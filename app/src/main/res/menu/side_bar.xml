@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/themes"
+        android:icon="@drawable/ic_themes"
+        android:title="@string/themes"/>
+
+    <item
+        android:id="@+id/ringtone_cutter"
+        android:icon="@drawable/ic_ringtone_cutter"
+        android:title="@string/ringtoneCutter"/>
+
+    <item
+        android:id="@+id/sleep_timer"
+        android:icon="@drawable/ic_sleep_timer"
+        android:title="@string/sleepTimer"/>
+
+    <item
+        android:id="@+id/equiliser"
+        android:icon="@drawable/ic_equiliser"
+        android:title="@string/equiliser"/>
+
+    <item
+        android:id="@+id/drive_mode"
+        android:icon="@drawable/ic_drive_mode"
+        android:title="@string/driveMode"/>
+
+    <item
+        android:id="hidden_folders"
+        android:icon="@drawable/ic_hidden_folders"
+        android:title="@string/hiddenFolders"/>
+
+    <item
+        android:id="@+id/scan_media"
+        android:icon="@drawable/ic_scan_media"
+        android:title="@string/scanMedia"/>
+
+</menu>

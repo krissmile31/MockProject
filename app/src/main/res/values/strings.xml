@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Muzic</string>
+    <string name="home_nav">Home</string>
+    <string name="music_nav">Music</string>
+    <string name="setting_nav">Setting</string>
+    <string name="searchHint">Search album song</string>
+    <string name="hotRecommend">Hot Recommended</string>
+    <string name="playlist">Playlist</string>
+    <string name="viewAll">View All</string>
+    <string name="recentPlay">Recently Played</string>
+    
+    
+    <string name="songs">Songs</string>
+    <string name="albums">Albums</string>
+    <string name="artists">Artists</string>
+    <string name="themes">Themes</string>
+    <string name="ringtoneCutter">Ringtone Cutter</string>
+    <string name="sleepTimer">Sleep timer</string>
+    <string name="equiliser">Equiliser</string>
+    <string name="driveMode">Drive Mode</string>
+    <string name="hiddenFolders">Hidden Folders</string>
+    <string name="scanMedia">Scan Media</string>
+    
+    
+<!--    setting-->
+    <string name="display">Display</string>
+    <string name="audio">Audio</string>
+    <string name="headset">Headset</string>
+    <string name="lockscreen">Lockscreen</string>
+    <string name="advanced">Advanced</string>
+    <string name="other">Other</string>
+</resources>
