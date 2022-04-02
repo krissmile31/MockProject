@@ -12,4 +12,6 @@
     <color name="itemTextColor">#D9519D</color>
     <color name="disable">#707070</color>
     <color name="viewAll">#ED8770</color>
+
+    <color name="singer">#585A66</color>
 </resources>

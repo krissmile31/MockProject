@@ -9,7 +9,12 @@
     <string name="viewAll">View All</string>
     <string name="recentPlay">Recently Played</string>
 
-
+<!--&lt;!&ndash;    Hot recommended&ndash;&gt;-->
+<!--    <string name="songHot1">Sound of Sky</string>-->
+<!--    <string name="singerHot1">Dilon Bruce</string>-->
+<!--    <string name="songHot2">Girl on Fire</string>-->
+<!--    <string name="singerHot2">Alecia Keys</string>-->
+    
     <string name="songs">Songs</string>
     <string name="albums">Albums</string>
     <string name="artists">Artists</string>
