@@ -26,10 +26,10 @@
         android:icon="@drawable/ic_drive_mode"
         android:title="@string/driveMode"/>
 
-    <item
-        android:id="hidden_folders"
-        android:icon="@drawable/ic_hidden_folders"
-        android:title="@string/hiddenFolders"/>
+<!--    <item-->
+<!--        android:id="hidden_folders"-->
+<!--        android:icon="@drawable/ic_hidden_folders"-->
+<!--        android:title="@string/hiddenFolders"/>-->
 
     <item
         android:id="@+id/scan_media"

@@ -8,8 +8,8 @@
     <string name="playlist">Playlist</string>
     <string name="viewAll">View All</string>
     <string name="recentPlay">Recently Played</string>
-    
-    
+
+
     <string name="songs">Songs</string>
     <string name="albums">Albums</string>
     <string name="artists">Artists</string>
@@ -20,13 +20,15 @@
     <string name="driveMode">Drive Mode</string>
     <string name="hiddenFolders">Hidden Folders</string>
     <string name="scanMedia">Scan Media</string>
-    
-    
-<!--    setting-->
+
+
+    <!--    setting-->
     <string name="display">Display</string>
     <string name="audio">Audio</string>
     <string name="headset">Headset</string>
     <string name="lockscreen">Lockscreen</string>
     <string name="advanced">Advanced</string>
     <string name="other">Other</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
