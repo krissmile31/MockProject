@@ -9,12 +9,13 @@
     <string name="viewAll">View All</string>
     <string name="recentPlay">Recently Played</string>
 
-<!--&lt;!&ndash;    Hot recommended&ndash;&gt;-->
-<!--    <string name="songHot1">Sound of Sky</string>-->
-<!--    <string name="singerHot1">Dilon Bruce</string>-->
-<!--    <string name="songHot2">Girl on Fire</string>-->
-<!--    <string name="singerHot2">Alecia Keys</string>-->
-    
+    <!--&lt;!&ndash;    Hot recommended&ndash;&gt;-->
+    <!--    <string name="songHot1">Sound of Sky</string>-->
+    <!--    <string name="singerHot1">Dilon Bruce</string>-->
+    <!--    <string name="songHot2">Girl on Fire</string>-->
+    <!--    <string name="singerHot2">Alecia Keys</string>-->
+
+    <!--    side bar-->
     <string name="songs">Songs</string>
     <string name="albums">Albums</string>
     <string name="artists">Artists</string>
@@ -26,8 +27,14 @@
     <string name="hiddenFolders">Hidden Folders</string>
     <string name="scanMedia">Scan Media</string>
 
+    <!--    music-->
+    <string name="all_songs">All Songs</string>
+    <string name="playlists">Playlists</string>
+    <string name="genres">Genres</string>
+
 
     <!--    setting-->
+    <string name="setting">Settings</string>
     <string name="display">Display</string>
     <string name="audio">Audio</string>
     <string name="headset">Headset</string>

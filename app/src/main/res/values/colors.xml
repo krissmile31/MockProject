@@ -11,6 +11,9 @@
     <color name="bottomNavigation">#14192C</color>
     <color name="itemTextColor">#D9519D</color>
     <color name="disable">#707070</color>
+    <color name="header_nav">#191B28</color>
+    <color name="text_header_nav">#C1C0C0</color>
+    <color name="side_bar_background">#0D0F1E</color>
     <color name="viewAll">#ED8770</color>
 
     <color name="singer">#585A66</color>

@@ -2,4 +2,18 @@
 <resources>
     <dimen name="thumbnail">20dp</dimen>
     <dimen name="song">5dp</dimen>
+    <dimen name="text_header_nav_size">12sp</dimen>
+    <dimen name="text_header_nav_margin_right">50dp</dimen>
+    <dimen name="padding_header_nav">20dp</dimen>
+    <dimen name="padding_layout">20dp</dimen>
+    <dimen name="margin_layout">20dp</dimen>
+
+<!--    music-->
+    <dimen name="text_size_item_music">15sp</dimen>
+
+<!--    setting-->
+    <dimen name="text_settings">17sp</dimen>
+    <dimen name="text_setting_item">14sp</dimen>
+    <dimen name="margin_divider">20dp</dimen>
+
 </resources>
