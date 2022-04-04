@@ -4,14 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".musicFragments.AllSongsFragment">
+    android:padding="@dimen/padding_layout"
+    tools:context=".fragments.musicFragments.AllSongsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcl_all_songs"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textColor="@color/white"
-        android:textSize="30sp"
-        android:text="All Songs" />
+        android:layout_height="match_parent"/>
 
 </FrameLayout>

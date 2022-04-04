@@ -50,31 +50,33 @@
         app:tabTextAppearance="@style/text_tab_layout"
         app:tabTextColor="@color/white"
         app:tabSelectedTextColor="@color/itemTextColor"
-        app:tabIndicatorColor="@color/itemTextColor"
+        app:tabIndicator="@drawable/gradient_color"
+        app:tabIndicatorColor="@null"
+        app:tabIndicatorHeight="1dp"
         android:layout_marginLeft="@dimen/margin_layout">
 
-<!--        <com.google.android.material.tabs.TabItem-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:tabSelectedTextColor="@color/white"-->
-<!--            android:text="@string/all_songs"/>-->
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:tabSelectedTextColor="@color/white"
+            android:text="@string/all_songs"/>
 
-<!--        <com.google.android.material.tabs.TabItem-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="@string/playlists"/>-->
-<!--        <com.google.android.material.tabs.TabItem-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="@string/albums"/>-->
-<!--        <com.google.android.material.tabs.TabItem-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="@string/artists"/>-->
-<!--        <com.google.android.material.tabs.TabItem-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="@string/genres"/>-->
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/playlists"/>
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/albums"/>
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/artists"/>
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/genres"/>
 
     </com.google.android.material.tabs.TabLayout>
 
@@ -82,7 +84,7 @@
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_layout"
+        android:layout_marginTop="@dimen/margin_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tabLayout" />
 

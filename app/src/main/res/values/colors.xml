@@ -15,6 +15,9 @@
     <color name="text_header_nav">#C1C0C0</color>
     <color name="side_bar_background">#0D0F1E</color>
     <color name="viewAll">#ED8770</color>
-
+    <color name="circle_inside_dvd">#272B36</color>
     <color name="singer">#585A66</color>
+    <color name="text_playlists_color">#EEEEEE</color>
+    <color name="text_song_playlist_color">#C1C0C0</color>
+    <color name="floating_button">#23273B</color>
 </resources>

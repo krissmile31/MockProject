@@ -1,27 +1,26 @@
 package com.example.mockproject.fragments;
 
-import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.mockproject.R;
-import com.example.mockproject.adapters.HotRecommendedAdapter;
-import com.example.mockproject.adapters.PlaylistAdapter;
-import com.example.mockproject.adapters.RecentlyPlayedAdapter;
+import com.example.mockproject.adapters.home.HotRecommendedAdapter;
+import com.example.mockproject.adapters.home.PlaylistAdapter;
+import com.example.mockproject.adapters.home.RecentlyPlayedAdapter;
 import com.example.mockproject.models.Album;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,10 +81,30 @@ public class HomeFragment extends Fragment {
         rcl_recentlyPlayed.setAdapter(recentlyPlayedAdapter);
         rcl_recentlyPlayed.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        mActionBarDrawerToggle = new ActionBarDrawerToggle((Activity) getContext(), mDrawLayout, R.string.advanced, R.string.advanced);
-        mDrawLayout.addDrawerListener(mActionBarDrawerToggle);
-        mActionBarDrawerToggle.syncState();
         mNavigationView.setItemIconTintList(null);
+
+        // open side bar
+        mMenuSideBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDrawLayout.openDrawer(GravityCompat.START);
+            }
+        });
+
+        // on BAck Press  -> not ACTIVE
+        view.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if (i ==  KeyEvent.KEYCODE_BACK) {
+                    if (!mDrawLayout.isDrawerOpen(GravityCompat.START)) {
+                        mDrawLayout.closeDrawer(GravityCompat.START);
+                    }
+                }
+                return false;
+            }
+        });
         return view;
     }
+
+
 }

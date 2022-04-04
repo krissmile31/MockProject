@@ -11,6 +11,12 @@
 <!--    music-->
     <dimen name="text_size_item_music">15sp</dimen>
 
+<!--    playlist-->
+    <dimen name="text_playlist_size">14sp</dimen>
+    <dimen name="text_song_playlist_size">11sp</dimen>
+    <dimen name="my_playlists">15sp</dimen>
+    <dimen name="viewAll">11sp</dimen>
+
 <!--    setting-->
     <dimen name="text_settings">17sp</dimen>
     <dimen name="text_setting_item">14sp</dimen>

@@ -16,6 +16,11 @@ public class Album {
         this.singer = singer;
     }
 
+    public Album(int thumbnail, String singer) {
+        this.thumbnail = thumbnail;
+        this.singer = singer;
+    }
+
     public int getThumbnail() {
         return thumbnail;
     }
