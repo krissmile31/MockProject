@@ -1,6 +1,7 @@
 package com.example.mockproject.adapters.tab;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mockproject.R;
 import com.example.mockproject.models.Album;
+import com.example.mockproject.services.PlaySongService;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class AllSongsAdapter extends RecyclerView.Adapter<AllSongsAdapter.AlbumAdapter> {
@@ -58,6 +61,22 @@ public class AllSongsAdapter extends RecyclerView.Adapter<AllSongsAdapter.AlbumA
             img_all_songs.setImageResource(album.getThumbnail());
             tv_all_songs.setText(album.getSong());
             tv_all_singer.setText(album.getSinger());
+
+            itemView.findViewById(R.id.play_song).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, PlaySongService.class);
+                    intent.putExtra("song_details", album);
+                    context.startService(intent);
+                }
+            });
+
+            itemView.findViewById(R.id.tv_all_songs).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    context.stopService(new Intent(context, PlaySongService.class));
+                }
+            });
         }
     }
 }

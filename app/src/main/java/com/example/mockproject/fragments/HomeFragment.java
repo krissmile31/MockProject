@@ -49,9 +49,9 @@ public class HomeFragment extends Fragment {
         rcl_hotRecommended = view.findViewById(R.id.rcl_hotRecommended);
         rcl_playlist = view.findViewById(R.id.rcl_playlist);
         rcl_recentlyPlayed = view.findViewById(R.id.rcl_recentlyPlayed);
-        mNavigationView = view.findViewById(R.id.navigationView);
-        mDrawLayout = view.findViewById(R.id.drawLayout);
-        mMenuSideBar = view.findViewById(R.id.menu_side_bar);
+//        mNavigationView = view.findViewById(R.id.navigationView);
+//        mDrawLayout = view.findViewById(R.id.drawLayout);
+//        mMenuSideBar = view.findViewById(R.id.menu_side_bar);
 
         // Hot Recommended preview
         albumList = new ArrayList<>();
@@ -81,28 +81,28 @@ public class HomeFragment extends Fragment {
         rcl_recentlyPlayed.setAdapter(recentlyPlayedAdapter);
         rcl_recentlyPlayed.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        mNavigationView.setItemIconTintList(null);
+//        mNavigationView.setItemIconTintList(null);
 
         // open side bar
-        mMenuSideBar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mDrawLayout.openDrawer(GravityCompat.START);
-            }
-        });
-
-        // on BAck Press  -> not ACTIVE
-        view.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                if (i ==  KeyEvent.KEYCODE_BACK) {
-                    if (!mDrawLayout.isDrawerOpen(GravityCompat.START)) {
-                        mDrawLayout.closeDrawer(GravityCompat.START);
-                    }
-                }
-                return false;
-            }
-        });
+//        mMenuSideBar.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                mDrawLayout.openDrawer(GravityCompat.START);
+//            }
+//        });
+//
+//        // on BAck Press  -> not ACTIVE
+//        view.setOnKeyListener(new View.OnKeyListener() {
+//            @Override
+//            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+//                if (i ==  KeyEvent.KEYCODE_BACK) {
+//                    if (!mDrawLayout.isDrawerOpen(GravityCompat.START)) {
+//                        mDrawLayout.closeDrawer(GravityCompat.START);
+//                    }
+//                }
+//                return false;
+//            }
+//        });
         return view;
     }
 

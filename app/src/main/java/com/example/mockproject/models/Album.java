@@ -1,6 +1,8 @@
 package com.example.mockproject.models;
 
-public class Album {
+import java.io.Serializable;
+
+public class Album implements Serializable {
     private int thumbnail;
     private String song;
     private String singer;

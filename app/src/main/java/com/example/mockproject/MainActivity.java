@@ -8,6 +8,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 import com.example.mockproject.fragments.HomeFragment;
 import com.example.mockproject.fragments.MusicFragment;
 import com.example.mockproject.fragments.SettingFragment;
+import com.example.mockproject.services.PlaySongService;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
@@ -23,6 +25,9 @@ import com.google.android.material.navigation.NavigationView;
 public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView mBottomNavigationView;
+    private NavigationView mNavigationView;
+    private DrawerLayout mDrawerLayout;
+    private ImageView mMenuSideBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +35,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mBottomNavigationView = findViewById(R.id.bottomNavigation);
+        mNavigationView = findViewById(R.id.navigationView);
+        mDrawerLayout = findViewById(R.id.drawLayout);
+        mMenuSideBar = findViewById(R.id.menu_side_bar);
 
         mBottomNavigationView.setItemIconTintList(null);
+        mNavigationView.setItemIconTintList(null);
+
+        // open side bar
+        mMenuSideBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDrawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
 
         replaceFragment(new HomeFragment());
 
@@ -59,5 +76,13 @@ public class MainActivity extends AppCompatActivity {
     public void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fragment).commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START))
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+        else
+            super.onBackPressed();
     }
 }

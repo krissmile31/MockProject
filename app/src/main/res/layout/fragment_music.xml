@@ -12,7 +12,7 @@
         android:id="@+id/linear_song"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_layout"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -25,7 +25,7 @@
 
         <TextView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/height_linear"
             android:gravity="center"
             android:layout_weight="10"
             android:text="@string/songs"
@@ -52,8 +52,7 @@
         app:tabSelectedTextColor="@color/itemTextColor"
         app:tabIndicator="@drawable/gradient_color"
         app:tabIndicatorColor="@null"
-        app:tabIndicatorHeight="1dp"
-        android:layout_marginLeft="@dimen/margin_layout">
+        app:tabIndicatorHeight="1dp">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"

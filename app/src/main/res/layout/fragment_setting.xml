@@ -5,11 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    android:padding="@dimen/padding_layout"
     tools:context=".fragments.SettingFragment">
 
     <LinearLayout
         android:id="@+id/linear_settings"
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,7 +23,7 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/height_linear"
             android:gravity="center"
             android:text="@string/setting"
             android:textColor="@color/white"

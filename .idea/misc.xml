@@ -16,6 +16,8 @@
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/drawable/ic_logo.xml" value="0.1375" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/drawable/ic_music_nav.xml" value="0.1375" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/drawable/ic_musica_searcher.xml" value="0.1375" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/drawable/ic_pause_empty.xml" value="0.1395" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/drawable/ic_pause_exclusion.xml" value="0.1395" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/drawable/ic_played.xml" value="0.1395" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/drawable/ic_setting_nav.xml" value="0.1375" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/drawable/ic_union_1.xml" value="0.1815" />
@@ -28,7 +30,7 @@
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/activity_home.xml" value="0.14175724637681159" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/activity_main.xml" value="0.14175724637681159" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/activity_splash_screen.xml" value="0.14175724637681159" />
-        <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/all_songs_item.xml" value="0.335" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/all_songs_item.xml" value="0.25" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/dada.xml" value="0.14175724637681159" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/fkjff.xml" value="0.14175724637681159" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/fragment_albums.xml" value="0.14673913043478262" />
@@ -37,11 +39,12 @@
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/fragment_genres.xml" value="0.14673913043478262" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/fragment_home.xml" value="0.1539855072463768" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/fragment_music.xml" value="0.165" />
-        <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/fragment_playlists.xml" value="0.14673913043478262" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/fragment_playlists.xml" value="0.25" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/fragment_setting.xml" value="0.1539855072463768" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/hot_recommended.xml" value="0.1539855072463768" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/hot_recommended_item.xml" value="0.1539855072463768" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/my_playlists_item.xml" value="0.14673913043478262" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/play_song_foreground.xml" value="0.165" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/playlist_item.xml" value="0.1539855072463768" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/recently_played_item.xml" value="0.25" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/menu/menu.xml" value="0.1" />
