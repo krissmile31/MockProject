@@ -20,4 +20,10 @@
     <color name="text_playlists_color">#EEEEEE</color>
     <color name="text_song_playlist_color">#C1C0C0</color>
     <color name="floating_button">#23273B</color>
+    <color name="ic_launcher_background">#181D31</color>
+    <color name="play_song">#090E24</color>
+    <color name="albums_name">#EEEEEE</color>
+    <color name="albums_details">#C1C0C0</color>
+    <color name="artists_name">#EEEEEE</color>
+    <color name="artists_details">#C1C0C0</color>
 </resources>

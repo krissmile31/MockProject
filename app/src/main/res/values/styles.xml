@@ -40,4 +40,36 @@
         <item name="android:textAllCaps">false</item>
         <item name="android:textSize">@dimen/text_size_item_music</item>
     </style>
+
+    <style name="text_card_playlists">
+        <item name="android:textColor">@color/text_playlists_color</item>
+        <item name="android:textSize">@dimen/text_playlist_size</item>
+    </style>
+
+    <style name="text_singer_card_playlists">
+        <item name="android:textColor">@color/text_song_playlist_color</item>
+        <item name="android:textSize">@dimen/text_song_playlist_size</item>
+    </style>
+
+    <style name="text_albums">
+        <item name="android:textColor">@color/albums_name</item>
+        <item name="android:textSize">@dimen/text_size_albums</item>
+    </style>
+
+    <style name="text_details_albums">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/albums_details</item>
+        <item name="android:textSize">@dimen/text_size_albums</item>
+    </style>
+
+    <style name="singer_artists">
+        <item name="android:textColor">@color/artists_name</item>
+        <item name="android:textSize">@dimen/text_size_artists</item>
+    </style>
+
+    <style name="details_artists">
+        <item name="android:textColor">@color/artists_details</item>
+        <item name="android:textSize">@dimen/text_details_artists</item>
+    </style>
 </resources>

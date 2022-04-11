@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    android:padding="@dimen/padding_layout"
-    tools:context=".fragments.musicFragments.AlbumsFragment">
+    tools:context=".songs.tab.albums.AlbumsFragment">
 
     <GridLayout
         android:id="@+id/grid_layout"
@@ -14,6 +13,7 @@
         android:layout_height="wrap_content"
         android:columnCount="2"
         android:rowCount="2"
+        android:layout_margin="-10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -21,108 +21,18 @@
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
             android:layout_row="0"
             android:layout_column="0">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:scaleType="fitXY"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:scaleType="fitXY"
                 android:src="@drawable/my_top_tracks" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:layout_gravity="bottom">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingRight="50dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/my_top_tracks"
-                        android:textColor="@color/text_playlists_color"
-                        android:textSize="@dimen/text_playlist_size" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/song_my_top_tracks"
-                        android:textColor="@color/text_song_playlist_color"
-                        android:textSize="@dimen/text_song_playlist_size" />
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_play"
-                    android:layout_gravity="center_vertical"
-                    app:layout_constraintEnd_toEndOf="parent" />
-                </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_column="1">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/lastet_added"/>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:layout_gravity="bottom">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingRight="50dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/lastest_added"
-                        android:textColor="@color/text_playlists_color"
-                        android:textSize="@dimen/text_playlist_size" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/song_latest_added"
-                        android:textColor="@color/text_song_playlist_color"
-                        android:textSize="@dimen/text_song_playlist_size" />
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_play"
-                    android:layout_gravity="center_vertical"
-                    app:layout_constraintEnd_toEndOf="parent" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="1"
-            android:layout_column="0">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/history"/>
-
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
@@ -131,44 +41,50 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingRight="50dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
+                        style="@style/text_card_playlists"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/history"
-                        android:textColor="@color/text_playlists_color"
-                        android:textSize="@dimen/text_playlist_size" />
+                        android:text="@string/my_top_tracks" />
 
                     <TextView
+                        style="@style/text_singer_card_playlists"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/song_history"
-                        android:textColor="@color/text_song_playlist_color"
-                        android:textSize="@dimen/text_song_playlist_size" />
+                        android:text="@string/song_my_top_tracks" />
                 </LinearLayout>
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_play"
                     android:layout_gravity="center_vertical"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
-            </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_row="1"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_row="0"
             android:layout_column="1">
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/favourites"/>
+                android:scaleType="fitXY"
+                android:src="@drawable/lastet_added"/>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:layout_gravity="bottom">
@@ -176,22 +92,21 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingRight="50dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
+                        style="@style/text_card_playlists"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/favourites"
-                        android:textColor="@color/text_playlists_color"
-                        android:textSize="@dimen/text_playlist_size" />
+                        android:text="@string/lastest_added" />
 
                     <TextView
+                        style="@style/text_singer_card_playlists"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/song_favourites"
-                        android:textColor="@color/text_song_playlist_color"
-                        android:textSize="@dimen/text_song_playlist_size" />
+                        android:text="@string/song_latest_added" />
                 </LinearLayout>
 
                 <ImageView
@@ -199,8 +114,109 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_play"
                     android:layout_gravity="center_vertical"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_row="1"
+            android:layout_column="0">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/history"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_gravity="bottom">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        style="@style/text_card_playlists"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/history" />
+
+                    <TextView
+                        style="@style/text_singer_card_playlists"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/song_history" />
+                </LinearLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_play"
+                    android:layout_gravity="center_vertical"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_row="1"
+            android:layout_column="1">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/favourites"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_gravity="bottom">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        style="@style/text_card_playlists"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/favourites" />
+
+                    <TextView
+                        style="@style/text_singer_card_playlists"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/song_favourites" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_play"
+                    android:layout_gravity="center_vertical"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
 
@@ -264,13 +280,23 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_floating_plus"
-        android:pointerIcon="arrow"
-        app:backgroundTint="@color/floating_button"
+        android:layout_marginBottom="150dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/float_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_floating_plus"
+            android:clickable="true"
+            android:pointerIcon="arrow"
+            app:backgroundTint="@color/floating_button" />
+
+    </RelativeLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

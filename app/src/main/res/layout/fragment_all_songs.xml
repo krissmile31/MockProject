@@ -1,15 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/padding_layout"
-    tools:context=".fragments.musicFragments.AllSongsFragment">
+    tools:context=".songs.tab.allsongs.AllSongsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcl_all_songs"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
-</FrameLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/play_song_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:background="@color/play_song"
+        android:layout_marginTop="400dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@drawable/gradient_color"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="@dimen/padding_layout"
+        android:paddingVertical="10dp">
+        <ImageView
+            android:id="@+id/thumbnail_play_song"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/billie_jean"/>
+
+        <LinearLayout
+            android:id="@+id/tv_play_song_background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_layout"
+            app:layout_constraintStart_toEndOf="@id/thumbnail_play_song"
+            android:layout_gravity="center"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_song_background"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Billie Jean"
+                style="@style/song"/>
+
+            <TextView
+                android:id="@+id/tv_singer_background"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Michael Jackson"
+                style="@style/singer"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="100dp"
+            android:gravity="end"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_play_song_background"
+            app:layout_constraintEnd_toStartOf="@id/exit_play_song_background">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_previous_song"/>
+
+            <ImageView
+                android:id="@+id/play_background"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/padding_layout"
+                android:paddingRight="@dimen/padding_layout"
+                android:src="@drawable/ic_play_empty"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_next_song"/>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/exit_play_song_background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_exit"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
