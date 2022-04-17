@@ -24,9 +24,32 @@
 <!--    album-->
     <dimen name="text_size_albums">11sp</dimen>
 
+<!--    album details-->
+    <dimen name="text_album_details">17sp</dimen>
+    <dimen name="tv_album_detail">18sp</dimen>
+    <dimen name="tv_album_details">12sp</dimen>
+    <dimen name="tv_button_album_details">8sp</dimen>
+    <dimen name="item_song_album_details">13sp</dimen>
+    <dimen name="time_album_details">10sp</dimen>
+
 <!--    artist-->
     <dimen name="text_size_artists">14sp</dimen>
     <dimen name="text_details_artists">11sp</dimen>
+
+<!--    artist details-->
+    <dimen name="text_artist_details">17sp</dimen>
+    <dimen name="tv_artist_detail">18sp</dimen>
+    <dimen name="tv_artist_details">13sp</dimen>
+    <dimen name="tv_quantity_artist_details">14sp</dimen>
+    <dimen name="tv_follwers_artist_details">10sp</dimen>
+    <dimen name="tv_follow_artist_details">8sp</dimen>
+    <dimen name="tv_top_album">15sp</dimen>
+    <dimen name="tv_view_all">11sp</dimen>
+    <dimen name="top_album">12sp</dimen>
+    <dimen name="year_top_album">10sp</dimen>
+    <dimen name="tv_top_song">15sp</dimen>
+    <dimen name="tv_song_top_songs">13sp</dimen>
+    <dimen name="time_song_top_songs">10sp</dimen>
 
 <!--    genres-->
     <dimen name="text_genres">15sp</dimen>

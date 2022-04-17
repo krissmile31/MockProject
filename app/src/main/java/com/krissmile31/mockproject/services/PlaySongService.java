@@ -17,6 +17,7 @@ import android.widget.RemoteViews;
 
 import androidx.core.app.NotificationCompat;
 
+import com.krissmile31.mockproject.LogUtils;
 import com.krissmile31.mockproject.MainActivity;
 import com.krissmile31.mockproject.R;
 import com.krissmile31.mockproject.models.Album;
@@ -103,7 +104,7 @@ public class PlaySongService extends Service {
 
         handleActionControlSong(intent.getIntExtra(BROADCAST_RECEIVER, 0));
 
-        Log.i("isPlaying", String.valueOf(songPlaying));
+        LogUtils.d(String.valueOf(songPlaying));
 
         return super.onStartCommand(intent, flags, startId);
     }
@@ -133,13 +134,13 @@ public class PlaySongService extends Service {
         if (songPlaying) {
             notificationCompat.addAction(R.drawable.ic_baseline_pause_24, "Pause", getPendingIntent(this, PAUSE))
                     .addAction(R.drawable.ic_baseline_skip_next_24, "Next", null)
-                    .addAction(R.drawable.ic_exit, "Exit", null);
+                    .addAction(R.drawable.ic_baseline_clear_24, "Exit", getPendingIntent(this, EXIT));
         }
 
         else {
             notificationCompat.addAction(R.drawable.ic_baseline_play_arrow_24, "Play", getPendingIntent(this, RESUME))
                     .addAction(R.drawable.ic_baseline_skip_next_24, "Next", null)
-                    .addAction(R.drawable.ic_exit, "Exit", null);
+                    .addAction(R.drawable.ic_baseline_clear_24, "Exit", getPendingIntent(this, EXIT));
         }
 
         Notification notification = notificationCompat.build();
@@ -173,6 +174,7 @@ public class PlaySongService extends Service {
 
             case EXIT:
                 mediaPlayer.release();
+                stopForeground(true);
                 stopSelf();
                 break;
         }

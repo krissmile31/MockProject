@@ -15,7 +15,7 @@ import com.krissmile31.mockproject.models.Album;
 
 import java.util.List;
 
-public class HotRecommendedAdapter extends RecyclerView.Adapter<HotRecommendedAdapter.AlbumHolder>{
+public class HotRecommendedAdapter extends RecyclerView.Adapter<HotRecommendedAdapter.MyViewHolder>{
     private List<Album> albumList;
 
     public HotRecommendedAdapter(List<Album> albumList) {
@@ -24,14 +24,14 @@ public class HotRecommendedAdapter extends RecyclerView.Adapter<HotRecommendedAd
 
     @NonNull
     @Override
-    public AlbumHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         View itemView = LayoutInflater.from(context).inflate(R.layout.hot_recommended_item, parent, false);
-        return new AlbumHolder(itemView, context);
+        return new MyViewHolder(itemView, context);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HotRecommendedAdapter.AlbumHolder holder, int position) {
+    public void onBindViewHolder(@NonNull HotRecommendedAdapter.MyViewHolder holder, int position) {
         holder.bind(albumList.get(position));
     }
 
@@ -40,12 +40,12 @@ public class HotRecommendedAdapter extends RecyclerView.Adapter<HotRecommendedAd
         return albumList.size();
     }
 
-    public class AlbumHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder {
         private Context context;
         private ImageView thumbnail_hot;
         private TextView tv_song_hot, tv_singer_hot;
 
-        public AlbumHolder(@NonNull View itemView, Context context) {
+        public MyViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
             this.context = context;
 

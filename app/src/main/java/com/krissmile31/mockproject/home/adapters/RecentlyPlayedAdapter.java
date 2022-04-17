@@ -14,7 +14,7 @@ import com.krissmile31.mockproject.models.Album;
 
 import java.util.List;
 
-public class RecentlyPlayedAdapter extends RecyclerView.Adapter<RecentlyPlayedAdapter.AlbumHolder> {
+public class RecentlyPlayedAdapter extends RecyclerView.Adapter<RecentlyPlayedAdapter.MyViewHolder> {
     private List<Album> albumList;
 
     public RecentlyPlayedAdapter(List<Album> albumList) {
@@ -23,14 +23,14 @@ public class RecentlyPlayedAdapter extends RecyclerView.Adapter<RecentlyPlayedAd
 
     @NonNull
     @Override
-    public AlbumHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         View itemView = LayoutInflater.from(context).inflate(R.layout.recently_played_item, parent, false);
-        return new AlbumHolder(itemView, context);
+        return new MyViewHolder(itemView, context);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AlbumHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.bind(albumList.get(position));
     }
 
@@ -39,11 +39,11 @@ public class RecentlyPlayedAdapter extends RecyclerView.Adapter<RecentlyPlayedAd
         return albumList.size();
     }
 
-    public class AlbumHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder {
         private Context context;
         private TextView tv_song_played, tv_singer_played;
 
-        public AlbumHolder(@NonNull View itemView, Context context) {
+        public MyViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
             this.context = context;
 

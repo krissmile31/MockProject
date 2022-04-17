@@ -72,4 +72,6 @@
 
     </com.google.android.material.navigation.NavigationView>
 
+    <include android:visibility="gone" android:id="@+id/play_song_background" layout="@layout/play_song_background"/>
+
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -2,6 +2,7 @@ package com.krissmile31.mockproject;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -11,20 +12,27 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.krissmile31.mockproject.home.HomeFragment;
+import com.krissmile31.mockproject.interfaces.OnBackPressedListener;
 import com.krissmile31.mockproject.songs.MusicFragment;
 import com.krissmile31.mockproject.settings.SettingFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
+import com.krissmile31.mockproject.songs.tab.albums.AlbumsFragment;
+import com.krissmile31.mockproject.songs.tab.albums.albumdetails.AlbumDetailsFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnBackPressedListener {
 
     private BottomNavigationView mBottomNavigationView;
     private NavigationView mNavigationView;
     private DrawerLayout mDrawerLayout;
     private ImageView mMenuSideBar;
+    public static ConstraintLayout playSongBackground;
+    private ImageView thumbnail_play_song, play_background, exit_play_song_background;
+    private TextView tv_song_background, tv_singer_background;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +43,13 @@ public class MainActivity extends AppCompatActivity {
         mNavigationView = findViewById(R.id.navigationView);
         mDrawerLayout = findViewById(R.id.drawLayout);
         mMenuSideBar = findViewById(R.id.menu_side_bar);
+
+        playSongBackground = findViewById(R.id.play_song_background);
+        thumbnail_play_song = findViewById(R.id.thumbnail_play_song);
+        tv_song_background = findViewById(R.id.tv_song_background);
+        tv_singer_background = findViewById(R.id.tv_singer_background);
+        play_background = findViewById(R.id.play_background);
+        exit_play_song_background = findViewById(R.id.exit_play_song_background);
 
         mBottomNavigationView.setItemIconTintList(null);
         mNavigationView.setItemIconTintList(null);
@@ -71,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void replaceFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
+//        FragmentManager fragmentManager = getSupportFragmentManager();
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fragment).commit();
     }
 
@@ -81,5 +96,10 @@ public class MainActivity extends AppCompatActivity {
             mDrawerLayout.closeDrawer(GravityCompat.START);
         else
             super.onBackPressed();
+    }
+
+    @Override
+    public void onBackStackPressed() {
+        super.onBackPressed();
     }
 }

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background"
+    tools:context=".songs.tab.albums.albumdetails.AlbumDetailsFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linear_album_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/btn_back_album"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/ic_back_button"/>
+
+        <TextView
+            android:id="@+id/text_album_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_back_album"
+            android:text="@string/album_details"
+            android:textSize="@dimen/text_album_details"
+            android:textColor="@color/white"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/ic_musica_searcher"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_layout"
+        app:layout_constraintTop_toBottomOf="@id/linear_album_details">
+
+        <ImageView
+            android:id="@+id/thumbnail_album_detail"
+            android:layout_width="match_parent"
+            android:layout_height="169dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/image_album_details"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:src="@drawable/background_image_details"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/contraint_album_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_layout">
+
+            <ImageView
+                android:id="@+id/thumbnail_album_details"
+                android:layout_width="87dp"
+                android:layout_height="87dp"
+                android:src="@drawable/album_art_details"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="@dimen/margin_layout"
+                app:layout_constraintStart_toEndOf="@id/thumbnail_album_details">
+                <TextView
+                    android:id="@+id/tv_album_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:text="History"
+                    android:textSize="@dimen/tv_album_detail"
+                    android:textColor="@color/tv_album_detail"/>
+
+                <TextView
+                    style="@style/tv_album_details"
+                    android:paddingBottom="10dp"
+                    android:id="@+id/tv_singer_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="by Michael Jackson"
+                    app:layout_constraintTop_toBottomOf="@id/tv_album_details"/>
+
+                <TextView
+                    android:id="@+id/tv_period_album_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1996 . 18 Songs . 64 min"
+                    style="@style/tv_album_details"
+                    app:layout_constraintTop_toBottomOf="@id/tv_singer_details"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/contraint_album_details">
+
+            <Button
+                android:id="@+id/play_details"
+                android:layout_width="75dp"
+                android:layout_height="23dp"
+                android:background="@drawable/background_play_album_details"
+                android:drawableStart="@drawable/ic_play_album_details"
+                android:gravity="center"
+                android:foregroundGravity="center"
+                android:text="@string/play"
+                android:paddingHorizontal="@dimen/padding_layout"
+                android:layout_marginHorizontal="@dimen/margin_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                style="@style/text_button_album_details" />
+
+            <Button
+                android:id="@+id/share_details"
+                android:layout_width="75dp"
+                android:layout_height="23dp"
+                app:layout_constraintStart_toEndOf="@id/play_details"
+                android:text="@string/share"
+                style="@style/text_button_album_details"
+                android:drawableStart="@drawable/ic_share_album_details"
+                android:paddingHorizontal="15dp"
+                android:background="@drawable/background_button_album_details"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="23dp"
+                app:layout_constraintStart_toEndOf="@id/share_details"
+                android:background="@drawable/background_button_album_details"
+                android:text="@string/favourite"
+                android:layout_marginHorizontal="@dimen/margin_layout"
+                style="@style/text_button_album_details"
+                android:drawableStart="@drawable/ic_favourites_album_details"
+                android:drawablePadding="10dp"
+                android:paddingHorizontal="@dimen/padding_layout"/>
+
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcl_album_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/layout_details"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

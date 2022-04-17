@@ -15,7 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.krissmile31.mockproject.R;
+import com.krissmile31.mockproject.interfaces.OnItemClickListener;
 import com.krissmile31.mockproject.services.PlaySongService;
+import com.krissmile31.mockproject.songs.MusicFragment;
 import com.krissmile31.mockproject.songs.tab.allsongs.adapter.AllSongsAdapter;
 import com.krissmile31.mockproject.models.Album;
 
@@ -73,14 +75,21 @@ public class AllSongsFragment extends Fragment {
         return view;
     }
 
-    AllSongsAdapter.OnPlayClickListener listener = new AllSongsAdapter.OnPlayClickListener() {
+    OnItemClickListener listener = new OnItemClickListener() {
         @Override
-        public void onClick(Album album) {
+        public void onItemClick(Album album) {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("play_song_details", album);
+//            MusicFragment musicFragment = new MusicFragment();
+//            musicFragment.setArguments(bundle);
+//
+//            MusicFragment.playSongBackground.setVisibility(View.VISIBLE);
             thumbnail_play_song.setImageResource(album.getThumbnail());
             tv_song_background.setText(album.getSong());
             tv_singer_background.setText(album.getSinger());
 
             play_background.setImageResource(R.drawable.ic_pause_empty);
+
 
         }
     };

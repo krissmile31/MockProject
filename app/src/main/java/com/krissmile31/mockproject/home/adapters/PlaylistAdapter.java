@@ -15,7 +15,7 @@ import com.krissmile31.mockproject.models.Album;
 
 import java.util.List;
 
-public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.AlbumHolder> {
+public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.MyViewHolder> {
     private List<Album> albumList;
 
     public PlaylistAdapter(List<Album> albumList) {
@@ -24,14 +24,14 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.AlbumH
 
     @NonNull
     @Override
-    public AlbumHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         View itemView = LayoutInflater.from(context).inflate(R.layout.playlist_item, parent, false);
-        return new AlbumHolder(itemView, context);
+        return new MyViewHolder(itemView, context);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AlbumHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.bind(albumList.get(position));
     }
 
@@ -40,12 +40,12 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.AlbumH
         return albumList.size();
     }
 
-    public class AlbumHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder{
         private Context context;
         private ImageView thumbnail_playlist;
         private TextView tv_song_playlist, tv_singer_playlist;
 
-        public AlbumHolder(@NonNull View itemView, Context context) {
+        public MyViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
             this.context = context;
 

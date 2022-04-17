@@ -26,4 +26,15 @@
     <color name="albums_details">#C1C0C0</color>
     <color name="artists_name">#EEEEEE</color>
     <color name="artists_details">#C1C0C0</color>
+    <color name="popup_menu">#383B49</color>
+
+<!--    album details-->
+    <color name="tv_album_detail">#EEEEEE</color>
+    <color name="tv_album_details">#C1C0C0</color>
+    <color name="time_album_details">#707070</color>
+    
+<!--    artist details-->
+    <color name="tv_color_artist_details">#EEEEEE</color>
+    <color name="tv_view_all">#ED8770</color>
+    
 </resources>

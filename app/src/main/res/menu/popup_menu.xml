@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/play_popup"
+        android:title="Play" />
+
+    <item
+        android:id="@+id/play_next_popup"
+        android:title="Play next" />
+
+    <item
+        android:id="@+id/playing_queue_popup"
+        android:title="Add to playing queue" />
+
+    <item
+        android:id="@+id/playlist_popup"
+        android:title="Add to playlist..." />
+
+    <item
+        android:id="@+id/rename_popup"
+        android:title="Rename" />
+
+    <item
+        android:id="@+id/tag_editor_popup"
+        android:title="Tag editor" />
+
+    <item
+        android:id="@+id/artist_popup"
+        android:title="Go to artist" />
+
+    <item
+        android:id="@+id/delete_popup"
+        android:title="Delete from device"/>
+
+    <item
+        android:id="@+id/share_popup"
+        android:title="Share"/>
+
+</menu>

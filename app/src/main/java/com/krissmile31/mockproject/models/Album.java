@@ -11,6 +11,11 @@ public class Album implements Serializable {
     private int quantity_songs;
     private String albumName;
     private String genre;
+    private int year;
+
+    public Album(String song) {
+        this.song = song;
+    }
 
     public Album(int thumbnail, String song, String singer) {
         this.thumbnail = thumbnail;
@@ -53,6 +58,12 @@ public class Album implements Serializable {
         this.thumbnail = thumbnail;
         this.quantity_songs = quantity_songs;
         this.genre = genre;
+    }
+
+    public Album(int thumbnail, String albumName, int year) {
+        this.thumbnail = thumbnail;
+        this.albumName = albumName;
+        this.year = year;
     }
 
     public int getThumbnail() {
@@ -117,5 +128,13 @@ public class Album implements Serializable {
 
     public void setGenre(String genre) {
         this.genre = genre;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
     }
 }

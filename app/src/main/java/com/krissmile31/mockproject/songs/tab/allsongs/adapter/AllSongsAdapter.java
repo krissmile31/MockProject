@@ -15,35 +15,36 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.krissmile31.mockproject.R;
+import com.krissmile31.mockproject.interfaces.OnItemClickListener;
 import com.krissmile31.mockproject.models.Album;
 import com.krissmile31.mockproject.services.PlaySongService;
 import com.krissmile31.mockproject.songs.tab.allsongs.AllSongsFragment;
 
 import java.util.List;
 
-public class AllSongsAdapter extends RecyclerView.Adapter<AllSongsAdapter.AlbumAdapter> {
+public class AllSongsAdapter extends RecyclerView.Adapter<AllSongsAdapter.MyViewHolder> {
     private List<Album> albumList;
-    private OnPlayClickListener listener;
+    private OnItemClickListener listener;
 
     public AllSongsAdapter(List<Album> albumList) {
         this.albumList = albumList;
     }
 
-    public AllSongsAdapter(List<Album> albumList, OnPlayClickListener listener) {
+    public AllSongsAdapter(List<Album> albumList, OnItemClickListener listener) {
         this.albumList = albumList;
         this.listener = listener;
     }
 
     @NonNull
     @Override
-    public AlbumAdapter onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         View itemView = LayoutInflater.from(context).inflate(R.layout.all_songs_item, parent, false);
-        return new AlbumAdapter(itemView, context);
+        return new MyViewHolder(itemView, context);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AlbumAdapter holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.bind(albumList.get(position));
     }
 
@@ -52,7 +53,7 @@ public class AllSongsAdapter extends RecyclerView.Adapter<AllSongsAdapter.AlbumA
         return albumList.size();
     }
 
-    public class AlbumAdapter extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder {
         private Context context;
         private ImageView img_all_songs;
         private TextView tv_all_songs, tv_all_singer;
@@ -60,7 +61,7 @@ public class AllSongsAdapter extends RecyclerView.Adapter<AllSongsAdapter.AlbumA
         private PlaySongService playSongService;
         private boolean isConnected;
 
-        public AlbumAdapter(@NonNull View itemView, Context context) {
+        public MyViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
             this.context = context;
 
@@ -82,7 +83,7 @@ public class AllSongsAdapter extends RecyclerView.Adapter<AllSongsAdapter.AlbumA
                     AllSongsFragment.playSongBackground.setVisibility(View.VISIBLE);
                     int position = getAdapterPosition();
                     if (listener != null && position != RecyclerView.NO_POSITION) {
-                        listener.onClick(albumList.get(position));
+                        listener.onItemClick(albumList.get(position));
                     }
 
                     Intent intent = new Intent(context, PlaySongService.class);
@@ -130,7 +131,7 @@ public class AllSongsAdapter extends RecyclerView.Adapter<AllSongsAdapter.AlbumA
 
     }
 
-    public interface OnPlayClickListener {
-        void onClick (Album album);
-    }
+//    public interface OnPlayClickListener {
+//        void onClick (Album album);
+//    }
 }

@@ -15,7 +15,7 @@ import com.krissmile31.mockproject.models.Album;
 
 import java.util.List;
 
-public class GenresAdapter extends RecyclerView.Adapter<GenresAdapter.AlbumAdapter> {
+public class GenresAdapter extends RecyclerView.Adapter<GenresAdapter.MyViewHolder> {
     private List<Album> albumList;
 
     public GenresAdapter(List<Album> albumList) {
@@ -24,14 +24,14 @@ public class GenresAdapter extends RecyclerView.Adapter<GenresAdapter.AlbumAdapt
 
     @NonNull
     @Override
-    public AlbumAdapter onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         View itemView = LayoutInflater.from(context).inflate(R.layout.genres_item, parent, false);
-        return new AlbumAdapter(itemView, context);
+        return new MyViewHolder(itemView, context);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AlbumAdapter holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.bind(albumList.get(position));
     }
 
@@ -40,12 +40,12 @@ public class GenresAdapter extends RecyclerView.Adapter<GenresAdapter.AlbumAdapt
         return albumList.size();
     }
 
-    public class AlbumAdapter extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder {
         private Context context;
         private ImageView thumbnail_genres;
         private TextView text_genres, quantity_songs_genres;
 
-        public AlbumAdapter(@NonNull View itemView, Context context) {
+        public MyViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
             this.context = context;
 

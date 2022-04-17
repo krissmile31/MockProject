@@ -25,8 +25,8 @@
     <string name="all_songs">All Songs</string>
     <string name="playlists">Playlists</string>
     <string name="genres">Genres</string>
-    
-<!--    Playlists-->
+
+    <!--    Playlists-->
     <string name="my_top_tracks">My Top Tracks</string>
     <string name="lastest_added">Lastest Added</string>
     <string name="history">History</string>
@@ -36,8 +36,21 @@
     <string name="song_history">450 Songs</string>
     <string name="song_favourites">966 Songs</string>
     <string name="my_playlists">My Playlists</string>
-    
-    
+
+<!--    album details-->
+    <string name="album_details">Album Details</string>
+    <string name="play">Play</string>
+    <string name="share">Share</string>
+    <string name="favourite">Add to Favourites</string>
+
+<!--    artist details-->
+    <string name="artist_details">Artist Details</string>
+    <string name="followers">Followers</string>
+    <string name="listeners">Listeners</string>
+    <string name="follow">Follow</string>
+    <string name="top_album">Top Albums</string>
+    <string name="top_song">Top Songs</string>
+
     <!--    setting-->
     <string name="setting">Settings</string>
     <string name="display">Display</string>
@@ -46,5 +59,7 @@
     <string name="lockscreen">Lockscreen</string>
     <string name="advanced">Advanced</string>
     <string name="other">Other</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

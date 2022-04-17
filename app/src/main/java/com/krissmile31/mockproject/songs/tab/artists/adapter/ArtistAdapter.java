@@ -11,27 +11,34 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.krissmile31.mockproject.R;
+import com.krissmile31.mockproject.interfaces.OnItemClickListener;
 import com.krissmile31.mockproject.models.Album;
 
 import java.util.List;
 
-public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.AlbumAdapter> {
+public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.MyViewHolder> {
     private List<Album> albumList;
+    private OnItemClickListener listener;
 
     public ArtistAdapter(List<Album> albumList) {
         this.albumList = albumList;
     }
 
+    public ArtistAdapter(List<Album> albumList, OnItemClickListener listener) {
+        this.albumList = albumList;
+        this.listener = listener;
+    }
+
     @NonNull
     @Override
-    public AlbumAdapter onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         View itemView = LayoutInflater.from(context).inflate(R.layout.artists_item, parent, false);
-        return new AlbumAdapter(itemView, context);
+        return new MyViewHolder(itemView, context);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AlbumAdapter holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.bind(albumList.get(position));
     }
 
@@ -40,12 +47,12 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.AlbumAdapt
         return albumList.size();
     }
 
-    public class AlbumAdapter extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder {
         private Context context;
         private ImageView thumbnail_artists;
         private TextView tv_singer_artists, quantity_songs_artists, quantity_albums_artists;
 
-        public AlbumAdapter(@NonNull View itemView, Context context) {
+        public MyViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
             this.context = context;
 
@@ -60,6 +67,15 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.AlbumAdapt
             tv_singer_artists.setText(album.getSinger());
             quantity_songs_artists.setText(String.valueOf(album.getQuantity_songs()));
             quantity_albums_artists.setText(String.valueOf(album.getQuantity_albums()));
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    if (listener != null && position != RecyclerView.NO_POSITION)
+                        listener.onItemClick(albumList.get(position));
+                }
+            });
         }
     }
 }
