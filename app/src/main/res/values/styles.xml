@@ -83,4 +83,9 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/tv_button_album_details</item>
     </style>
+
+    <style name="tv_action_now_playing">
+        <item name="android:textSize">@dimen/tv_action_now_playing</item>
+        <item name="android:textColor">@color/tv_details_now_playing</item>
+    </style>
 </resources>

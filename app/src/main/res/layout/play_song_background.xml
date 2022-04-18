@@ -4,14 +4,12 @@
     android:id="@+id/play_song_background"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="300dp"
-    android:background="@color/play_song"
-    app:layout_constraintBottom_toBottomOf="parent">
+    android:background="@color/play_song">
 
     <SeekBar
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="@drawable/gradient_color"
+        android:progressDrawable="@drawable/gradient_color"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout

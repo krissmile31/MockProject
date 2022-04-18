@@ -1,5 +1,14 @@
 package com.krissmile31.mockproject.songs.tab.allsongs.adapter;
 
+import static com.krissmile31.mockproject.services.PlaySongService.mediaPlayer;
+import static com.krissmile31.mockproject.services.PlaySongService.pauseMusic;
+import static com.krissmile31.mockproject.services.PlaySongService.releaseMusic;
+import static com.krissmile31.mockproject.services.PlaySongService.resumeMusic;
+import static com.krissmile31.mockproject.services.PlaySongService.songPlaying;
+import static com.krissmile31.mockproject.services.boundservice.ServiceConnection.isConnected;
+import static com.krissmile31.mockproject.services.boundservice.ServiceConnection.playSongService;
+import static com.krissmile31.mockproject.services.boundservice.ServiceConnection.serviceConnection;
+
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -23,7 +32,7 @@ import com.krissmile31.mockproject.songs.tab.allsongs.AllSongsFragment;
 import java.util.List;
 
 public class AllSongsAdapter extends RecyclerView.Adapter<AllSongsAdapter.MyViewHolder> {
-    private List<Album> albumList;
+    private final List<Album> albumList;
     private OnItemClickListener listener;
 
     public AllSongsAdapter(List<Album> albumList) {
@@ -54,10 +63,11 @@ public class AllSongsAdapter extends RecyclerView.Adapter<AllSongsAdapter.MyView
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        private Context context;
-        private ImageView img_all_songs;
-        private TextView tv_all_songs, tv_all_singer;
-        private ImageView play_song;
+        private final Context context;
+        private final ImageView img_all_songs;
+        private final TextView tv_all_songs;
+        private final TextView tv_all_singer;
+        private final ImageView play_song;
         private PlaySongService playSongService;
         private boolean isConnected;
 
@@ -79,8 +89,8 @@ public class AllSongsAdapter extends RecyclerView.Adapter<AllSongsAdapter.MyView
             play_song.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    play_song.setImageResource(R.drawable.ic_pause_gradie);
-                    AllSongsFragment.playSongBackground.setVisibility(View.VISIBLE);
+//                    play_song.setImageResource(R.drawable.ic_pause_gradie);
+//                    AllSongsFragment.playSongBackground.setVisibility(View.VISIBLE);
                     int position = getAdapterPosition();
                     if (listener != null && position != RecyclerView.NO_POSITION) {
                         listener.onItemClick(albumList.get(position));
@@ -89,7 +99,20 @@ public class AllSongsAdapter extends RecyclerView.Adapter<AllSongsAdapter.MyView
                     Intent intent = new Intent(context, PlaySongService.class);
                     intent.putExtra("song_details", album);
 
-                    // started
+                    releaseMusic();
+
+//                    if (playSongService == null)
+//                        return;
+//                    if (playSongService.songPlaying) {
+//                        playSongService.pauseMusic();
+//                        play_song.setImageResource(R.drawable.ic_pause_gradie);
+//                    }
+//                    else {
+//                        playSongService.resumeMusic();
+//                        play_song.setImageResource(R.drawable.ic_played);
+//                    }
+
+                        // started
                     context.startService(intent);
 
                     // bound service
@@ -130,8 +153,4 @@ public class AllSongsAdapter extends RecyclerView.Adapter<AllSongsAdapter.MyView
         };
 
     }
-
-//    public interface OnPlayClickListener {
-//        void onClick (Album album);
-//    }
 }

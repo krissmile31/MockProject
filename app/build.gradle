@@ -38,4 +38,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation "androidx.media:media:1.5.0"
 //    https://developer.android.com/jetpack/androidx/releases/media#groovy
+    implementation 'me.tankery.lib:circularSeekBar:1.3.2'
 }

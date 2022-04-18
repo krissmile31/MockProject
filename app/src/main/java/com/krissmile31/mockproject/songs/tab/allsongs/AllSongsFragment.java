@@ -1,5 +1,11 @@
 package com.krissmile31.mockproject.songs.tab.allsongs;
 
+import static com.krissmile31.mockproject.MainActivity.playSongBackground;
+import static com.krissmile31.mockproject.MainActivity.play_background;
+import static com.krissmile31.mockproject.MainActivity.thumbnail_play_song;
+import static com.krissmile31.mockproject.MainActivity.tv_singer_background;
+import static com.krissmile31.mockproject.MainActivity.tv_song_background;
+
 import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -14,8 +20,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.krissmile31.mockproject.MainActivity;
 import com.krissmile31.mockproject.R;
 import com.krissmile31.mockproject.interfaces.OnItemClickListener;
+import com.krissmile31.mockproject.nowplaying.NowPlayingFragment;
 import com.krissmile31.mockproject.services.PlaySongService;
 import com.krissmile31.mockproject.songs.MusicFragment;
 import com.krissmile31.mockproject.songs.tab.allsongs.adapter.AllSongsAdapter;
@@ -28,9 +36,6 @@ public class AllSongsFragment extends Fragment {
     private RecyclerView rcl_all_songs;
     private AllSongsAdapter allSongsAdapter;
     private List<Album> albumList;
-    public static ConstraintLayout playSongBackground;
-    private ImageView thumbnail_play_song, play_background, exit_play_song_background;
-    private TextView tv_song_background, tv_singer_background;
 
     public AllSongsFragment() {
         // Required empty public constructor
@@ -43,12 +48,6 @@ public class AllSongsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_all_songs, container, false);
         rcl_all_songs = view.findViewById(R.id.rcl_all_songs);
-        playSongBackground = view.findViewById(R.id.play_song_background);
-        thumbnail_play_song = view.findViewById(R.id.thumbnail_play_song);
-        tv_song_background = view.findViewById(R.id.tv_song_background);
-        tv_singer_background = view.findViewById(R.id.tv_singer_background);
-        play_background = view.findViewById(R.id.play_background);
-        exit_play_song_background = view.findViewById(R.id.exit_play_song_background);
 
         albumList = new ArrayList<>();
         albumList.add(new Album(R.drawable.billie_jean, "Billie Jean", "Michael Jackson", R.raw.heather));
@@ -65,12 +64,7 @@ public class AllSongsFragment extends Fragment {
         rcl_all_songs.setAdapter(allSongsAdapter);
         rcl_all_songs.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        exit_play_song_background.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                playSongBackground.setVisibility(View.GONE);
-            }
-        });
+
 
         return view;
     }
@@ -78,19 +72,26 @@ public class AllSongsFragment extends Fragment {
     OnItemClickListener listener = new OnItemClickListener() {
         @Override
         public void onItemClick(Album album) {
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("play_song_details", album);
-//            MusicFragment musicFragment = new MusicFragment();
-//            musicFragment.setArguments(bundle);
-//
-//            MusicFragment.playSongBackground.setVisibility(View.VISIBLE);
+
+            playSongBackground.setVisibility(View.VISIBLE);
             thumbnail_play_song.setImageResource(album.getThumbnail());
             tv_song_background.setText(album.getSong());
             tv_singer_background.setText(album.getSinger());
 
             play_background.setImageResource(R.drawable.ic_pause_empty);
 
+            playSongBackground.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("play_song_details", album);
+                    NowPlayingFragment nowPlayingFragment = new NowPlayingFragment();
+                    nowPlayingFragment.setArguments(bundle);
 
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.drawLayout, nowPlayingFragment).addToBackStack("now_playing").commit();
+
+                }
+            });
         }
     };
 }

@@ -55,6 +55,12 @@
     <dimen name="text_genres">15sp</dimen>
     <dimen name="details_genres">10sp</dimen>
 
+<!--    now playing-->
+    <dimen name="tv_now_playing">17sp</dimen>
+    <dimen name="tv_details_now_playing">12sp</dimen>
+    <dimen name="tv_song_now_playing">18sp</dimen>
+    <dimen name="tv_action_now_playing">9sp</dimen>
+
 <!--    setting-->
     <dimen name="text_settings">17sp</dimen>
     <dimen name="text_setting_item">14sp</dimen>

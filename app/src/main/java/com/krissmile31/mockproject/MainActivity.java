@@ -6,7 +6,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -16,13 +15,15 @@ import android.widget.TextView;
 
 import com.krissmile31.mockproject.home.HomeFragment;
 import com.krissmile31.mockproject.interfaces.OnBackPressedListener;
+import com.krissmile31.mockproject.interfaces.OnItemClickListener;
+import com.krissmile31.mockproject.models.Album;
 import com.krissmile31.mockproject.songs.MusicFragment;
 import com.krissmile31.mockproject.settings.SettingFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
-import com.krissmile31.mockproject.songs.tab.albums.AlbumsFragment;
-import com.krissmile31.mockproject.songs.tab.albums.albumdetails.AlbumDetailsFragment;
+import com.krissmile31.mockproject.nowplaying.NowPlayingFragment;
+import com.krissmile31.mockproject.songs.tab.allsongs.AllSongsFragment;
 
 public class MainActivity extends AppCompatActivity implements OnBackPressedListener {
 
@@ -31,8 +32,8 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
     private DrawerLayout mDrawerLayout;
     private ImageView mMenuSideBar;
     public static ConstraintLayout playSongBackground;
-    private ImageView thumbnail_play_song, play_background, exit_play_song_background;
-    private TextView tv_song_background, tv_singer_background;
+    public static ImageView thumbnail_play_song, play_background, exit_play_song_background;
+    public static TextView tv_song_background, tv_singer_background;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +84,23 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
                 return false;
             }
         });
+
+//        // play_song_background_mini_bar
+//        playSongBackground.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                getSupportFragmentManager().beginTransaction().replace(R.id.drawLayout, new NowPlayingFragment()).addToBackStack("now_playing").commit();
+//
+//            }
+//        });
+
+        exit_play_song_background.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                playSongBackground.setVisibility(View.GONE);
+            }
+        });
     }
 
     public void replaceFragment(Fragment fragment) {
@@ -102,4 +120,5 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
     public void onBackStackPressed() {
         super.onBackPressed();
     }
+
 }

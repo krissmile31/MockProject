@@ -25,11 +25,6 @@ public class MusicFragment extends Fragment {
     private ViewPager2 mViewPager;
     private MusicFragmentAdapter mMusicFragmentAdapter;
 
-    public static ConstraintLayout playSongBackground;
-    private ImageView thumbnail_play_song, play_background, exit_play_song_background;
-    private TextView tv_song_background, tv_singer_background;
-
-
     public MusicFragment() {
         // Required empty public constructor
     }
@@ -41,14 +36,6 @@ public class MusicFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_music, container, false);
         mTabLayout = view.findViewById(R.id.tabLayout);
         mViewPager = view.findViewById(R.id.viewPager);
-
-        playSongBackground = view.findViewById(R.id.play_song_background);
-        thumbnail_play_song = view.findViewById(R.id.thumbnail_play_song);
-//        tv_song_background = view.findViewById(R.id.tv_song_background);
-//        tv_singer_background = view.findViewById(R.id.tv_singer_background);
-//        play_background = view.findViewById(R.id.play_background);
-        exit_play_song_background = view.findViewById(R.id.exit_play_song_background);
-
 
         mMusicFragmentAdapter = new MusicFragmentAdapter(this);
         mViewPager.setAdapter(mMusicFragmentAdapter);
@@ -79,15 +66,6 @@ public class MusicFragment extends Fragment {
                 }
             }
         }).attach();
-
-//        Bundle bundle = this.getArguments();
-//        Album album = (Album) bundle.get("play_song_details");
-//        thumbnail_play_song.setImageResource(album.getThumbnail());
-//        tv_song_background.setText(album.getSong());
-//        tv_singer_background.setText(album.getSinger());
-//
-//        play_background.setImageResource(R.drawable.ic_pause_empty);
-
 
         return view;
     }

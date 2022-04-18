@@ -37,4 +37,7 @@
     <color name="tv_color_artist_details">#EEEEEE</color>
     <color name="tv_view_all">#ED8770</color>
     
+<!--    now playing-->
+    <color name="tv_details_now_playing">#C1C0C0</color>
+    
 </resources>

@@ -26,9 +26,9 @@ import com.krissmile31.mockproject.songs.tab.allsongs.AllSongsFragment;
 import com.krissmile31.mockproject.songs.tab.allsongs.adapter.AllSongsAdapter;
 
 public class PlaySongService extends Service {
-    private MediaPlayer mediaPlayer;
-    private Album getSong;
-    private boolean songPlaying;
+    public static MediaPlayer mediaPlayer;
+    private static Album getSong;
+    public static boolean songPlaying;
 
     public static final String BROADCAST_RECEIVER = "broadcast_receiver";
     public static final String TAG = PlaySongService.class.getSimpleName();
@@ -157,19 +157,13 @@ public class PlaySongService extends Service {
     private void handleActionControlSong(int action) {
         switch (action) {
             case PAUSE:
-                if (mediaPlayer != null && songPlaying) {
-                    mediaPlayer.pause();
-                    songPlaying = false;
-                    sendNotification(getSong);
-                }
+                pauseMusic();
+                sendNotification(getSong);
                 break;
 
             case RESUME:
-                if (mediaPlayer != null && !songPlaying) {
-                    mediaPlayer.start();
-                    songPlaying = true;
-                    sendNotification(getSong);
-                }
+                resumeMusic();
+                sendNotification(getSong);
                 break;
 
             case EXIT:
@@ -180,11 +174,32 @@ public class PlaySongService extends Service {
         }
     }
 
+    public static void pauseMusic() {
+        if (mediaPlayer != null && songPlaying) {
+            mediaPlayer.pause();
+            songPlaying = false;
+
+        }
+    }
+
+    public static void resumeMusic() {
+        if (mediaPlayer != null && !songPlaying) {
+            mediaPlayer.start();
+            songPlaying = true;
+        }
+    }
+
+
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "onDestroy()");
 
+        releaseMusic();
+    }
+
+    public static void releaseMusic() {
         if (mediaPlayer != null) {
             mediaPlayer.release();
             mediaPlayer = null;

@@ -37,19 +37,27 @@
     <string name="song_favourites">966 Songs</string>
     <string name="my_playlists">My Playlists</string>
 
-<!--    album details-->
+    <!--    album details-->
     <string name="album_details">Album Details</string>
     <string name="play">Play</string>
     <string name="share">Share</string>
     <string name="favourite">Add to Favourites</string>
 
-<!--    artist details-->
+    <!--    artist details-->
     <string name="artist_details">Artist Details</string>
     <string name="followers">Followers</string>
     <string name="listeners">Listeners</string>
     <string name="follow">Follow</string>
     <string name="top_album">Top Albums</string>
     <string name="top_song">Top Songs</string>
+
+    <!--    now playing-->
+    <string name="now_playing">Now Playing</string>
+    <string name="playlist_now_playing">Playlist</string>
+    <string name="shuffle_now_playing">Shuffle</string>
+    <string name="repeat_now_playing">Repeat</string>
+    <string name="eq_now_playing">EQ</string>
+    <string name="favourites_now_playing">Favourites</string>
 
     <!--    setting-->
     <string name="setting">Settings</string>
