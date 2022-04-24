@@ -39,6 +39,8 @@
                 android:id="@+id/tv_all_songs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="Billie Jean"
                 android:textColor="@color/white"
                 android:textSize="13sp" />

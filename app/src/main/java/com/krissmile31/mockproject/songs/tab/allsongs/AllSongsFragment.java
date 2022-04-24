@@ -28,7 +28,7 @@ import static com.krissmile31.mockproject.MainActivity.albumList;
 
 public class AllSongsFragment extends Fragment {
     private RecyclerView rcl_all_songs;
-    private AllSongsAdapter allSongsAdapter;
+    public static AllSongsAdapter allSongsAdapter;
     public static OnShowMusic onShowMusic;
 
     public AllSongsFragment() {
@@ -55,7 +55,10 @@ public class AllSongsFragment extends Fragment {
 
 //        Log.e(TAG, "onCreateView: " + albumList );
 
-        onShowMusic = (MainActivity) getActivity();
+        onShowMusic = (OnShowMusic) getContext();
+        if (onShowMusic != null) {
+            onShowMusic.displaySongs();
+        }
         allSongsAdapter = new AllSongsAdapter(albumList, listener);
         rcl_all_songs.setAdapter(allSongsAdapter);
         rcl_all_songs.setLayoutManager(new LinearLayoutManager(getContext()));

@@ -40,7 +40,12 @@ import com.krissmile31.mockproject.songs.MusicFragment;
 import com.krissmile31.mockproject.songs.tab.allsongs.AllSongsFragment;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+
+import static com.krissmile31.mockproject.songs.tab.allsongs.AllSongsFragment.allSongsAdapter;
 
 public class MainActivity extends AppCompatActivity implements OnBackPressedListener, OnShowMusic, LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -82,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
             }
         });
 
-        displaySongs();
+//        displaySongs();
 
         replaceFragment(new HomeFragment());
 
@@ -137,21 +142,28 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
 
     @Override
     public void displaySongs() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                        != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[] {
-                        Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE
-                }, 0);
-            }
-        }
-
         if (!isLoaded) {
             isLoaded = true;
             getLoaderManager().initLoader(0, null, this);
         }
         else
             getLoaderManager().initLoader(0, null, this);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        Log.e(TAG, "onRequestPermissionsResult: " );
+
+        if (requestCode == 0) {
+            for (int i = 0; i < permissions.length; i++) {
+                if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                    displaySongs();
+                    return;
+                }
+            }
+        }
     }
 
     @Override
@@ -179,10 +191,19 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
                         cursor.getLong((int) cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID)));
 
                 albumList.add(new Album(id, song, singer, thumbnail.toString(), data.toString()));
-//                Log.e(TAG, "onLoadFinished: " + albumList);
-
+//                Log.e(TAG, "onLoadFinished: " +
             }
         }
+
+        Collections.sort(albumList, new Comparator<Album>() {
+            @Override
+            public int compare(Album album_first, Album album_second) {
+                return album_first.getSong().compareTo(album_second.getSong());
+            }
+        });
+
+        allSongsAdapter.notifyDataSetChanged();
+
     }
 
     @Override
