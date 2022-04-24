@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.krissmile31.mockproject.R;
 import com.krissmile31.mockproject.songs.tab.playlists.adapter.MyPlaylistsAdapter;
-import com.krissmile31.mockproject.models.Album;
+import com.krissmile31.mockproject.model.Album;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;

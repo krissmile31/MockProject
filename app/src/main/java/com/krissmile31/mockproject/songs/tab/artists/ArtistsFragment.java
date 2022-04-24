@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.krissmile31.mockproject.R;
 import com.krissmile31.mockproject.interfaces.OnItemClickListener;
-import com.krissmile31.mockproject.models.Album;
+import com.krissmile31.mockproject.model.Album;
 import com.krissmile31.mockproject.songs.tab.artists.adapter.ArtistAdapter;
 import com.krissmile31.mockproject.songs.tab.artists.artistdetails.ArtistDetailsFragment;
 

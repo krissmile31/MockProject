@@ -12,8 +12,8 @@
         android:layout_marginRight="@dimen/margin_layout">
         <ImageView
             android:id="@+id/img_all_songs"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
             android:src="@drawable/billie_jean" />
 
         <ImageView

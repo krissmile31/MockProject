@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.krissmile31.mockproject.R;
-import com.krissmile31.mockproject.models.Album;
+import com.krissmile31.mockproject.model.Album;
 import com.krissmile31.mockproject.songs.tab.genres.adapter.GenresAdapter;
 
 import java.util.ArrayList;

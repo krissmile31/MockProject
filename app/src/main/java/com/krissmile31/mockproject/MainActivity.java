@@ -1,31 +1,49 @@
 package com.krissmile31.mockproject;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
+import static com.krissmile31.mockproject.songs.tab.allsongs.AllSongsFragment.onShowMusic;
 
+import android.Manifest;
+import android.app.LoaderManager;
+import android.content.ContentUris;
+import android.content.CursorLoader;
+import android.content.Loader;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.krissmile31.mockproject.home.HomeFragment;
-import com.krissmile31.mockproject.interfaces.OnBackPressedListener;
-import com.krissmile31.mockproject.interfaces.OnItemClickListener;
-import com.krissmile31.mockproject.models.Album;
-import com.krissmile31.mockproject.songs.MusicFragment;
-import com.krissmile31.mockproject.settings.SettingFragment;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
-import com.krissmile31.mockproject.nowplaying.NowPlayingFragment;
+import com.krissmile31.mockproject.home.HomeFragment;
+import com.krissmile31.mockproject.interfaces.OnBackPressedListener;
+import com.krissmile31.mockproject.interfaces.OnShowMusic;
+import com.krissmile31.mockproject.model.Album;
+import com.krissmile31.mockproject.settings.SettingFragment;
+import com.krissmile31.mockproject.songs.MusicFragment;
 import com.krissmile31.mockproject.songs.tab.allsongs.AllSongsFragment;
 
-public class MainActivity extends AppCompatActivity implements OnBackPressedListener {
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements OnBackPressedListener, OnShowMusic, LoaderManager.LoaderCallbacks<Cursor> {
 
     private BottomNavigationView mBottomNavigationView;
     private NavigationView mNavigationView;
@@ -34,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
     public static ConstraintLayout playSongBackground;
     public static ImageView thumbnail_play_song, play_background, exit_play_song_background;
     public static TextView tv_song_background, tv_singer_background;
+    private boolean isLoaded;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,15 +104,6 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
             }
         });
 
-//        // play_song_background_mini_bar
-//        playSongBackground.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                getSupportFragmentManager().beginTransaction().replace(R.id.drawLayout, new NowPlayingFragment()).addToBackStack("now_playing").commit();
-//
-//            }
-//        });
 
         exit_play_song_background.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
 
     public void replaceFragment(Fragment fragment) {
 //        FragmentManager fragmentManager = getSupportFragmentManager();
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fragment).addToBackStack("bottom_nav").commit();
     }
 
     @Override
@@ -121,4 +131,67 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
         super.onBackPressed();
     }
 
+
+
+    @Override
+    public void displaySongs() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[] {
+                        Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE
+                }, 0);
+            }
+        }
+
+        if (!isLoaded) {
+            isLoaded = true;
+            getLoaderManager().initLoader(0, null, this);
+        }
+        else
+            getLoaderManager().initLoader(0, null, this);
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+        if (i == 0) {
+            return new CursorLoader(this, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                    null,
+                    null,
+                    null,
+                    null);
+        }
+        return null;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        if (cursor != null && cursor.moveToFirst()) {
+            while (cursor.moveToNext()) {
+                long id = cursor.getLong((int) cursor.getColumnIndex(MediaStore.Audio.Media._ID));
+                String song = cursor.getString((int) cursor.getColumnIndex(MediaStore.Audio.Media.TITLE));
+                String singer = cursor.getString((int) cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
+
+                Uri data = Uri.parse(cursor.getString((int) cursor.getColumnIndex(MediaStore.Audio.Media.DATA)));
+                Uri thumbnail = ContentUris.withAppendedId(Uri.parse("content://media/external/audio/albumart"),
+                        cursor.getLong((int) cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID)));
+
+//                Log.e("TAG", "onLoadFinished: " + data);
+                AllSongsFragment.albumList.add(new Album(id, song, singer, thumbnail.toString(), data.toString()));
+
+                Log.e("TAG", "onLoadFinished: " + AllSongsFragment.albumList);
+
+                Bundle bundle = new Bundle();
+//                bundle.putSerializable("show_music", (Serializable) a);
+                new AllSongsFragment().setArguments(bundle);
+//                getSupportFragmentManager().beginTransaction().replace(R.id.viewPager, new AllSongsFragment()).addToBackStack("show").commit();
+
+            }
+        }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+
+    }
 }

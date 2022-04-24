@@ -1,8 +1,13 @@
-package com.krissmile31.mockproject.models;
+package com.krissmile31.mockproject.model;
+
+import android.net.Uri;
 
 import java.io.Serializable;
 
 public class Album implements Serializable {
+    private long id;
+    private String image;
+    private String data;
     private int thumbnail;
     private String song;
     private String singer;
@@ -64,6 +69,60 @@ public class Album implements Serializable {
         this.thumbnail = thumbnail;
         this.albumName = albumName;
         this.year = year;
+    }
+
+    public Album(long id, int thumbnail, String song, String singer) {
+        this.id = id;
+        this.thumbnail = thumbnail;
+        this.song = song;
+        this.singer = singer;
+    }
+
+    public Album(long id, String song, String singer) {
+        this.id = id;
+        this.image = image;
+        this.data = data;
+        this.song = song;
+        this.singer = singer;
+    }
+
+    public Album(long id, String song, String singer, String image, String data) {
+        this.id = id;
+        this.image = image;
+        this.data = data;
+        this.song = song;
+        this.singer = singer;
+    }
+
+    public Album(long id, String song, String singer, String data) {
+        this.id = id;
+        this.data = data;
+        this.song = song;
+        this.singer = singer;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
     }
 
     public int getThumbnail() {

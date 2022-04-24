@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.krissmile31.mockproject.R;
 import com.krissmile31.mockproject.interfaces.OnItemClickListener;
-import com.krissmile31.mockproject.models.Album;
+import com.krissmile31.mockproject.model.Album;
 
 import java.util.List;
 

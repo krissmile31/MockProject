@@ -70,8 +70,8 @@
 
                 <ImageView
                     android:id="@+id/thumbnail_play_song"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
                     android:src="@drawable/billie_jean" />
 
                 <LinearLayout
@@ -156,7 +156,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:visibility="gone"
+        android:visibility="visible"
         android:background="@color/side_bar_background"
         app:headerLayout="@layout/header_nav"
         app:itemTextColor="@color/white"

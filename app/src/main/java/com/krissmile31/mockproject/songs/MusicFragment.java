@@ -4,21 +4,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.krissmile31.mockproject.R;
-import com.krissmile31.mockproject.interfaces.OnItemClickListener;
-import com.krissmile31.mockproject.models.Album;
 import com.krissmile31.mockproject.songs.tab.MusicFragmentAdapter;
-import com.krissmile31.mockproject.songs.tab.allsongs.AllSongsFragment;
 
 public class MusicFragment extends Fragment {
     private TabLayout mTabLayout;

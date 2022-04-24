@@ -7,23 +7,26 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.util.Log;
-import android.widget.RemoteViews;
+import android.widget.ImageView;
 
 import androidx.core.app.NotificationCompat;
 
 import com.krissmile31.mockproject.LogUtils;
 import com.krissmile31.mockproject.MainActivity;
 import com.krissmile31.mockproject.R;
-import com.krissmile31.mockproject.models.Album;
+import com.krissmile31.mockproject.model.Album;
 import com.krissmile31.mockproject.services.BroadcastReceiver.SongReceiver;
-import com.krissmile31.mockproject.songs.tab.allsongs.AllSongsFragment;
-import com.krissmile31.mockproject.songs.tab.allsongs.adapter.AllSongsAdapter;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 public class PlaySongService extends Service {
     public static MediaPlayer mediaPlayer;
@@ -110,8 +113,11 @@ public class PlaySongService extends Service {
     }
 
     private void playMusic(Album album) {
-        if (mediaPlayer == null)
-            mediaPlayer = MediaPlayer.create(getApplicationContext(), album.getMusic());
+        if (mediaPlayer == null) {
+//            mediaPlayer = MediaPlayer.create(getApplicationContext(), Uri.parse(album.getData()));
+            mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.ifiaintgotu);
+
+        }
         mediaPlayer.start();
     }
 
@@ -125,11 +131,30 @@ public class PlaySongService extends Service {
                 .setContentTitle(album.getSong())
                 .setContentText(album.getSinger())
                 .setContentIntent(pendingIntent)
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(), album.getThumbnail()))
+//                .setLargeIcon(BitmapFactory.decodeResource(getResources(), album.getThumbnail()))
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.logo))
                 .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
                             .setShowActionsInCompactView(0, 1, 2)
                             .setMediaSession(new MediaSessionCompat(this, "Play Music").getSessionToken()))
                 .addAction(R.drawable.ic_baseline_skip_previous_24, "Previous", null);
+
+        Picasso.get().load(album.getImage()).into(new Target() {
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+//                Log.d(TAG, "onBitmapLoaded: " + bitmap);
+                notificationCompat.setLargeIcon(bitmap);
+            }
+
+            @Override
+            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+            }
+        });
 
         if (songPlaying) {
             notificationCompat.addAction(R.drawable.ic_baseline_pause_24, "Pause", getPendingIntent(this, PAUSE))

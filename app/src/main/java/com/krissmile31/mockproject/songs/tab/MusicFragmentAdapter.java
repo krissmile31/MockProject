@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.krissmile31.mockproject.interfaces.OnShowMusic;
 import com.krissmile31.mockproject.songs.tab.albums.AlbumsFragment;
 import com.krissmile31.mockproject.songs.tab.allsongs.AllSongsFragment;
 import com.krissmile31.mockproject.songs.tab.artists.ArtistsFragment;
@@ -14,6 +15,7 @@ import com.krissmile31.mockproject.songs.tab.genres.GenresFragment;
 import com.krissmile31.mockproject.songs.tab.playlists.PlaylistsFragment;
 
 public class MusicFragmentAdapter extends FragmentStateAdapter {
+
     public MusicFragmentAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }

@@ -17,7 +17,7 @@ import com.krissmile31.mockproject.R;
 import com.krissmile31.mockproject.home.adapters.HotRecommendedAdapter;
 import com.krissmile31.mockproject.home.adapters.PlaylistAdapter;
 import com.krissmile31.mockproject.home.adapters.RecentlyPlayedAdapter;
-import com.krissmile31.mockproject.models.Album;
+import com.krissmile31.mockproject.model.Album;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;

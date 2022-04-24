@@ -1,13 +1,6 @@
 package com.krissmile31.mockproject.songs.tab.allsongs.adapter;
 
-import static com.krissmile31.mockproject.services.PlaySongService.mediaPlayer;
-import static com.krissmile31.mockproject.services.PlaySongService.pauseMusic;
 import static com.krissmile31.mockproject.services.PlaySongService.releaseMusic;
-import static com.krissmile31.mockproject.services.PlaySongService.resumeMusic;
-import static com.krissmile31.mockproject.services.PlaySongService.songPlaying;
-import static com.krissmile31.mockproject.services.boundservice.ServiceConnection.isConnected;
-import static com.krissmile31.mockproject.services.boundservice.ServiceConnection.playSongService;
-import static com.krissmile31.mockproject.services.boundservice.ServiceConnection.serviceConnection;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -25,9 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.krissmile31.mockproject.R;
 import com.krissmile31.mockproject.interfaces.OnItemClickListener;
-import com.krissmile31.mockproject.models.Album;
+import com.krissmile31.mockproject.model.Album;
 import com.krissmile31.mockproject.services.PlaySongService;
-import com.krissmile31.mockproject.songs.tab.allsongs.AllSongsFragment;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -82,7 +75,9 @@ public class AllSongsAdapter extends RecyclerView.Adapter<AllSongsAdapter.MyView
         }
 
         public void bind(Album album) {
-            img_all_songs.setImageResource(album.getThumbnail());
+//            img_all_songs.setImageResource(album.getThumbnail());
+            Picasso.get().load(album.getImage()).placeholder(R.drawable.ic_logo)
+                    .error(R.drawable.ic_logo).fit().into(img_all_songs);
             tv_all_songs.setText(album.getSong());
             tv_all_singer.setText(album.getSinger());
 

@@ -13,8 +13,9 @@ import android.widget.TextView;
 import com.krissmile31.mockproject.MainActivity;
 import com.krissmile31.mockproject.R;
 import com.krissmile31.mockproject.interfaces.OnBackPressedListener;
-import com.krissmile31.mockproject.models.Album;
+import com.krissmile31.mockproject.model.Album;
 import com.krissmile31.mockproject.services.PlaySongService;
+import com.squareup.picasso.Picasso;
 
 import me.tankery.lib.circularseekbar.CircularSeekBar;
 
@@ -48,7 +49,8 @@ public class NowPlayingFragment extends Fragment {
 
         Bundle bundle = this.getArguments();
         Album album = (Album) bundle.get("play_song_details");
-        thumbnail_now_playing.setImageResource(album.getThumbnail());
+//        thumbnail_now_playing.setImageResource(album.getThumbnail());
+        Picasso.get().load(album.getImage()).placeholder(R.drawable.ic_logo).into(thumbnail_now_playing);
         tv_song_now_playing.setText(album.getSong());
         tv_singer_now_playing.setText(album.getSinger());
 
