@@ -6,42 +6,28 @@ import static com.krissmile31.mockproject.MainActivity.thumbnail_play_song;
 import static com.krissmile31.mockproject.MainActivity.tv_singer_background;
 import static com.krissmile31.mockproject.MainActivity.tv_song_background;
 
-import android.Manifest;
-import android.app.Activity;
-import android.content.Context;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.krissmile31.mockproject.MainActivity;
 import com.krissmile31.mockproject.R;
-import com.krissmile31.mockproject.interfaces.OnShowMusic;
 import com.krissmile31.mockproject.interfaces.OnItemClickListener;
+import com.krissmile31.mockproject.interfaces.OnShowMusic;
 import com.krissmile31.mockproject.model.Album;
 import com.krissmile31.mockproject.nowplaying.NowPlayingFragment;
 import com.krissmile31.mockproject.songs.tab.allsongs.adapter.AllSongsAdapter;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-import java.util.List;
+import static com.krissmile31.mockproject.MainActivity.albumList;
 
 public class AllSongsFragment extends Fragment {
     private RecyclerView rcl_all_songs;
     private AllSongsAdapter allSongsAdapter;
-    public static List<Album> albumList = new ArrayList<>();
-    public static OnShowMusic onShowMusic;
 
     public AllSongsFragment() {
         // Required empty public constructor
@@ -64,23 +50,8 @@ public class AllSongsFragment extends Fragment {
 //        albumList.add(new Album(R.drawable.somebody_usedto_know, "Somebody that I used to know", "Gotye", R.raw.pricetag));
 //        albumList.add(new Album(R.drawable.wild_thoughts, "Wild Thoughts", "Michael Jackson", R.raw.theonethatgotaway));
 
-        onShowMusic = (OnShowMusic) getContext();
-        if (onShowMusic != null) {
-            onShowMusic.displaySongs();
-        }
 
-//        Bundle bundle = this.getArguments();
-//        if (bundle != null) {
-////            Album album = (Album) bundle.get("show_music");
-////
-////            if (album != null)
-////                albumList.add(album);
-//            albumList = (List<Album>) bundle.get("show_music");
-//        }
-
-//        Log.e("TAG", "onCreateView: " + displaySongs);
-        Log.e("TAG", "onCreateView: " + albumList);
-
+//        Log.e(TAG, "onCreateView: " + albumList );
         allSongsAdapter = new AllSongsAdapter(albumList, listener);
         rcl_all_songs.setAdapter(allSongsAdapter);
         rcl_all_songs.setLayoutManager(new LinearLayoutManager(getContext()));

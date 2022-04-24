@@ -1,7 +1,5 @@
 package com.krissmile31.mockproject;
 
-import static com.krissmile31.mockproject.songs.tab.allsongs.AllSongsFragment.onShowMusic;
-
 import android.Manifest;
 import android.app.LoaderManager;
 import android.content.ContentUris;
@@ -13,7 +11,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -37,9 +34,7 @@ import com.krissmile31.mockproject.interfaces.OnShowMusic;
 import com.krissmile31.mockproject.model.Album;
 import com.krissmile31.mockproject.settings.SettingFragment;
 import com.krissmile31.mockproject.songs.MusicFragment;
-import com.krissmile31.mockproject.songs.tab.allsongs.AllSongsFragment;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
     public static ImageView thumbnail_play_song, play_background, exit_play_song_background;
     public static TextView tv_song_background, tv_singer_background;
     private boolean isLoaded;
+    public static List<Album> albumList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
                         return true;
 
                     case R.id.music_nav:
+                        displaySongs();
                         replaceFragment(new MusicFragment());
                         return true;
 
@@ -176,15 +173,8 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
                 Uri thumbnail = ContentUris.withAppendedId(Uri.parse("content://media/external/audio/albumart"),
                         cursor.getLong((int) cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID)));
 
-//                Log.e("TAG", "onLoadFinished: " + data);
-                AllSongsFragment.albumList.add(new Album(id, song, singer, thumbnail.toString(), data.toString()));
+                albumList.add(new Album(id, song, singer, thumbnail.toString(), data.toString()));
 
-                Log.e("TAG", "onLoadFinished: " + AllSongsFragment.albumList);
-
-                Bundle bundle = new Bundle();
-//                bundle.putSerializable("show_music", (Serializable) a);
-                new AllSongsFragment().setArguments(bundle);
-//                getSupportFragmentManager().beginTransaction().replace(R.id.viewPager, new AllSongsFragment()).addToBackStack("show").commit();
 
             }
         }
