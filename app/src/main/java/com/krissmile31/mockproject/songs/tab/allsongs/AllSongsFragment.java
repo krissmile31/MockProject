@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.krissmile31.mockproject.MainActivity;
 import com.krissmile31.mockproject.R;
 import com.krissmile31.mockproject.interfaces.OnItemClickListener;
 import com.krissmile31.mockproject.interfaces.OnShowMusic;
@@ -28,6 +29,7 @@ import static com.krissmile31.mockproject.MainActivity.albumList;
 public class AllSongsFragment extends Fragment {
     private RecyclerView rcl_all_songs;
     private AllSongsAdapter allSongsAdapter;
+    public static OnShowMusic onShowMusic;
 
     public AllSongsFragment() {
         // Required empty public constructor
@@ -52,6 +54,8 @@ public class AllSongsFragment extends Fragment {
 
 
 //        Log.e(TAG, "onCreateView: " + albumList );
+
+        onShowMusic = (MainActivity) getActivity();
         allSongsAdapter = new AllSongsAdapter(albumList, listener);
         rcl_all_songs.setAdapter(allSongsAdapter);
         rcl_all_songs.setLayoutManager(new LinearLayoutManager(getContext()));

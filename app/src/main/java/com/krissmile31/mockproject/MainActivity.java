@@ -1,5 +1,7 @@
 package com.krissmile31.mockproject;
 
+import static android.content.ContentValues.TAG;
+
 import android.Manifest;
 import android.app.LoaderManager;
 import android.content.ContentUris;
@@ -11,6 +13,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -34,6 +37,7 @@ import com.krissmile31.mockproject.interfaces.OnShowMusic;
 import com.krissmile31.mockproject.model.Album;
 import com.krissmile31.mockproject.settings.SettingFragment;
 import com.krissmile31.mockproject.songs.MusicFragment;
+import com.krissmile31.mockproject.songs.tab.allsongs.AllSongsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,6 +82,8 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
             }
         });
 
+        displaySongs();
+
         replaceFragment(new HomeFragment());
 
         mBottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -89,7 +95,6 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
                         return true;
 
                     case R.id.music_nav:
-                        displaySongs();
                         replaceFragment(new MusicFragment());
                         return true;
 
@@ -174,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
                         cursor.getLong((int) cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID)));
 
                 albumList.add(new Album(id, song, singer, thumbnail.toString(), data.toString()));
-
+//                Log.e(TAG, "onLoadFinished: " + albumList);
 
             }
         }
