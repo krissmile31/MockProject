@@ -1,19 +1,15 @@
 package com.krissmile31.mockproject;
 
-import static android.content.ContentValues.TAG;
+import static com.krissmile31.mockproject.songs.tab.allsongs.AllSongsFragment.allSongsAdapter;
 
-import android.Manifest;
 import android.app.LoaderManager;
 import android.content.ContentUris;
 import android.content.CursorLoader;
 import android.content.Loader;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,8 +18,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -37,15 +31,11 @@ import com.krissmile31.mockproject.interfaces.OnShowMusic;
 import com.krissmile31.mockproject.model.Album;
 import com.krissmile31.mockproject.settings.SettingFragment;
 import com.krissmile31.mockproject.songs.MusicFragment;
-import com.krissmile31.mockproject.songs.tab.allsongs.AllSongsFragment;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-import static com.krissmile31.mockproject.songs.tab.allsongs.AllSongsFragment.allSongsAdapter;
 
 public class MainActivity extends AppCompatActivity implements OnBackPressedListener, OnShowMusic, LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -86,8 +76,6 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
                 mDrawerLayout.openDrawer(GravityCompat.START);
             }
         });
-
-//        displaySongs();
 
         replaceFragment(new HomeFragment());
 
@@ -139,7 +127,6 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
     }
 
 
-
     @Override
     public void displaySongs() {
         if (!isLoaded) {
@@ -148,22 +135,6 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
         }
         else
             getLoaderManager().initLoader(0, null, this);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        Log.e(TAG, "onRequestPermissionsResult: " );
-
-        if (requestCode == 0) {
-            for (int i = 0; i < permissions.length; i++) {
-                if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                    displaySongs();
-                    return;
-                }
-            }
-        }
     }
 
     @Override
