@@ -84,7 +84,7 @@ public class AllSongsAdapter extends RecyclerView.Adapter<AllSongsAdapter.MyView
             play_song.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    play_song.setImageResource(R.drawable.ic_pause_gradie);
+                    play_song.setImageResource(R.drawable.ic_pause_gradie);
 //                    AllSongsFragment.playSongBackground.setVisibility(View.VISIBLE);
                     int position = getAdapterPosition();
                     if (listener != null && position != RecyclerView.NO_POSITION) {

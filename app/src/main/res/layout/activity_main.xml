@@ -52,9 +52,9 @@
             android:id="@+id/play_song_background"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/play_song"
             android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@id/bottomNavigation"
-            android:background="@color/play_song">
+            app:layout_constraintBottom_toTopOf="@id/bottomNavigation">
 
             <SeekBar
                 android:layout_width="match_parent"
@@ -66,7 +66,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingVertical="10dp"
-                android:paddingStart="@dimen/padding_layout">
+                android:paddingStart="@dimen/padding_layout"
+                app:layout_constraintHorizontal_weight="3">
 
                 <ImageView
                     android:id="@+id/thumbnail_play_song"
@@ -75,60 +76,70 @@
                     android:src="@drawable/billie_jean" />
 
                 <LinearLayout
-                    android:id="@+id/tv_play_song_background"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/margin_layout"
-                    android:orientation="vertical"
+                    android:paddingHorizontal="@dimen/padding_layout"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/exit_play_song_background"
                     app:layout_constraintStart_toEndOf="@id/thumbnail_play_song"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
-                        style="@style/song"
-                        android:id="@+id/tv_song_background"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/tv_play_song_background"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Billie Jean" />
+                        android:layout_weight="2"
+                        android:orientation="vertical">
 
-                    <TextView
-                        style="@style/singer"
-                        android:id="@+id/tv_singer_background"
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:id="@+id/tv_song_background"
+                            style="@style/song"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="Billie Jean" />
+
+                        <TextView
+                            android:id="@+id/tv_singer_background"
+                            style="@style/singer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="Michael Jackson" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Michael Jackson" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="end"
-                    android:paddingStart="100dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/exit_play_song_background"
-                    app:layout_constraintStart_toEndOf="@id/tv_play_song_background"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_previous_song" />
+                        android:layout_marginStart="@dimen/margin_layout">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/play_background"
-                        android:paddingLeft="@dimen/padding_layout"
-                        android:paddingRight="@dimen/padding_layout"
-                        android:src="@drawable/ic_play_empty" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_previous_song" />
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_next_song" />
+                        <ImageView
+                            android:id="@+id/play_background"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingLeft="@dimen/padding_layout"
+                            android:paddingRight="@dimen/padding_layout"
+                            android:src="@drawable/ic_play_empty" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_next_song" />
+                    </LinearLayout>
                 </LinearLayout>
 
                 <ImageView
@@ -156,8 +167,8 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:visibility="visible"
         android:background="@color/side_bar_background"
+        android:visibility="visible"
         app:headerLayout="@layout/header_nav"
         app:itemTextColor="@color/white"
         app:menu="@menu/side_bar">

@@ -29,6 +29,7 @@ import com.krissmile31.mockproject.home.HomeFragment;
 import com.krissmile31.mockproject.interfaces.OnBackPressedListener;
 import com.krissmile31.mockproject.interfaces.OnShowMusic;
 import com.krissmile31.mockproject.model.Album;
+import com.krissmile31.mockproject.nowplaying.NowPlayingFragment;
 import com.krissmile31.mockproject.settings.SettingFragment;
 import com.krissmile31.mockproject.songs.MusicFragment;
 
@@ -106,6 +107,20 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
                 playSongBackground.setVisibility(View.GONE);
             }
         });
+
+
+//        String open = getIntent().getStringExtra("notification");
+//        if (open != null) {
+//            if (open.equals("open_now_playing")) {
+////                Bundle bundle = new Bundle();
+////                bundle.putSerializable("play_song_details", album);
+////                NowPlayingFragment nowPlayingFragment = new NowPlayingFragment();
+////                nowPlayingFragment.setArguments(bundle);
+//
+//                getSupportFragmentManager().beginTransaction().replace(R.id.drawLayout, new NowPlayingFragment()).addToBackStack("now_playing").commit();
+//
+//            }
+//        }
     }
 
     public void replaceFragment(Fragment fragment) {

@@ -13,6 +13,7 @@ import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Binder;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.util.Log;
@@ -24,6 +25,7 @@ import com.krissmile31.mockproject.LogUtils;
 import com.krissmile31.mockproject.MainActivity;
 import com.krissmile31.mockproject.R;
 import com.krissmile31.mockproject.model.Album;
+import com.krissmile31.mockproject.nowplaying.NowPlayingFragment;
 import com.krissmile31.mockproject.services.BroadcastReceiver.SongReceiver;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -123,6 +125,8 @@ public class PlaySongService extends Service {
 
     private void sendNotification(Album album) {
         Intent intent = new Intent(this, MainActivity.class);
+//        intent.putExtra("notification", "open_now_playing");
+
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder notificationCompat = new NotificationCompat.Builder(this, CHANNEL_ID)
