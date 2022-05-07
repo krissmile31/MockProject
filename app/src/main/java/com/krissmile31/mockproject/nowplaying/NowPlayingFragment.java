@@ -1,25 +1,21 @@
 package com.krissmile31.mockproject.nowplaying;
 
-import static com.krissmile31.mockproject.MainActivity.sBtnPlayBar;
-import static com.krissmile31.mockproject.services.PlaySongService.pauseMusic;
-import static com.krissmile31.mockproject.services.PlaySongService.resumeMusic;
-import static com.krissmile31.mockproject.services.PlaySongService.sSongPlaying;
+import static com.krissmile31.mockproject.MainActivity.setIconPlaying;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+
 import com.krissmile31.mockproject.MainActivity;
 import com.krissmile31.mockproject.R;
 import com.krissmile31.mockproject.interfaces.OnBackPressedListener;
 import com.krissmile31.mockproject.models.Song;
-import com.krissmile31.mockproject.services.PlaySongService;
 import com.squareup.picasso.Picasso;
 
 public class NowPlayingFragment extends Fragment {
@@ -37,9 +33,6 @@ public class NowPlayingFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_now_playing, container, false);
-//        circularSeekBar = view.findViewById(R.id.cicular_seek_bar);
-//        circularSeekBar.setMax(100);
-//        circularSeekBar.setProgress(0);
 
         mBtnBackNowPlaying = view.findViewById(R.id.btn_back_now_playing);
         mThumbnailNowPlaying = view.findViewById(R.id.thumbnail_now_playing);
@@ -49,14 +42,14 @@ public class NowPlayingFragment extends Fragment {
         mPlayNowPlaying = view.findViewById(R.id.play_now_playing);
         mNextNowPlaying = view.findViewById(R.id.next_now_playing);
 
-        Bundle bundle = this.getArguments();
-        Song song = (Song) bundle.get("play_song_details");
-//        thumbnail_now_playing.setImageResource(album.getThumbnail());
-        Picasso.get().load(song.getImage()).placeholder(R.drawable.ic_logo).into(mThumbnailNowPlaying);
-        mSongNowPlaying.setText(song.getSong());
-        mSingerNowPlaying.setText(song.getSinger());
-        mPlayNowPlaying.setImageResource(R.drawable.ic_pause_song_action);
+        getDataSongPlaying();
 
+        mPlayNowPlaying.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setIconPlaying(mPlayNowPlaying, R.drawable.ic_play_song_action, R.drawable.ic_pause_song_action);
+            }
+        });
 
         mBtnBackNowPlaying.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,23 +58,18 @@ public class NowPlayingFragment extends Fragment {
                 mOnBackPressedListener.onBackStackPressed();
             }
         });
-        mPlayNowPlaying.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (sSongPlaying) {
-                    mPlayNowPlaying.setImageResource(R.drawable.ic_play_song_action);
-                    pauseMusic();
-                    sSongPlaying = false;
-                }
-
-                else  {
-                    mPlayNowPlaying.setImageResource(R.drawable.ic_pause_song_action);
-                    resumeMusic();
-                    sSongPlaying = true;
-                }
-            }
-        });
 
         return view;
+    }
+
+    private void getDataSongPlaying() {
+        Bundle bundle = this.getArguments();
+        Song song = (Song) bundle.get("play_song_details");
+        Log.e("TAG", "onDisplayData: " + bundle );
+
+        Picasso.get().load(song.getImage()).placeholder(R.drawable.ic_logo).into(mThumbnailNowPlaying);
+        mSongNowPlaying.setText(song.getSong());
+        mSingerNowPlaying.setText(song.getSinger());
+        mPlayNowPlaying.setImageResource(R.drawable.ic_pause_song_action);
     }
 }

@@ -49,7 +49,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/play_song_background"
+            android:id="@+id/mini_player"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/play_song"
@@ -88,7 +88,7 @@
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="@dimen/padding_layout"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/exit_play_song_background"
+                    app:layout_constraintEnd_toStartOf="@id/btn_exit"
                     app:layout_constraintStart_toEndOf="@id/thumbnail_play_song"
                     app:layout_constraintTop_toTopOf="parent">
 
@@ -134,7 +134,7 @@
                             android:src="@drawable/ic_previous_song" />
 
                         <ImageView
-                            android:id="@+id/play_background"
+                            android:id="@+id/btn_play"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -153,10 +153,11 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:id="@+id/exit_play_song_background"
+                    android:id="@+id/btn_exit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_exit"
+                    android:paddingRight="5dp"
                     app:layout_constraintEnd_toEndOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

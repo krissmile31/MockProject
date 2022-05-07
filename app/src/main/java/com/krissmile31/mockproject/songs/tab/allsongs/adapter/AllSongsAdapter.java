@@ -1,6 +1,7 @@
 package com.krissmile31.mockproject.songs.tab.allsongs.adapter;
 
 
+import static com.krissmile31.mockproject.MainActivity.setIconPlaying;
 import static com.krissmile31.mockproject.services.PlaySongService.pauseMusic;
 import static com.krissmile31.mockproject.services.PlaySongService.resumeMusic;
 import static com.krissmile31.mockproject.services.PlaySongService.sSongPlaying;
@@ -20,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.krissmile31.mockproject.MainActivity;
 import com.krissmile31.mockproject.R;
 import com.krissmile31.mockproject.interfaces.OnItemClickListener;
 import com.krissmile31.mockproject.models.Song;
@@ -110,18 +112,7 @@ public class AllSongsAdapter extends RecyclerView.Adapter<AllSongsAdapter.MyView
             mBtnPlaySong.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
-                    if (sSongPlaying) {
-                        mBtnPlaySong.setImageResource(R.drawable.ic_played);
-                        pauseMusic();
-                        sSongPlaying = false;
-                    }
-
-                    else  {
-                        mBtnPlaySong.setImageResource(R.drawable.ic_pause_gradie);
-                        resumeMusic();
-                        sSongPlaying = true;
-                    }
+                    setIconPlaying(mBtnPlaySong, R.drawable.ic_played, R.drawable.ic_pause_gradie);
                 }
             });
 

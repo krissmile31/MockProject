@@ -16,6 +16,9 @@ public class Song implements Serializable {
     private String genre;
     private int year;
 
+    public Song() {
+    }
+
     public Song(String song) {
         this.song = song;
     }
@@ -25,6 +28,8 @@ public class Song implements Serializable {
         this.song = song;
         this.singer = singer;
     }
+
+
 
     public Song(String song, String singer) {
         this.song = song;
