@@ -3,7 +3,7 @@
     <string name="home_nav">Home</string>
     <string name="music_nav">Music</string>
     <string name="setting_nav">Setting</string>
-    <string name="searchHint">Search album song</string>
+    <string name="searchHint">Search song song</string>
     <string name="hotRecommend">Hot Recommended</string>
     <string name="playlist">Playlist</string>
     <string name="viewAll">View All</string>
@@ -37,7 +37,7 @@
     <string name="song_favourites">966 Songs</string>
     <string name="my_playlists">My Playlists</string>
 
-    <!--    album details-->
+    <!--    song details-->
     <string name="album_details">Album Details</string>
     <string name="play">Play</string>
     <string name="share">Share</string>

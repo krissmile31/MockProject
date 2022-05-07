@@ -106,10 +106,6 @@ public class SplashScreenActivity extends AppCompatActivity {
                                         requestPermission();
                                     }
                                 }).show();
-
-                        //                        Toast.makeText(this, "Thank u, next", Toast.LENGTH_SHORT).show();
-                        //                        finish();
-                        //                    }
                     }
                 }
                 return;

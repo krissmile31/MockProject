@@ -11,15 +11,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.krissmile31.mockproject.R;
-import com.krissmile31.mockproject.model.Album;
+import com.krissmile31.mockproject.models.Song;
 
 import java.util.List;
 
 public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.MyViewHolder> {
-    private List<Album> albumList;
+    private List<Song> songList;
 
-    public PlaylistAdapter(List<Album> albumList) {
-        this.albumList = albumList;
+    public PlaylistAdapter(List<Song> songList) {
+        this.songList = songList;
     }
 
     @NonNull
@@ -32,12 +32,12 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.bind(albumList.get(position));
+        holder.bind(songList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return albumList.size();
+        return songList.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
@@ -54,10 +54,10 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.MyView
             tv_singer_playlist = itemView.findViewById(R.id.tv_singer_playlist);
         }
 
-        public void bind(Album album) {
-            thumbnail_playlist.setImageResource(album.getThumbnail());
-            tv_song_playlist.setText(album.getSong());
-            tv_singer_playlist.setText(album.getSinger());
+        public void bind(Song song) {
+            thumbnail_playlist.setImageResource(song.getThumbnail());
+            tv_song_playlist.setText(song.getSong());
+            tv_singer_playlist.setText(song.getSinger());
         }
     }
 }

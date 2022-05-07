@@ -28,7 +28,7 @@
     <color name="artists_details">#C1C0C0</color>
     <color name="popup_menu">#383B49</color>
 
-<!--    album details-->
+<!--    song details-->
     <color name="tv_album_detail">#EEEEEE</color>
     <color name="tv_album_details">#C1C0C0</color>
     <color name="time_album_details">#707070</color>
@@ -39,5 +39,10 @@
     
 <!--    now playing-->
     <color name="tv_details_now_playing">#C1C0C0</color>
-    
+
+<!--    gradient color-->
+    <color name="startColor">#EC8472</color>
+    <color name="centerColor">#DA549A</color>
+    <color name="endColor">#D9519D</color>
+
 </resources>

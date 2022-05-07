@@ -10,15 +10,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.krissmile31.mockproject.R;
-import com.krissmile31.mockproject.model.Album;
+import com.krissmile31.mockproject.models.Song;
 
 import java.util.List;
 
 public class RecentlyPlayedAdapter extends RecyclerView.Adapter<RecentlyPlayedAdapter.MyViewHolder> {
-    private List<Album> albumList;
+    private List<Song> songList;
 
-    public RecentlyPlayedAdapter(List<Album> albumList) {
-        this.albumList = albumList;
+    public RecentlyPlayedAdapter(List<Song> songList) {
+        this.songList = songList;
     }
 
     @NonNull
@@ -31,12 +31,12 @@ public class RecentlyPlayedAdapter extends RecyclerView.Adapter<RecentlyPlayedAd
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.bind(albumList.get(position));
+        holder.bind(songList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return albumList.size();
+        return songList.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -51,9 +51,9 @@ public class RecentlyPlayedAdapter extends RecyclerView.Adapter<RecentlyPlayedAd
             tv_singer_played = itemView.findViewById(R.id.tv_singer_played);
         }
 
-        public void bind(Album album) {
-            tv_song_played.setText(album.getSong());
-            tv_singer_played.setText(album.getSinger());
+        public void bind(Song song) {
+            tv_song_played.setText(song.getSong());
+            tv_singer_played.setText(song.getSinger());
         }
     }
 }

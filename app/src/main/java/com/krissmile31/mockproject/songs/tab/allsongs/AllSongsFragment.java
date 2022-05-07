@@ -1,12 +1,14 @@
 package com.krissmile31.mockproject.songs.tab.allsongs;
 
-import static com.krissmile31.mockproject.MainActivity.playSongBackground;
-import static com.krissmile31.mockproject.MainActivity.play_background;
-import static com.krissmile31.mockproject.MainActivity.thumbnail_play_song;
-import static com.krissmile31.mockproject.MainActivity.tv_singer_background;
-import static com.krissmile31.mockproject.MainActivity.tv_song_background;
+import static com.krissmile31.mockproject.MainActivity.sBtnPreSongBar;
+import static com.krissmile31.mockproject.MainActivity.sPlaySongBackground;
+import static com.krissmile31.mockproject.MainActivity.sBtnPlayBar;
+import static com.krissmile31.mockproject.MainActivity.sThumbnailPlaySong;
+import static com.krissmile31.mockproject.MainActivity.sSingerBackground;
+import static com.krissmile31.mockproject.MainActivity.sSongBackground;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,21 +17,25 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.krissmile31.mockproject.MainActivity;
 import com.krissmile31.mockproject.R;
 import com.krissmile31.mockproject.interfaces.OnItemClickListener;
 import com.krissmile31.mockproject.interfaces.OnShowMusic;
-import com.krissmile31.mockproject.model.Album;
+import com.krissmile31.mockproject.models.Song;
 import com.krissmile31.mockproject.nowplaying.NowPlayingFragment;
+import com.krissmile31.mockproject.services.PlaySongService;
 import com.krissmile31.mockproject.songs.tab.allsongs.adapter.AllSongsAdapter;
 import com.squareup.picasso.Picasso;
 
-import static com.krissmile31.mockproject.MainActivity.albumList;
+import static com.krissmile31.mockproject.MainActivity.sSongList;
+import static com.krissmile31.mockproject.services.PlaySongService.TAG;
+import static com.krissmile31.mockproject.services.PlaySongService.pauseMusic;
+import static com.krissmile31.mockproject.services.PlaySongService.resumeMusic;
+import static com.krissmile31.mockproject.services.PlaySongService.sSongPlaying;
 
 public class AllSongsFragment extends Fragment {
-    private RecyclerView rcl_all_songs;
-    public static AllSongsAdapter allSongsAdapter;
-    public static OnShowMusic onShowMusic;
+    private RecyclerView mRclAllSongs;
+    public static AllSongsAdapter sAllSongsAdapter;
+    public static OnShowMusic sOnShowMusic;
 
     public AllSongsFragment() {
         // Required empty public constructor
@@ -40,7 +46,7 @@ public class AllSongsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_all_songs, container, false);
-        rcl_all_songs = view.findViewById(R.id.rcl_all_songs);
+        mRclAllSongs = view.findViewById(R.id.rcl_all_songs);
 
 //        albumList.add(new Album(R.drawable.billie_jean, "Billie Jean", "Michael Jackson", R.raw.heather));
 //        albumList.add(new Album(R.drawable.be_the_girl, "Be the Girl", "Bebe Rexa", R.raw.ifiaintgotu));
@@ -55,41 +61,73 @@ public class AllSongsFragment extends Fragment {
 
 //        Log.e(TAG, "onCreateView: " + albumList );
 
-        onShowMusic = (OnShowMusic) getContext();
-        if (onShowMusic != null) {
-            onShowMusic.displaySongs();
+        sOnShowMusic = (OnShowMusic) getContext();
+        if (sOnShowMusic != null) {
+            sOnShowMusic.displaySongs();
         }
-        allSongsAdapter = new AllSongsAdapter(albumList, listener);
-        rcl_all_songs.setAdapter(allSongsAdapter);
-        rcl_all_songs.setLayoutManager(new LinearLayoutManager(getContext()));
+        sAllSongsAdapter = new AllSongsAdapter(sSongList, mListener);
+        mRclAllSongs.setAdapter(sAllSongsAdapter);
+        mRclAllSongs.setLayoutManager(new LinearLayoutManager(getContext()));
 
         return view;
     }
 
-    OnItemClickListener listener = new OnItemClickListener() {
+    OnItemClickListener mListener = new OnItemClickListener() {
         @Override
-        public void onItemClick(Album album) {
+        public void onItemClick(Song song) {
+            Log.e(TAG, "onItemClick: " + song.getData() );
 
-            playSongBackground.setVisibility(View.VISIBLE);
-            Picasso.get().load(album.getImage()).placeholder(R.drawable.ic_logo).error(R.drawable.ic_logo).into(thumbnail_play_song);
+            openNowPlaying(song);
+
+            sBtnPlayBar.setImageResource(R.drawable.ic_pause_empty);
+
+            sPlaySongBackground.setVisibility(View.VISIBLE);
+            Picasso.get().load(song.getImage()).placeholder(R.drawable.ic_logo).error(R.drawable.ic_logo).into(sThumbnailPlaySong);
 //            thumbnail_play_song.setImageResource(album.getThumbnail());
-            tv_song_background.setText(album.getSong());
-            tv_singer_background.setText(album.getSinger());
+            sSongBackground.setText(song.getSong());
+            sSingerBackground.setText(song.getSinger());
 
-            play_background.setImageResource(R.drawable.ic_pause_empty);
-
-            playSongBackground.setOnClickListener(new View.OnClickListener() {
+            sBtnPlayBar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("play_song_details", album);
-                    NowPlayingFragment nowPlayingFragment = new NowPlayingFragment();
-                    nowPlayingFragment.setArguments(bundle);
 
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.drawLayout, nowPlayingFragment).addToBackStack("now_playing").commit();
+                    if (sSongPlaying) {
+                        sBtnPlayBar.setImageResource(R.drawable.ic_play_empty);
+                        pauseMusic();
+                        sSongPlaying = false;
+                    }
 
+                    else  {
+                        sBtnPlayBar.setImageResource(R.drawable.ic_pause_empty);
+                        resumeMusic();
+                        sSongPlaying = true;
+                    }
+                }
+            });
+
+            sBtnPreSongBar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+
+            sPlaySongBackground.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    openNowPlaying(song);
                 }
             });
         }
     };
+
+    private void openNowPlaying(Song song) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("play_song_details", song);
+        NowPlayingFragment nowPlayingFragment = new NowPlayingFragment();
+        nowPlayingFragment.setArguments(bundle);
+
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.drawLayout, nowPlayingFragment).addToBackStack("now_playing").commit();
+
+    }
 }

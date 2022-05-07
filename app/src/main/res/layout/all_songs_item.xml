@@ -4,17 +4,27 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/margin_layout"
+    android:padding="1dp"
     android:background="@color/background">
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/margin_layout">
-        <ImageView
+
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/img_all_songs"
             android:layout_width="46dp"
             android:layout_height="46dp"
-            android:src="@drawable/billie_jean" />
+            android:src="@drawable/beyonce_artists"
+            app:strokeColor="@color/white"
+            app:strokeWidth="0.5dp"
+            app:shapeAppearanceOverlay="@style/CornerImage_circle" />
+<!--        <ImageView-->
+<!--            android:id="@+id/img_all_songs"-->
+<!--            android:layout_width="46dp"-->
+<!--            android:layout_height="46dp"-->
+<!--            android:src="@drawable/billie_jean" />-->
 
         <ImageView
             android:layout_width="14dp"

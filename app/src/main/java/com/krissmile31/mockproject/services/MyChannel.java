@@ -5,7 +5,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
 
-public class MyApp extends Application {
+public class MyChannel extends Application {
     public final static String CHANNEL_ID = "my_song";
 
     @Override

@@ -11,15 +11,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.krissmile31.mockproject.R;
-import com.krissmile31.mockproject.model.Album;
+import com.krissmile31.mockproject.models.Song;
 
 import java.util.List;
 
 public class TopAlbumsAdapter extends RecyclerView.Adapter<TopAlbumsAdapter.MyViewHolder> {
-    private List<Album> albumList;
+    private List<Song> mSongList;
 
-    public TopAlbumsAdapter(List<Album> albumList) {
-        this.albumList = albumList;
+    public TopAlbumsAdapter(List<Song> songList) {
+        mSongList = songList;
     }
 
     @NonNull
@@ -32,33 +32,33 @@ public class TopAlbumsAdapter extends RecyclerView.Adapter<TopAlbumsAdapter.MyVi
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.bind(albumList.get(position));
+        holder.bind(mSongList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return albumList.size();
+        return mSongList.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        private Context context;
-        private ImageView thumbnail_top_albums;
-        private TextView tv_name_top_albums, tv_year_top_albums;
+        private Context mContext;
+        private ImageView mThumbnailAlbum;
+        private TextView mNameAlbum, mYearAlbum;
 
         public MyViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
-            this.context = context;
+            mContext = context;
 
-            thumbnail_top_albums = itemView.findViewById(R.id.thumbnail_top_albums);
-            tv_name_top_albums = itemView.findViewById(R.id.tv_name_top_albums);
-            tv_year_top_albums = itemView.findViewById(R.id.tv_year_top_albums);
+            mThumbnailAlbum = itemView.findViewById(R.id.thumbnail_top_albums);
+            mNameAlbum = itemView.findViewById(R.id.tv_name_top_albums);
+            mYearAlbum = itemView.findViewById(R.id.tv_year_top_albums);
 
         }
 
-        public void bind(Album album) {
-            thumbnail_top_albums.setImageResource(album.getThumbnail());
-            tv_name_top_albums.setText(album.getAlbumName());
-            tv_year_top_albums.setText(String.valueOf(album.getYear()));
+        public void bind(Song song) {
+            mThumbnailAlbum.setImageResource(song.getThumbnail());
+            mNameAlbum.setText(song.getAlbumName());
+            mYearAlbum.setText(String.valueOf(song.getYear()));
         }
     }
 }

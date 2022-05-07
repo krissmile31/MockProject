@@ -11,18 +11,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.krissmile31.mockproject.R;
+import com.krissmile31.mockproject.models.Song;
 import com.krissmile31.mockproject.songs.tab.playlists.adapter.MyPlaylistsAdapter;
-import com.krissmile31.mockproject.model.Album;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PlaylistsFragment extends Fragment {
-    private RecyclerView rcl_my_playlists;
-    private MyPlaylistsAdapter myPlaylistsAdapter;
-    private List<Album> albumList;
-    private FloatingActionButton floatingActionButton;
+    private RecyclerView mRclMyPlaylists;
+    private MyPlaylistsAdapter mMyPlaylistsAdapter;
+    private List<Song> mSongList;
+    private FloatingActionButton mFloatingActionButton;
 
     public PlaylistsFragment() {
         // Required empty public constructor
@@ -33,20 +33,20 @@ public class PlaylistsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_playlists, container, false);
-        rcl_my_playlists = view.findViewById(R.id.rcl_myPlaylists);
-        floatingActionButton = view.findViewById(R.id.float_button);
+        mRclMyPlaylists = view.findViewById(R.id.rcl_myPlaylists);
+        mFloatingActionButton = view.findViewById(R.id.float_button);
 
-        floatingActionButton.setImageTintList(null);
+        mFloatingActionButton.setImageTintList(null);
 
-        albumList = new ArrayList<>();
-        albumList.add(new Album(R.drawable.queen_colle, "Queens Collection"));
-        albumList.add(new Album(R.drawable.rihanna_coll, "Rihanna Collection"));
-        albumList.add(new Album(R.drawable.mj_coll, "MJ Collection"));
-        albumList.add(new Album(R.drawable.classical_coll, "Classic Collection"));
+        mSongList = new ArrayList<>();
+        mSongList.add(new Song(R.drawable.queen_colle, "Queens Collection"));
+        mSongList.add(new Song(R.drawable.rihanna_coll, "Rihanna Collection"));
+        mSongList.add(new Song(R.drawable.mj_coll, "MJ Collection"));
+        mSongList.add(new Song(R.drawable.classical_coll, "Classic Collection"));
 
-        myPlaylistsAdapter = new MyPlaylistsAdapter(albumList);
-        rcl_my_playlists.setAdapter(myPlaylistsAdapter);
-        rcl_my_playlists.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+        mMyPlaylistsAdapter = new MyPlaylistsAdapter(mSongList);
+        mRclMyPlaylists.setAdapter(mMyPlaylistsAdapter);
+        mRclMyPlaylists.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
 
 
         return view;

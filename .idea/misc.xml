@@ -35,6 +35,7 @@
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/drawable/ic_union_1.xml" value="0.1815" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/drawable/item_text_color.xml" value="0.1375" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/drawable/music_item.xml" value="0.1375" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/drawable/progress.xml" value="0.1425" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/drawable/search_background.xml" value="0.1375" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/drawable/setting_item.xml" value="0.1375" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/drawable/splash_background.xml" value="0.11" />
@@ -42,6 +43,7 @@
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/drawable/thumbnail_album_details.xml" value="0.139" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/activity_home.xml" value="0.14175724637681159" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/activity_main.xml" value="0.14175724637681159" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/activity_main2.xml" value="0.1796875" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/activity_splash_screen.xml" value="0.14175724637681159" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/album_details_item.xml" value="0.17527173913043478" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/albums_item.xml" value="0.17346014492753623" />
@@ -58,7 +60,7 @@
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/fragment_genres.xml" value="0.14673913043478262" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/fragment_home.xml" value="0.1539855072463768" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/fragment_music.xml" value="0.165" />
-        <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/fragment_now_playing.xml" value="0.11" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/fragment_now_playing.xml" value="0.165" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/fragment_playlists.xml" value="0.165" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/fragment_setting.xml" value="0.1539855072463768" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/genres_item.xml" value="0.17346014492753623" />

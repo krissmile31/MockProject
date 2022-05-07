@@ -167,7 +167,9 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         if (cursor != null && cursor.moveToFirst()) {
-            while (cursor.moveToNext()) {
+            do {
+
+                // All Songs
                 long id = cursor.getLong((int) cursor.getColumnIndex(MediaStore.Audio.Media._ID));
                 String song = cursor.getString((int) cursor.getColumnIndex(MediaStore.Audio.Media.TITLE));
                 String singer = cursor.getString((int) cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
@@ -176,9 +178,34 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
                 Uri thumbnail = ContentUris.withAppendedId(Uri.parse("content://media/external/audio/albumart"),
                         cursor.getLong((int) cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID)));
 
-                albumList.add(new Album(id, song, singer, thumbnail.toString(), data.toString()));
-//                Log.e(TAG, "onLoadFinished: " +
-            }
+                sSongList.add(new Song(id, song, singer, thumbnail.toString(), data.toString()));
+
+                // Playlists
+                long playlistId = cursor.getLong((int) cursor.getColumnIndex(MediaStore.Audio.Playlists._ID));
+                // ... tobe continued
+
+                // Albums
+                long albumId = cursor.getLong((int) cursor.getColumnIndex(MediaStore.Audio.Albums.ALBUM_ID));
+                String albumName = cursor.getString((int) cursor.getColumnIndex(MediaStore.Audio.Albums.ALBUM));
+//                String albumSinger = cursor.getString((int) cursor.getColumnIndex(MediaStore.Audio.Albums.ARTIST));
+//                int noSongsAlbum = cursor.getInt((int) cursor.getColumnIndex(MediaStore.Audio.Albums.NUMBER_OF_SONGS));
+                sAlbumList.add(new Album(albumId, thumbnail.toString(), albumName, singer));
+
+                // Artist
+                long artistId = cursor.getLong((int) cursor.getColumnIndex(MediaStore.Audio.Artists._ID));
+//                String artistName = cursor.getString((int) cursor.getColumnIndex(MediaStore.Audio.Artists.ARTIST));
+                String thumbnailArtist = cursor.getString((int) cursor.getColumnIndex(MediaStore.Audio.Artists.ARTIST_KEY));
+//                String noAlbumsArtist = cursor.getString((int) cursor.getColumnIndex(MediaStore.Audio.ArtistColumns.NUMBER_OF_ALBUMS));
+//                String noSongsArtist = cursor.getString((int) cursor.getColumnIndex(MediaStore.Audio.ArtistColumns.NUMBER_OF_TRACKS));
+                sArtistList.add(new Artist(artistId, singer, thumbnail.toString()));
+
+                // Genre
+                long genreId = cursor.getLong((int) cursor.getColumnIndex(MediaStore.Audio.Genres._ID));
+//                String genreName = cursor.getString((int) cursor.getColumnIndex(MediaStore.Audio.GenresColumns.NAME));
+                Uri thumbnailGenre = ContentUris.withAppendedId(Uri.parse("content://media/external/audio/albumart"),
+                        genreId);
+                sGenreList.add(new Genre(genreId, thumbnailGenre.toString()));
+            } while (cursor.moveToNext());
         }
 
         Collections.sort(albumList, new Comparator<Album>() {

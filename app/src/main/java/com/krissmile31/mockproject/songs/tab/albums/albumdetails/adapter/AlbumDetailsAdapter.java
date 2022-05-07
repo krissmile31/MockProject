@@ -10,15 +10,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.krissmile31.mockproject.R;
-import com.krissmile31.mockproject.model.Album;
+import com.krissmile31.mockproject.models.Song;
 
 import java.util.List;
 
 public class AlbumDetailsAdapter extends RecyclerView.Adapter<AlbumDetailsAdapter.MyViewHolder> {
-    private List<Album> albumList;
+    private List<Song> mSongList;
 
-    public AlbumDetailsAdapter(List<Album> albumList) {
-        this.albumList = albumList;
+    public AlbumDetailsAdapter(List<Song> songList) {
+        mSongList = songList;
     }
 
     @NonNull
@@ -31,28 +31,28 @@ public class AlbumDetailsAdapter extends RecyclerView.Adapter<AlbumDetailsAdapte
 
     @Override
     public void onBindViewHolder(@NonNull AlbumDetailsAdapter.MyViewHolder holder, int position) {
-        holder.bind(albumList.get(position));
+        holder.bind(mSongList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return albumList.size();
+        return mSongList.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        private Context context;
-        private TextView song_album_details, time_album_details;
+        private Context mContext;
+        private TextView mSongAlbumDetail, mTimeAlbumDetail;
 
         public MyViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
-            this.context = context;
+            mContext = context;
 
-            song_album_details = itemView.findViewById(R.id.song_album_details);
-            time_album_details = itemView.findViewById(R.id.time_album_details);
+            mSongAlbumDetail = itemView.findViewById(R.id.song_album_details);
+            mTimeAlbumDetail = itemView.findViewById(R.id.time_album_details);
         }
 
-        public void bind(Album album) {
-            song_album_details.setText(album.getSong());
+        public void bind(Song song) {
+            mSongAlbumDetail.setText(song.getSong());
 //            time_album_details.setText(album.getTime());
         }
     }

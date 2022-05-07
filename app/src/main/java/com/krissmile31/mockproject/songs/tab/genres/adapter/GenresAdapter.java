@@ -11,15 +11,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.krissmile31.mockproject.R;
-import com.krissmile31.mockproject.model.Album;
+import com.krissmile31.mockproject.models.Genre;
+import com.krissmile31.mockproject.models.Song;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class GenresAdapter extends RecyclerView.Adapter<GenresAdapter.MyViewHolder> {
-    private List<Album> albumList;
+    private List<Genre> mGenreList;
 
-    public GenresAdapter(List<Album> albumList) {
-        this.albumList = albumList;
+    public GenresAdapter(List<Genre> songList) {
+        mGenreList = songList;
     }
 
     @NonNull
@@ -32,33 +34,35 @@ public class GenresAdapter extends RecyclerView.Adapter<GenresAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.bind(albumList.get(position));
+        holder.bind(mGenreList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return albumList.size();
+        return mGenreList.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        private Context context;
-        private ImageView thumbnail_genres;
-        private TextView text_genres, quantity_songs_genres;
+        private Context mContext;
+        private ImageView mThumbnailGenres;
+        private TextView mTvGenres, mNoSongsGenres;
 
         public MyViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
-            this.context = context;
+            mContext = context;
 
-            thumbnail_genres = itemView.findViewById(R.id.thumbnail_genres);
-            text_genres = itemView.findViewById(R.id.text_genres);
-            quantity_songs_genres = itemView.findViewById(R.id.quantity_songs_genres);
+            mThumbnailGenres = itemView.findViewById(R.id.thumbnail_genres);
+            mTvGenres = itemView.findViewById(R.id.text_genres);
+            mNoSongsGenres = itemView.findViewById(R.id.quantity_songs_genres);
 
         }
 
-        public void bind(Album album) {
-            thumbnail_genres.setImageResource(album.getThumbnail());
-            text_genres.setText(album.getGenre());
-            quantity_songs_genres.setText(String.valueOf(album.getQuantity_songs() + " Songs"));
+        public void bind(Genre genre) {
+//            mThumbnailGenres.setImageResource(song.getThumbnail());
+            Picasso.get().load(genre.getThumbnailGenre()).placeholder(R.drawable.ic_logo)
+                    .error(R.drawable.ic_logo).fit().into(mThumbnailGenres);
+            mTvGenres.setText(genre.getGenreName());
+            mNoSongsGenres.setText(String.valueOf(genre.getNoSongsGenre()) + " Songs");
         }
     }
 }

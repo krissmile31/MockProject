@@ -1,5 +1,7 @@
 package com.krissmile31.mockproject.songs.tab.artists;
 
+import static com.krissmile31.mockproject.MainActivity.sArtistList;
+
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,7 +14,7 @@ import android.view.ViewGroup;
 
 import com.krissmile31.mockproject.R;
 import com.krissmile31.mockproject.interfaces.OnItemClickListener;
-import com.krissmile31.mockproject.model.Album;
+import com.krissmile31.mockproject.models.Song;
 import com.krissmile31.mockproject.songs.tab.artists.adapter.ArtistAdapter;
 import com.krissmile31.mockproject.songs.tab.artists.artistdetails.ArtistDetailsFragment;
 
@@ -20,9 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArtistsFragment extends Fragment {
-    private ArtistAdapter artistAdapter;
-    private List<Album> albumList;
-    private RecyclerView rcl_artists;
+    private ArtistAdapter mArtistAdapter;
+    private List<Song> mSongList;
+    private RecyclerView mRclArtists;
 
     public ArtistsFragment() {
         // Required empty public constructor
@@ -33,19 +35,19 @@ public class ArtistsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_artists, container, false);
-        rcl_artists = view.findViewById(R.id.rcl_artist);
+        mRclArtists = view.findViewById(R.id.rcl_artist);
 
-        albumList = new ArrayList<>();
-        albumList.add(new Album(R.drawable.beyonce_artists, "Beyonce", 4, 38));
-        albumList.add(new Album(R.drawable.bebe_rexha_artists, "Bebe Rexha", 2, 17));
-        albumList.add(new Album(R.drawable.maroon_artists, "Maroon 5", 5, 46));
-        albumList.add(new Album(R.drawable.michael_jackson_artists, "Michael Jackson", 10, 112));
-        albumList.add(new Album(R.drawable.queens_artists, "Queens", 3, 32));
-        albumList.add(new Album(R.drawable.yani_artists, "Yani", 1, 13));
+//        mSongList = new ArrayList<>();
+//        mSongList.add(new Song(R.drawable.beyonce_artists, "Beyonce", 4, 38));
+//        mSongList.add(new Song(R.drawable.bebe_rexha_artists, "Bebe Rexha", 2, 17));
+//        mSongList.add(new Song(R.drawable.maroon_artists, "Maroon 5", 5, 46));
+//        mSongList.add(new Song(R.drawable.michael_jackson_artists, "Michael Jackson", 10, 112));
+//        mSongList.add(new Song(R.drawable.queens_artists, "Queens", 3, 32));
+//        mSongList.add(new Song(R.drawable.yani_artists, "Yani", 1, 13));
 
-        artistAdapter = new ArtistAdapter(albumList, listener);
-        rcl_artists.setAdapter(artistAdapter);
-        rcl_artists.setLayoutManager(new LinearLayoutManager(getContext()));
+        mArtistAdapter = new ArtistAdapter(sArtistList);
+        mRclArtists.setAdapter(mArtistAdapter);
+        mRclArtists.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
         return view;
@@ -53,9 +55,9 @@ public class ArtistsFragment extends Fragment {
 
     private OnItemClickListener listener = new OnItemClickListener() {
         @Override
-        public void onItemClick(Album album) {
+        public void onItemClick(Song song) {
             Bundle bundle = new Bundle();
-            bundle.putSerializable("artist_details", album);
+            bundle.putSerializable("artist_details", song);
             ArtistDetailsFragment artistDetailsFragment = new ArtistDetailsFragment();
             artistDetailsFragment.setArguments(bundle);
 

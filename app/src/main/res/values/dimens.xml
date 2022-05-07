@@ -21,10 +21,10 @@
     <dimen name="my_playlists">15sp</dimen>
     <dimen name="viewAll">11sp</dimen>
 
-<!--    album-->
+<!--    song-->
     <dimen name="text_size_albums">11sp</dimen>
 
-<!--    album details-->
+<!--    song details-->
     <dimen name="text_album_details">17sp</dimen>
     <dimen name="tv_album_detail">18sp</dimen>
     <dimen name="tv_album_details">12sp</dimen>

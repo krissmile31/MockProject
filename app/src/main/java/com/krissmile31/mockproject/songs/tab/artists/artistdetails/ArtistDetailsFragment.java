@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.krissmile31.mockproject.MainActivity;
 import com.krissmile31.mockproject.R;
 import com.krissmile31.mockproject.interfaces.OnBackPressedListener;
-import com.krissmile31.mockproject.model.Album;
+import com.krissmile31.mockproject.models.Song;
 import com.krissmile31.mockproject.songs.tab.artists.artistdetails.adapters.TopAlbumsAdapter;
 import com.krissmile31.mockproject.songs.tab.artists.artistdetails.adapters.TopSongsAdapter;
 
@@ -22,13 +22,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArtistDetailsFragment extends Fragment {
-    private RecyclerView rcl_top_albums, rcl_top_songs;
-    private TopSongsAdapter topSongsAdapter;
-    private TopAlbumsAdapter topAlbumsAdapter;
-    private List<Album> albumList;
-    private ImageView btn_back_artists, thumbnail_artist_detail;
-    private TextView tv_artist_detail;
-    private OnBackPressedListener onBackPressedListener;
+    private RecyclerView mRclTopAlbums, mRclTopSongs;
+    private TopSongsAdapter mTopSongsAdapter;
+    private TopAlbumsAdapter mTopAlbumsAdapter;
+    private List<Song> mSongList;
+    private ImageView mBtnBackArtists, mThumbnailArtistDetail;
+    private TextView mTvArtistDetail;
+    private OnBackPressedListener mOnBackPressedListener;
 
     public ArtistDetailsFragment() {
         // Required empty public constructor
@@ -39,43 +39,43 @@ public class ArtistDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_artist_details, container, false);
-        rcl_top_albums = view.findViewById(R.id.rcl_top_albums);
-        rcl_top_songs = view.findViewById(R.id.rcl_top_songs);
-        btn_back_artists = view.findViewById(R.id.btn_back_artists);
-        thumbnail_artist_detail = view.findViewById(R.id.thumbnail_artist_detail);
-        tv_artist_detail = view.findViewById(R.id.tv_artist_detail);
+        mRclTopAlbums = view.findViewById(R.id.rcl_top_albums);
+        mRclTopSongs = view.findViewById(R.id.rcl_top_songs);
+        mBtnBackArtists = view.findViewById(R.id.btn_back_artists);
+        mThumbnailArtistDetail = view.findViewById(R.id.thumbnail_artist_detail);
+        mTvArtistDetail = view.findViewById(R.id.tv_artist_detail);
 
         // Top Albums
-        albumList = new ArrayList<>();
-        albumList.add(new Album(R.drawable.fire_dragon_artist_details, "Fire Dragon", 2019));
-        albumList.add(new Album(R.drawable.sound_of_life_artist_details, "Sound of Life", 2018));
-        albumList.add(new Album(R.drawable.giving_heart_artist_details, "Giving Heart", 2017));
-        albumList.add(new Album(R.drawable.dream_of_top_albums, "Dream of", 2016));
+        mSongList = new ArrayList<>();
+        mSongList.add(new Song(R.drawable.fire_dragon_artist_details, "Fire Dragon", 2019));
+        mSongList.add(new Song(R.drawable.sound_of_life_artist_details, "Sound of Life", 2018));
+        mSongList.add(new Song(R.drawable.giving_heart_artist_details, "Giving Heart", 2017));
+        mSongList.add(new Song(R.drawable.dream_of_top_albums, "Dream of", 2016));
 
-        topAlbumsAdapter = new TopAlbumsAdapter(albumList);
-        rcl_top_albums.setAdapter(topAlbumsAdapter);
-        rcl_top_albums.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+        mTopAlbumsAdapter = new TopAlbumsAdapter(mSongList);
+        mRclTopAlbums.setAdapter(mTopAlbumsAdapter);
+        mRclTopAlbums.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
 
         // Top Songs
-        albumList = new ArrayList<>();
-        albumList.add(new Album("Second of You"));
-        albumList.add(new Album("Whisper of Heart"));
+        mSongList = new ArrayList<>();
+        mSongList.add(new Song("Second of You"));
+        mSongList.add(new Song("Whisper of Heart"));
 
-        topSongsAdapter = new TopSongsAdapter(albumList);
-        rcl_top_songs.setAdapter(topSongsAdapter);
-        rcl_top_songs.setLayoutManager(new LinearLayoutManager(getContext()));
+        mTopSongsAdapter = new TopSongsAdapter(mSongList);
+        mRclTopSongs.setAdapter(mTopSongsAdapter);
+        mRclTopSongs.setLayoutManager(new LinearLayoutManager(getContext()));
 
         Bundle bundle = this.getArguments();
-        Album album = (Album) bundle.get("artist_details");
-        thumbnail_artist_detail.setImageResource(album.getThumbnail());
-        tv_artist_detail.setText(album.getSinger());
+        Song song = (Song) bundle.get("artist_details");
+        mThumbnailArtistDetail.setImageResource(song.getThumbnail());
+        mTvArtistDetail.setText(song.getSinger());
 
 
-        btn_back_artists.setOnClickListener(new View.OnClickListener() {
+        mBtnBackArtists.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressedListener = (MainActivity) getActivity();
-                onBackPressedListener.onBackStackPressed();
+                mOnBackPressedListener = (MainActivity) getActivity();
+                mOnBackPressedListener.onBackStackPressed();
             }
         });
 

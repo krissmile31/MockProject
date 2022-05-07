@@ -1,10 +1,8 @@
-package com.krissmile31.mockproject.model;
-
-import android.net.Uri;
+package com.krissmile31.mockproject.models;
 
 import java.io.Serializable;
 
-public class Album implements Serializable {
+public class Song implements Serializable {
     private long id;
     private String image;
     private String data;
@@ -12,73 +10,73 @@ public class Album implements Serializable {
     private String song;
     private String singer;
     private int music;
-    private int quantity_albums;
-    private int quantity_songs;
+    private int quantityAlbums;
+    private int quantitySongs;
     private String albumName;
     private String genre;
     private int year;
 
-    public Album(String song) {
+    public Song(String song) {
         this.song = song;
     }
 
-    public Album(int thumbnail, String song, String singer) {
+    public Song(int thumbnail, String song, String singer) {
         this.thumbnail = thumbnail;
         this.song = song;
         this.singer = singer;
     }
 
-    public Album(String song, String singer) {
+    public Song(String song, String singer) {
         this.song = song;
         this.singer = singer;
     }
 
-    public Album(int thumbnail, String singer) {
+    public Song(int thumbnail, String singer) {
         this.thumbnail = thumbnail;
         this.singer = singer;
     }
 
-    public Album(int thumbnail, String song, String singer, int music) {
+    public Song(int thumbnail, String song, String singer, int music) {
         this.thumbnail = thumbnail;
         this.song = song;
         this.singer = singer;
         this.music = music;
     }
 
-    public Album(int thumbnail, String singer, int quantity_albums, int quantity_songs) {
+    public Song(int thumbnail, String singer, int quantityAlbums, int quantitySongs) {
         this.thumbnail = thumbnail;
         this.singer = singer;
-        this.quantity_albums = quantity_albums;
-        this.quantity_songs = quantity_songs;
+        this.quantityAlbums = quantityAlbums;
+        this.quantitySongs = quantitySongs;
     }
 
-    public Album(int thumbnail, String singer, int quantity_songs, String albumName) {
+    public Song(int thumbnail, String singer, int quantitySongs, String albumName) {
         this.thumbnail = thumbnail;
         this.singer = singer;
-        this.quantity_songs = quantity_songs;
+        this.quantitySongs = quantitySongs;
         this.albumName = albumName;
     }
 
-    public Album(int thumbnail, int quantity_songs, String genre) {
+    public Song(int thumbnail, int quantitySongs, String genre) {
         this.thumbnail = thumbnail;
-        this.quantity_songs = quantity_songs;
+        this.quantitySongs = quantitySongs;
         this.genre = genre;
     }
 
-    public Album(int thumbnail, String albumName, int year) {
+    public Song(int thumbnail, String albumName, int year) {
         this.thumbnail = thumbnail;
         this.albumName = albumName;
         this.year = year;
     }
 
-    public Album(long id, int thumbnail, String song, String singer) {
+    public Song(long id, int thumbnail, String song, String singer) {
         this.id = id;
         this.thumbnail = thumbnail;
         this.song = song;
         this.singer = singer;
     }
 
-    public Album(long id, String song, String singer) {
+    public Song(long id, String song, String singer) {
         this.id = id;
         this.image = image;
         this.data = data;
@@ -86,7 +84,7 @@ public class Album implements Serializable {
         this.singer = singer;
     }
 
-    public Album(long id, String song, String singer, String image, String data) {
+    public Song(long id, String song, String singer, String image, String data) {
         this.id = id;
         this.image = image;
         this.data = data;
@@ -94,7 +92,7 @@ public class Album implements Serializable {
         this.singer = singer;
     }
 
-    public Album(long id, String song, String singer, String data) {
+    public Song(long id, String song, String singer, String data) {
         this.id = id;
         this.data = data;
         this.song = song;
@@ -157,20 +155,20 @@ public class Album implements Serializable {
         this.music = music;
     }
 
-    public int getQuantity_albums() {
-        return quantity_albums;
+    public int getQuantityAlbums() {
+        return quantityAlbums;
     }
 
-    public void setQuantity_albums(int quantity_albums) {
-        this.quantity_albums = quantity_albums;
+    public void setQuantityAlbums(int quantityAlbums) {
+        this.quantityAlbums = quantityAlbums;
     }
 
-    public int getQuantity_songs() {
-        return quantity_songs;
+    public int getQuantitySongs() {
+        return quantitySongs;
     }
 
-    public void setQuantity_songs(int quantity_songs) {
-        this.quantity_songs = quantity_songs;
+    public void setQuantitySongs(int quantitySongs) {
+        this.quantitySongs = quantitySongs;
     }
 
     public String getAlbumName() {

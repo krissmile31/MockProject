@@ -11,15 +11,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.krissmile31.mockproject.R;
-import com.krissmile31.mockproject.model.Album;
+import com.krissmile31.mockproject.models.Song;
 
 import java.util.List;
 
 public class HotRecommendedAdapter extends RecyclerView.Adapter<HotRecommendedAdapter.MyViewHolder>{
-    private List<Album> albumList;
+    private List<Song> mSongList;
 
-    public HotRecommendedAdapter(List<Album> albumList) {
-        this.albumList = albumList;
+    public HotRecommendedAdapter(List<Song> songList) {
+        mSongList = songList;
     }
 
     @NonNull
@@ -32,32 +32,32 @@ public class HotRecommendedAdapter extends RecyclerView.Adapter<HotRecommendedAd
 
     @Override
     public void onBindViewHolder(@NonNull HotRecommendedAdapter.MyViewHolder holder, int position) {
-        holder.bind(albumList.get(position));
+        holder.bind(mSongList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return albumList.size();
+        return mSongList.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        private Context context;
-        private ImageView thumbnail_hot;
-        private TextView tv_song_hot, tv_singer_hot;
+        private Context mContext;
+        private ImageView mThumbnailSong;
+        private TextView mTvSong, mTvSinger;
 
         public MyViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
-            this.context = context;
+            this.mContext = context;
 
-            thumbnail_hot = itemView.findViewById(R.id.thumbnail_hot);
-            tv_song_hot = itemView.findViewById(R.id.tv_song_hot);
-            tv_singer_hot = itemView.findViewById(R.id.tv_singer_hot);
+            mThumbnailSong = itemView.findViewById(R.id.thumbnail_hot);
+            mTvSong = itemView.findViewById(R.id.tv_song_hot);
+            mTvSinger = itemView.findViewById(R.id.tv_singer_hot);
         }
 
-        public void bind(Album album) {
-            thumbnail_hot.setImageResource(album.getThumbnail());
-            tv_song_hot.setText(album.getSong());
-            tv_singer_hot.setText(album.getSinger());
+        public void bind(Song song) {
+            mThumbnailSong.setImageResource(song.getThumbnail());
+            mTvSong.setText(song.getSong());
+            mTvSinger.setText(song.getSinger());
         }
     }
 }

@@ -15,19 +15,19 @@ import android.widget.TextView;
 import com.krissmile31.mockproject.MainActivity;
 import com.krissmile31.mockproject.R;
 import com.krissmile31.mockproject.interfaces.OnBackPressedListener;
-import com.krissmile31.mockproject.model.Album;
+import com.krissmile31.mockproject.models.Song;
 import com.krissmile31.mockproject.songs.tab.albums.albumdetails.adapter.AlbumDetailsAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AlbumDetailsFragment extends Fragment {
-    private RecyclerView rcl_album_details;
-    private List<Album> albumList;
-    private AlbumDetailsAdapter albumDetailsAdapter;
-    private OnBackPressedListener onBackPressedListener;
-    private ImageView btn_back_album, thumbnail_album_detail, thumbnail_album_details;
-    private TextView tv_album_details, tv_singer_album_details, tv_period_album_details;
+    private RecyclerView mRclAlbumDetails;
+    private List<Song> mSongList;
+    private AlbumDetailsAdapter mAlbumDetailsAdapter;
+    private OnBackPressedListener mOnBackPressedListener;
+    private ImageView mBtnBackAlbum, mThumbnailAlbum, mThumbnailAlbumDetail;
+    private TextView mTvAlbumDetail, mSingerAlbum, mYearAlbum;
 
     public AlbumDetailsFragment() {
         // Required empty public constructor
@@ -38,43 +38,43 @@ public class AlbumDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_album_details, container, false);
-        rcl_album_details = view.findViewById(R.id.rcl_album_details);
-        btn_back_album = view.findViewById(R.id.btn_back_album);
-        thumbnail_album_detail = view.findViewById(R.id.thumbnail_album_detail);
-        thumbnail_album_details = view.findViewById(R.id.thumbnail_album_details);
-        tv_album_details = view.findViewById(R.id.tv_album_details);
-        tv_singer_album_details = view.findViewById(R.id.tv_singer_details);
-        tv_period_album_details = view.findViewById(R.id.tv_period_album_details);
+        mRclAlbumDetails = view.findViewById(R.id.rcl_album_details);
+        mBtnBackAlbum = view.findViewById(R.id.btn_back_album);
+        mThumbnailAlbum = view.findViewById(R.id.thumbnail_album_detail);
+        mThumbnailAlbumDetail = view.findViewById(R.id.thumbnail_album_details);
+        mTvAlbumDetail = view.findViewById(R.id.tv_album_details);
+        mSingerAlbum = view.findViewById(R.id.tv_singer_details);
+        mYearAlbum = view.findViewById(R.id.tv_period_album_details);
 
-        albumList = new ArrayList<>();
-        albumList.add(new Album("Billie Jean"));
-        albumList.add(new Album("The way you make me feel"));
-        albumList.add(new Album("She is out of my life"));
-        albumList.add(new Album("Thriller"));
-        albumList.add(new Album("Beat It"));
-        albumList.add(new Album("Bad"));
-        albumList.add(new Album("Man in the mirror"));
-        albumList.add(new Album("Scream"));
+        mSongList = new ArrayList<>();
+        mSongList.add(new Song("Billie Jean"));
+        mSongList.add(new Song("The way you make me feel"));
+        mSongList.add(new Song("She is out of my life"));
+        mSongList.add(new Song("Thriller"));
+        mSongList.add(new Song("Beat It"));
+        mSongList.add(new Song("Bad"));
+        mSongList.add(new Song("Man in the mirror"));
+        mSongList.add(new Song("Scream"));
 
-        albumDetailsAdapter = new AlbumDetailsAdapter(albumList);
-        rcl_album_details.setAdapter(albumDetailsAdapter);
-        rcl_album_details.setLayoutManager(new LinearLayoutManager(getContext()));
+        mAlbumDetailsAdapter = new AlbumDetailsAdapter(mSongList);
+        mRclAlbumDetails.setAdapter(mAlbumDetailsAdapter);
+        mRclAlbumDetails.setLayoutManager(new LinearLayoutManager(getContext()));
 
         Bundle bundle = this.getArguments();
-        Album album = (Album) bundle.get("album_details");
+        Song song = (Song) bundle.get("album_details");
 
 //        String naem = bundle.getString("name");
-        thumbnail_album_detail.setImageResource(album.getThumbnail());
-        thumbnail_album_details.setImageResource(album.getThumbnail());
-        tv_album_details.setText(album.getAlbumName());
-        tv_singer_album_details.setText(album.getSinger());
+        mThumbnailAlbum.setImageResource(song.getThumbnail());
+        mThumbnailAlbumDetail.setImageResource(song.getThumbnail());
+        mTvAlbumDetail.setText(song.getAlbumName());
+        mSingerAlbum.setText(song.getSinger());
 //        tv_period_album_details.setText("1996 . " + album.getYear() + " . 64 min");
 
-        btn_back_album.setOnClickListener(new View.OnClickListener() {
+        mBtnBackAlbum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressedListener = (MainActivity) getActivity();
-                onBackPressedListener.onBackStackPressed();
+                mOnBackPressedListener = (MainActivity) getActivity();
+                mOnBackPressedListener.onBackStackPressed();
             }
         });
 

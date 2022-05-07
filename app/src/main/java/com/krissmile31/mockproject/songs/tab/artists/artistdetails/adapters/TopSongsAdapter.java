@@ -11,15 +11,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.krissmile31.mockproject.R;
-import com.krissmile31.mockproject.model.Album;
+import com.krissmile31.mockproject.models.Song;
 
 import java.util.List;
 
 public class TopSongsAdapter extends RecyclerView.Adapter<TopSongsAdapter.MyViewHolder> {
-    private List<Album> albumList;
+    private List<Song> mSongList;
 
-    public TopSongsAdapter(List<Album> albumList) {
-        this.albumList = albumList;
+    public TopSongsAdapter(List<Song> songList) {
+        mSongList = songList;
     }
 
     @NonNull
@@ -32,31 +32,31 @@ public class TopSongsAdapter extends RecyclerView.Adapter<TopSongsAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.bind(albumList.get(position));
+        holder.bind(mSongList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return albumList.size();
+        return mSongList.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        private Context context;
-        private ImageView play_top_songs, more_top_songs;
-        private TextView tv_name_top_songs, time_top_songs;
+        private Context mContext;
+        private ImageView mBtnPlaySong, mMoreTopSongs;
+        private TextView mNameTopSong, mTimeTopSong;
 
         public MyViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
-            this.context = context;
+            mContext = context;
 
-            play_top_songs = itemView.findViewById(R.id.play_top_songs);
-            more_top_songs = itemView.findViewById(R.id.more_top_songs);
-            tv_name_top_songs = itemView.findViewById(R.id.tv_name_top_songs);
-            time_top_songs = itemView.findViewById(R.id.time_top_songs);
+            mBtnPlaySong = itemView.findViewById(R.id.play_top_songs);
+            mMoreTopSongs = itemView.findViewById(R.id.more_top_songs);
+            mNameTopSong = itemView.findViewById(R.id.tv_name_top_songs);
+            mTimeTopSong = itemView.findViewById(R.id.time_top_songs);
         }
 
-        public void bind(Album album) {
-            tv_name_top_songs.setText(album.getSong());
+        public void bind(Song song) {
+            mNameTopSong.setText(song.getSong());
         }
     }
 }

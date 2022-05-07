@@ -1,5 +1,10 @@
 package com.krissmile31.mockproject.nowplaying;
 
+import static com.krissmile31.mockproject.MainActivity.sBtnPlayBar;
+import static com.krissmile31.mockproject.services.PlaySongService.pauseMusic;
+import static com.krissmile31.mockproject.services.PlaySongService.resumeMusic;
+import static com.krissmile31.mockproject.services.PlaySongService.sSongPlaying;
+
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,18 +18,15 @@ import android.widget.TextView;
 import com.krissmile31.mockproject.MainActivity;
 import com.krissmile31.mockproject.R;
 import com.krissmile31.mockproject.interfaces.OnBackPressedListener;
-import com.krissmile31.mockproject.model.Album;
+import com.krissmile31.mockproject.models.Song;
 import com.krissmile31.mockproject.services.PlaySongService;
 import com.squareup.picasso.Picasso;
 
-import me.tankery.lib.circularseekbar.CircularSeekBar;
-
 public class NowPlayingFragment extends Fragment {
-    private CircularSeekBar circularSeekBar;
-    private ImageView btn_back_now_playing;
-    private OnBackPressedListener onBackPressedListener;
-    private ImageView thumbnail_now_playing, previous_now_playing, play_now_playing, next_now_playing;
-    private TextView tv_song_now_playing, tv_singer_now_playing;
+    private ImageView mBtnBackNowPlaying;
+    private OnBackPressedListener mOnBackPressedListener;
+    private ImageView mThumbnailNowPlaying, mPreNowPlaying, mPlayNowPlaying, mNextNowPlaying;
+    private TextView mSongNowPlaying, mSingerNowPlaying;
 
     public NowPlayingFragment() {
         // Required empty public constructor
@@ -39,34 +41,46 @@ public class NowPlayingFragment extends Fragment {
 //        circularSeekBar.setMax(100);
 //        circularSeekBar.setProgress(0);
 
-        btn_back_now_playing = view.findViewById(R.id.btn_back_now_playing);
-        thumbnail_now_playing = view.findViewById(R.id.thumbnail_now_playing);
-        tv_song_now_playing = view.findViewById(R.id.tv_song_now_playing);
-        tv_singer_now_playing = view.findViewById(R.id.tv_singer_now_playing);
-        previous_now_playing = view.findViewById(R.id.previous_now_playing);
-        play_now_playing = view.findViewById(R.id.play_now_playing);
-        next_now_playing = view.findViewById(R.id.next_now_playing);
+        mBtnBackNowPlaying = view.findViewById(R.id.btn_back_now_playing);
+        mThumbnailNowPlaying = view.findViewById(R.id.thumbnail_now_playing);
+        mSongNowPlaying = view.findViewById(R.id.tv_song_now_playing);
+        mSingerNowPlaying = view.findViewById(R.id.tv_singer_now_playing);
+        mPreNowPlaying = view.findViewById(R.id.previous_now_playing);
+        mPlayNowPlaying = view.findViewById(R.id.play_now_playing);
+        mNextNowPlaying = view.findViewById(R.id.next_now_playing);
 
         Bundle bundle = this.getArguments();
-        Album album = (Album) bundle.get("play_song_details");
+        Song song = (Song) bundle.get("play_song_details");
 //        thumbnail_now_playing.setImageResource(album.getThumbnail());
-        Picasso.get().load(album.getImage()).placeholder(R.drawable.ic_logo).into(thumbnail_now_playing);
-        tv_song_now_playing.setText(album.getSong());
-        tv_singer_now_playing.setText(album.getSinger());
+        Picasso.get().load(song.getImage()).placeholder(R.drawable.ic_logo).into(mThumbnailNowPlaying);
+        mSongNowPlaying.setText(song.getSong());
+        mSingerNowPlaying.setText(song.getSinger());
+        mPlayNowPlaying.setImageResource(R.drawable.ic_pause_song_action);
 
-        btn_back_now_playing.setOnClickListener(new View.OnClickListener() {
+
+        mBtnBackNowPlaying.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressedListener = (MainActivity) getActivity();
-                onBackPressedListener.onBackStackPressed();
+                mOnBackPressedListener = (MainActivity) getActivity();
+                mOnBackPressedListener.onBackStackPressed();
             }
         });
+        mPlayNowPlaying.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (sSongPlaying) {
+                    mPlayNowPlaying.setImageResource(R.drawable.ic_play_song_action);
+                    pauseMusic();
+                    sSongPlaying = false;
+                }
 
-        if (PlaySongService.songPlaying) {
-            play_now_playing.setImageResource(R.drawable.ic_pause_song_action);
-        }
-        else
-            play_now_playing.setImageResource(R.drawable.ic_play_song_action);
+                else  {
+                    mPlayNowPlaying.setImageResource(R.drawable.ic_pause_song_action);
+                    resumeMusic();
+                    sSongPlaying = true;
+                }
+            }
+        });
 
         return view;
     }
