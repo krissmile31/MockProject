@@ -1,15 +1,17 @@
 package com.krissmile31.mockproject;
 
-import static com.krissmile31.mockproject.songs.tab.allsongs.AllSongsFragment.allSongsAdapter;
+import static com.krissmile31.mockproject.songs.tab.allsongs.AllSongsFragment.sAllSongsAdapter;
 
 import android.app.LoaderManager;
 import android.content.ContentUris;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -28,7 +30,10 @@ import com.google.android.material.navigation.NavigationView;
 import com.krissmile31.mockproject.home.HomeFragment;
 import com.krissmile31.mockproject.interfaces.OnBackPressedListener;
 import com.krissmile31.mockproject.interfaces.OnShowMusic;
-import com.krissmile31.mockproject.model.Album;
+import com.krissmile31.mockproject.models.Album;
+import com.krissmile31.mockproject.models.Artist;
+import com.krissmile31.mockproject.models.Genre;
+import com.krissmile31.mockproject.models.Song;
 import com.krissmile31.mockproject.nowplaying.NowPlayingFragment;
 import com.krissmile31.mockproject.settings.SettingFragment;
 import com.krissmile31.mockproject.songs.MusicFragment;
@@ -44,11 +49,16 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
     private NavigationView mNavigationView;
     private DrawerLayout mDrawerLayout;
     private ImageView mMenuSideBar;
-    public static ConstraintLayout playSongBackground;
-    public static ImageView thumbnail_play_song, play_background, exit_play_song_background;
-    public static TextView tv_song_background, tv_singer_background;
-    private boolean isLoaded;
-    public static List<Album> albumList = new ArrayList<>();
+    public static ConstraintLayout sPlaySongBackground;
+    public static ImageView sThumbnailPlaySong, sBtnPlayBar, sBtnPreSongBar, sBtnNextSongBar;
+    private ImageView mExitPlaySongBackground;
+    public static TextView sSongBackground, sSingerBackground;
+    private boolean mIsLoaded;
+    public static List<Song> sSongList = new ArrayList<>();
+    public static List<Album> sAlbumList = new ArrayList<>();
+    public static List<Artist> sArtistList = new ArrayList<>();
+    public static List<Genre> sGenreList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,12 +70,14 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
         mDrawerLayout = findViewById(R.id.drawLayout);
         mMenuSideBar = findViewById(R.id.menu_side_bar);
 
-        playSongBackground = findViewById(R.id.play_song_background);
-        thumbnail_play_song = findViewById(R.id.thumbnail_play_song);
-        tv_song_background = findViewById(R.id.tv_song_background);
-        tv_singer_background = findViewById(R.id.tv_singer_background);
-        play_background = findViewById(R.id.play_background);
-        exit_play_song_background = findViewById(R.id.exit_play_song_background);
+        sPlaySongBackground = findViewById(R.id.play_song_background);
+        sThumbnailPlaySong = findViewById(R.id.thumbnail_play_song);
+        sSongBackground = findViewById(R.id.tv_song_background);
+        sSingerBackground = findViewById(R.id.tv_singer_background);
+        sBtnPlayBar = findViewById(R.id.play_background);
+        sBtnPreSongBar = findViewById(R.id.btn_pre);
+        sBtnNextSongBar = findViewById(R.id.btn_next);
+        mExitPlaySongBackground = findViewById(R.id.exit_play_song_background);
 
         mBottomNavigationView.setItemIconTintList(null);
         mNavigationView.setItemIconTintList(null);
@@ -78,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
             }
         });
 
-        replaceFragment(new HomeFragment());
+        replaceFragment(new MusicFragment());
 
         mBottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -101,26 +113,43 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
         });
 
 
-        exit_play_song_background.setOnClickListener(new View.OnClickListener() {
+        mExitPlaySongBackground.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                playSongBackground.setVisibility(View.GONE);
+                sPlaySongBackground.setVisibility(View.GONE);
             }
         });
 
+        onNewIntent(getIntent());
 
-//        String open = getIntent().getStringExtra("notification");
-//        if (open != null) {
-//            if (open.equals("open_now_playing")) {
-////                Bundle bundle = new Bundle();
-////                bundle.putSerializable("play_song_details", album);
-////                NowPlayingFragment nowPlayingFragment = new NowPlayingFragment();
-////                nowPlayingFragment.setArguments(bundle);
-//
-//                getSupportFragmentManager().beginTransaction().replace(R.id.drawLayout, new NowPlayingFragment()).addToBackStack("now_playing").commit();
-//
-//            }
-//        }
+//        Log.e("TAG", "onCreate: " + getIntent().getStringExtra("notification"));
+//        openNowPlaying();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        Bundle extras = intent.getExtras();
+        Log.e("TAG", "onCreate: " + extras );
+
+        if (extras != null) {
+            if (extras.containsKey("onNotiClick")) {
+                Log.e("TAG", "onCreate: " + extras);
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.drawLayout, new NowPlayingFragment()).addToBackStack("now_playing").commit();
+
+            }
+        }
+        super.onNewIntent(intent);
+
+    }
+
+    private void openNowPlaying() {
+        String extras = getIntent().getStringExtra("notification");
+        if (extras != null && extras.equals("onNotiClick")) {
+            Log.e("TAG", "onCreate: " + extras );
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new NowPlayingFragment()).addToBackStack("bottom_nav").commit();
+
+        }
     }
 
     public void replaceFragment(Fragment fragment) {
@@ -144,8 +173,8 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
 
     @Override
     public void displaySongs() {
-        if (!isLoaded) {
-            isLoaded = true;
+        if (!mIsLoaded) {
+            mIsLoaded = true;
             getLoaderManager().initLoader(0, null, this);
         }
         else
@@ -174,7 +203,8 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
                 String song = cursor.getString((int) cursor.getColumnIndex(MediaStore.Audio.Media.TITLE));
                 String singer = cursor.getString((int) cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
 
-                Uri data = Uri.parse(cursor.getString((int) cursor.getColumnIndex(MediaStore.Audio.Media.DATA)));
+                Uri data = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, id);
+//                Uri data = Uri.parse(cursor.getString((int) cursor.getColumnIndex(MediaStore.Audio.Media.DATA)));
                 Uri thumbnail = ContentUris.withAppendedId(Uri.parse("content://media/external/audio/albumart"),
                         cursor.getLong((int) cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID)));
 
@@ -208,14 +238,14 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
             } while (cursor.moveToNext());
         }
 
-        Collections.sort(albumList, new Comparator<Album>() {
+        Collections.sort(sSongList, new Comparator<Song>() {
             @Override
-            public int compare(Album album_first, Album album_second) {
-                return album_first.getSong().compareTo(album_second.getSong());
+            public int compare(Song song_first, Song song_second) {
+                return song_first.getSong().compareTo(song_second.getSong());
             }
         });
 
-        allSongsAdapter.notifyDataSetChanged();
+        sAllSongsAdapter.notifyDataSetChanged();
 
     }
 
