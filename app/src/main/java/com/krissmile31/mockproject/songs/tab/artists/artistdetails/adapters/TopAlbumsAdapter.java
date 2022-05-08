@@ -26,7 +26,8 @@ public class TopAlbumsAdapter extends RecyclerView.Adapter<TopAlbumsAdapter.MyVi
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
-        View itemView = LayoutInflater.from(context).inflate(R.layout.top_albums_item, parent, false);
+        View itemView = LayoutInflater.from(context).inflate(R.layout.top_albums_item,
+                parent, false);
         return new MyViewHolder(itemView, context);
     }
 

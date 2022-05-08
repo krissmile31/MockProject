@@ -1,5 +1,7 @@
 package com.krissmile31.mockproject.songs.tab.genres.adapter;
 
+import static com.krissmile31.mockproject.services.ServiceUtils.getThumbnail;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.krissmile31.mockproject.R;
 import com.krissmile31.mockproject.models.Genre;
-import com.krissmile31.mockproject.models.Song;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -28,7 +29,8 @@ public class GenresAdapter extends RecyclerView.Adapter<GenresAdapter.MyViewHold
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
-        View itemView = LayoutInflater.from(context).inflate(R.layout.genres_item, parent, false);
+        View itemView = LayoutInflater.from(context).inflate(R.layout.genres_item,
+                parent, false);
         return new MyViewHolder(itemView, context);
     }
 
@@ -58,9 +60,7 @@ public class GenresAdapter extends RecyclerView.Adapter<GenresAdapter.MyViewHold
         }
 
         public void bind(Genre genre) {
-//            mThumbnailGenres.setImageResource(song.getThumbnail());
-            Picasso.get().load(genre.getThumbnailGenre()).placeholder(R.drawable.ic_logo)
-                    .error(R.drawable.ic_logo).fit().into(mThumbnailGenres);
+            getThumbnail(genre.getThumbnailGenre(), mThumbnailGenres);
             mTvGenres.setText(genre.getGenreName());
             mNoSongsGenres.setText(String.valueOf(genre.getNoSongsGenre()) + " Songs");
         }

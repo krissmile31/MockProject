@@ -1,6 +1,9 @@
 package com.krissmile31.mockproject.songs.tab.allsongs;
 
-import android.content.Intent;
+import static android.content.ContentValues.TAG;
+import static com.krissmile31.mockproject.MainActivity.sMiniPlayer;
+import static com.krissmile31.mockproject.MainActivity.sSongList;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,15 +17,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.krissmile31.mockproject.MainActivity;
 import com.krissmile31.mockproject.R;
 import com.krissmile31.mockproject.interfaces.OnDataMiniPlayer;
-import com.krissmile31.mockproject.interfaces.OnItemClickListener;
+import com.krissmile31.mockproject.interfaces.OnSongClickListener;
 import com.krissmile31.mockproject.interfaces.OnShowMusic;
 import com.krissmile31.mockproject.models.Song;
 import com.krissmile31.mockproject.nowplaying.NowPlayingFragment;
 import com.krissmile31.mockproject.songs.tab.allsongs.adapter.AllSongsAdapter;
 
-import static com.krissmile31.mockproject.MainActivity.sMiniPlayer;
-import static com.krissmile31.mockproject.MainActivity.sSongList;
-import static com.krissmile31.mockproject.services.PlaySongService.TAG;
+import static com.krissmile31.mockproject.services.ServiceUtils.sCurrentSongIndex;
 
 public class AllSongsFragment extends Fragment {
     private RecyclerView mRclAllSongs;
@@ -54,10 +55,13 @@ public class AllSongsFragment extends Fragment {
         return view;
     }
 
-    private OnItemClickListener mListener = new OnItemClickListener() {
+    private OnSongClickListener mListener = new OnSongClickListener() {
         @Override
         public void onItemClick(Song song) {
             Log.e(TAG, "onItemClick: " + song.getData());
+
+            // get position
+            sCurrentSongIndex = sSongList.indexOf(song);
 
             onDataMiniPlayer = (MainActivity) getActivity();
             if (onDataMiniPlayer != null)

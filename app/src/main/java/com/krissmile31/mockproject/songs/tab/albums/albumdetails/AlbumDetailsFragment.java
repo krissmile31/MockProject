@@ -15,8 +15,12 @@ import android.widget.TextView;
 import com.krissmile31.mockproject.MainActivity;
 import com.krissmile31.mockproject.R;
 import com.krissmile31.mockproject.interfaces.OnBackPressedListener;
+import com.krissmile31.mockproject.models.Album;
 import com.krissmile31.mockproject.models.Song;
 import com.krissmile31.mockproject.songs.tab.albums.albumdetails.adapter.AlbumDetailsAdapter;
+import com.squareup.picasso.Picasso;
+
+import static com.krissmile31.mockproject.services.ServiceUtils.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,13 +65,12 @@ public class AlbumDetailsFragment extends Fragment {
         mRclAlbumDetails.setLayoutManager(new LinearLayoutManager(getContext()));
 
         Bundle bundle = this.getArguments();
-        Song song = (Song) bundle.get("album_details");
+        Album album = (Album) bundle.get("album_details");
 
-//        String naem = bundle.getString("name");
-        mThumbnailAlbum.setImageResource(song.getThumbnail());
-        mThumbnailAlbumDetail.setImageResource(song.getThumbnail());
-        mTvAlbumDetail.setText(song.getAlbumName());
-        mSingerAlbum.setText(song.getSinger());
+        getThumbnail(album.getThumbnailAlbum(), mThumbnailAlbum);
+        getThumbnail(album.getThumbnailAlbum(), mThumbnailAlbumDetail);
+        mTvAlbumDetail.setText(album.getAlbumName());
+        mSingerAlbum.setText(album.getSingerName());
 //        tv_period_album_details.setText("1996 . " + album.getYear() + " . 64 min");
 
         mBtnBackAlbum.setOnClickListener(new View.OnClickListener() {

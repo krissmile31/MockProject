@@ -34,7 +34,8 @@ public class MusicFragment extends Fragment {
         mMusicFragmentAdapter = new MusicFragmentAdapter(this);
         mViewPager.setAdapter(mMusicFragmentAdapter);
 
-        new TabLayoutMediator(mTabLayout, mViewPager, new TabLayoutMediator.TabConfigurationStrategy() {
+        new TabLayoutMediator(mTabLayout, mViewPager,
+                new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                 switch (position){

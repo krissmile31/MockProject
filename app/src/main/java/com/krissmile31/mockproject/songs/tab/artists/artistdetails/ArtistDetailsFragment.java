@@ -1,5 +1,7 @@
 package com.krissmile31.mockproject.songs.tab.artists.artistdetails;
 
+import static com.krissmile31.mockproject.services.ServiceUtils.getThumbnail;
+
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import com.krissmile31.mockproject.MainActivity;
 import com.krissmile31.mockproject.R;
 import com.krissmile31.mockproject.interfaces.OnBackPressedListener;
+import com.krissmile31.mockproject.models.Artist;
 import com.krissmile31.mockproject.models.Song;
 import com.krissmile31.mockproject.songs.tab.artists.artistdetails.adapters.TopAlbumsAdapter;
 import com.krissmile31.mockproject.songs.tab.artists.artistdetails.adapters.TopSongsAdapter;
@@ -54,7 +57,8 @@ public class ArtistDetailsFragment extends Fragment {
 
         mTopAlbumsAdapter = new TopAlbumsAdapter(mSongList);
         mRclTopAlbums.setAdapter(mTopAlbumsAdapter);
-        mRclTopAlbums.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+        mRclTopAlbums.setLayoutManager(new LinearLayoutManager(getContext(),
+                RecyclerView.HORIZONTAL, false));
 
         // Top Songs
         mSongList = new ArrayList<>();
@@ -66,10 +70,9 @@ public class ArtistDetailsFragment extends Fragment {
         mRclTopSongs.setLayoutManager(new LinearLayoutManager(getContext()));
 
         Bundle bundle = this.getArguments();
-        Song song = (Song) bundle.get("artist_details");
-        mThumbnailArtistDetail.setImageResource(song.getThumbnail());
-        mTvArtistDetail.setText(song.getSinger());
-
+        Artist artist = (Artist) bundle.get("artist_details");
+        getThumbnail(artist.getThumbnailArtist(), mThumbnailArtistDetail);
+        mTvArtistDetail.setText(artist.getArtistName());
 
         mBtnBackArtists.setOnClickListener(new View.OnClickListener() {
             @Override

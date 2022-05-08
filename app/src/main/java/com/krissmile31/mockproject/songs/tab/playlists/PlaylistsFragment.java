@@ -1,27 +1,23 @@
 package com.krissmile31.mockproject.songs.tab.playlists;
 
+import static com.krissmile31.mockproject.MainActivity.sPlaylist;
+
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.krissmile31.mockproject.R;
-import com.krissmile31.mockproject.models.Song;
-import com.krissmile31.mockproject.songs.tab.playlists.adapter.MyPlaylistsAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.krissmile31.mockproject.R;
+import com.krissmile31.mockproject.songs.tab.playlists.adapter.MyPlaylistsAdapter;
 
 public class PlaylistsFragment extends Fragment {
     private RecyclerView mRclMyPlaylists;
     private MyPlaylistsAdapter mMyPlaylistsAdapter;
-    private List<Song> mSongList;
     private FloatingActionButton mFloatingActionButton;
 
     public PlaylistsFragment() {
@@ -38,16 +34,10 @@ public class PlaylistsFragment extends Fragment {
 
         mFloatingActionButton.setImageTintList(null);
 
-        mSongList = new ArrayList<>();
-        mSongList.add(new Song(R.drawable.queen_colle, "Queens Collection"));
-        mSongList.add(new Song(R.drawable.rihanna_coll, "Rihanna Collection"));
-        mSongList.add(new Song(R.drawable.mj_coll, "MJ Collection"));
-        mSongList.add(new Song(R.drawable.classical_coll, "Classic Collection"));
-
-        mMyPlaylistsAdapter = new MyPlaylistsAdapter(mSongList);
+        mMyPlaylistsAdapter = new MyPlaylistsAdapter(sPlaylist);
         mRclMyPlaylists.setAdapter(mMyPlaylistsAdapter);
-        mRclMyPlaylists.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-
+        mRclMyPlaylists.setLayoutManager(new LinearLayoutManager(getContext(),
+                RecyclerView.HORIZONTAL, false));
 
         return view;
     }

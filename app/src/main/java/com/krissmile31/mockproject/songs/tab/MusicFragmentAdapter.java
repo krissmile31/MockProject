@@ -24,7 +24,8 @@ public class MusicFragmentAdapter extends FragmentStateAdapter {
         super(fragment);
     }
 
-    public MusicFragmentAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
+    public MusicFragmentAdapter(@NonNull FragmentManager fragmentManager,
+                                @NonNull Lifecycle lifecycle) {
         super(fragmentManager, lifecycle);
     }
 

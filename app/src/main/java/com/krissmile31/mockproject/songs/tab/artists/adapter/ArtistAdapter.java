@@ -1,5 +1,7 @@
 package com.krissmile31.mockproject.songs.tab.artists.adapter;
 
+import static com.krissmile31.mockproject.services.ServiceUtils.getThumbnail;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.krissmile31.mockproject.R;
-import com.krissmile31.mockproject.interfaces.OnItemClickListener;
+import com.krissmile31.mockproject.interfaces.OnArtistClickListener;
 import com.krissmile31.mockproject.models.Artist;
 import com.squareup.picasso.Picasso;
 
@@ -19,13 +21,13 @@ import java.util.List;
 
 public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.MyViewHolder> {
     private List<Artist> mArtistList;
-    private OnItemClickListener mListener;
+    private OnArtistClickListener mListener;
 
     public ArtistAdapter(List<Artist> artistList) {
         mArtistList = artistList;
     }
 
-    public ArtistAdapter(List<Artist> artistList, OnItemClickListener listener) {
+    public ArtistAdapter(List<Artist> artistList, OnArtistClickListener listener) {
         mArtistList = artistList;
         mListener = listener;
     }
@@ -34,7 +36,8 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.MyViewHold
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
-        View itemView = LayoutInflater.from(context).inflate(R.layout.artists_item, parent, false);
+        View itemView = LayoutInflater.from(context).inflate(R.layout.artists_item,
+                parent, false);
         return new MyViewHolder(itemView, context);
     }
 
@@ -64,21 +67,19 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.MyViewHold
         }
 
         public void bind(Artist artist) {
-//            mThumbnailArtist.setImageResource(song.getThumbnail());
-            Picasso.get().load(artist.getThumbnailArtist()).placeholder(R.drawable.ic_logo)
-                    .error(R.drawable.ic_logo).fit().into(mThumbnailArtist);
+            getThumbnail(artist.getThumbnailArtist(), mThumbnailArtist);
             mSingerArtists.setText(artist.getArtistName());
             mNoSongsArtists.setText(String.valueOf(artist.getNoSongsArtist()));
             mNoAlbumsArtists.setText(String.valueOf(artist.getNoAlbumsArtist()));
 
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    int position = getAdapterPosition();
-//                    if (mListener != null && position != RecyclerView.NO_POSITION)
-//                        mListener.onItemClick(mArtistList.get(position));
-//                }
-//            });
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    if (mListener != null && position != RecyclerView.NO_POSITION)
+                        mListener.onItemClick(mArtistList.get(position));
+                }
+            });
         }
     }
 }

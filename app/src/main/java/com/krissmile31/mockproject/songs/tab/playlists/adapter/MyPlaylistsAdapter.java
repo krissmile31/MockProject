@@ -1,5 +1,7 @@
 package com.krissmile31.mockproject.songs.tab.playlists.adapter;
 
+import static com.krissmile31.mockproject.services.ServiceUtils.getThumbnail;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,52 +13,54 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.krissmile31.mockproject.R;
-import com.krissmile31.mockproject.models.Song;
+import com.krissmile31.mockproject.models.Playlist;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class MyPlaylistsAdapter extends RecyclerView.Adapter<MyPlaylistsAdapter.MyViewHolder> {
-    private List<Song> mSongList;
+    private List<Playlist> mPlayList;
 
-    public MyPlaylistsAdapter(List<Song> songList) {
-        mSongList = songList;
+    public MyPlaylistsAdapter(List<Playlist> songList) {
+        mPlayList = songList;
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
-        View itemView = LayoutInflater.from(context).inflate(R.layout.my_playlists_item, parent, false);
+        View itemView = LayoutInflater.from(context).inflate(R.layout.my_playlists_item,
+                parent, false);
         return new MyViewHolder(itemView, context);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.bind(mSongList.get(position));
+        holder.bind(mPlayList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return mSongList.size();
+        return mPlayList.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private Context mContext;
         private ImageView mThumbnailPlaylists;
-        private TextView mTvSingerPlaylists;
+        private TextView mTvPlaylistName;
 
         public MyViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
             mContext = context;
 
             mThumbnailPlaylists = itemView.findViewById(R.id.img_my_playlists);
-            mTvSingerPlaylists = itemView.findViewById(R.id.tv_singer_playlists);
+            mTvPlaylistName = itemView.findViewById(R.id.tv_playlist_name);
 
         }
 
-        public void bind(Song song) {
-            mThumbnailPlaylists.setImageResource(song.getThumbnail());
-            mTvSingerPlaylists.setText(song.getSinger());
+        public void bind(Playlist playlist) {
+            getThumbnail(playlist.getThumbnailPlaylist(), mThumbnailPlaylists);
+            mTvPlaylistName.setText(playlist.getPlaylistName());
         }
     }
 }

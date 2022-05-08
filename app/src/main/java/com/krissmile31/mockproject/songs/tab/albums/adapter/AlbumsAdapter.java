@@ -1,5 +1,7 @@
 package com.krissmile31.mockproject.songs.tab.albums.adapter;
 
+import static com.krissmile31.mockproject.services.ServiceUtils.getThumbnail;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.krissmile31.mockproject.R;
-import com.krissmile31.mockproject.interfaces.OnItemClickListener;
+import com.krissmile31.mockproject.interfaces.OnAlbumClickListener;
 import com.krissmile31.mockproject.models.Album;
 import com.squareup.picasso.Picasso;
 
@@ -20,13 +22,13 @@ import java.util.List;
 
 public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.MyViewHolder> {
     private List<Album> mAlbumList;
-    private OnItemClickListener mListener;
+    private OnAlbumClickListener mListener;
 
     public AlbumsAdapter(List<Album> AlbumList) {
         mAlbumList = AlbumList;
     }
 
-    public AlbumsAdapter(List<Album> AlbumList, OnItemClickListener listener) {
+    public AlbumsAdapter(List<Album> AlbumList, OnAlbumClickListener listener) {
         mAlbumList = AlbumList;
         mListener = listener;
     }
@@ -35,7 +37,8 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.MyViewHold
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
-        View itemView = LayoutInflater.from(context).inflate(R.layout.albums_item, parent, false);
+        View itemView = LayoutInflater.from(context).inflate(R.layout.albums_item,
+                parent, false);
         return new MyViewHolder(itemView, context);
     }
 
@@ -68,9 +71,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.MyViewHold
         }
 
         public void bind(Album album) {
-//            mThumbnailAlbum.setImageResource(Album.getThumbnail());
-            Picasso.get().load(album.getThumbnailAlbum()).placeholder(R.drawable.ic_logo)
-                    .error(R.drawable.ic_logo).fit().into(mThumbnailAlbum);
+            getThumbnail(album.getThumbnailAlbum(), mThumbnailAlbum);
             mTvAlbum.setText(album.getAlbumName());
             mSingerAlbum.setText(album.getSingerName());
             mNoAlbumsAlbum.setText(String.valueOf(album.getNoSongsAlbum()));
@@ -85,21 +86,14 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.MyViewHold
                 }
             });
 
-//            mThumbnailAlbum.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    int position = getAdapterPosition();
-//                    if (mListener != null && position != RecyclerView.NO_POSITION)
-//                        mListener.onItemClick(mAlbumList.get(position));
-//
-////                    AppCompatActivity activity = (AppCompatActivity) view.getContext();
-////                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.fa, new AlbumDetailsFragment()).addToBackStack(null).commit();
-//                }
-//            });
+            mThumbnailAlbum.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    if (mListener != null && position != RecyclerView.NO_POSITION)
+                        mListener.onItemClick(mAlbumList.get(position));
+                }
+            });
         }
     }
-
-//    public interface OnDetailsClickListener {
-//        void onDetailClick(Album album);
-//    }
 }

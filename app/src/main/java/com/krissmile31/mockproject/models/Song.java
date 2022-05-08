@@ -15,6 +15,7 @@ public class Song implements Serializable {
     private String albumName;
     private String genre;
     private int year;
+    private int duration;
 
     public Song() {
     }
@@ -198,5 +199,13 @@ public class Song implements Serializable {
 
     public void setYear(int year) {
         this.year = year;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 }

@@ -26,7 +26,8 @@ public class TopSongsAdapter extends RecyclerView.Adapter<TopSongsAdapter.MyView
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
-        View itemView = LayoutInflater.from(context).inflate(R.layout.top_songs_item, parent, false);
+        View itemView = LayoutInflater.from(context).inflate(R.layout.top_songs_item,
+                parent, false);
         return new MyViewHolder(itemView, context);
     }
 

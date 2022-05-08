@@ -1,9 +1,12 @@
 package com.krissmile31.mockproject;
 
-import static com.krissmile31.mockproject.services.PlaySongService.pauseMusic;
-import static com.krissmile31.mockproject.services.PlaySongService.releaseMusic;
-import static com.krissmile31.mockproject.services.PlaySongService.resumeMusic;
-import static com.krissmile31.mockproject.services.PlaySongService.sSongPlaying;
+import static android.service.controls.ControlsProviderService.TAG;
+import static com.krissmile31.mockproject.services.ServiceUtils.getCurrentSong;
+import static com.krissmile31.mockproject.services.ServiceUtils.nextMusic;
+import static com.krissmile31.mockproject.services.ServiceUtils.preMusic;
+import static com.krissmile31.mockproject.services.ServiceUtils.releaseMusic;
+import static com.krissmile31.mockproject.services.ServiceUtils.sCurrentSongIndex;
+import static com.krissmile31.mockproject.services.ServiceUtils.setIconPlaying;
 import static com.krissmile31.mockproject.songs.tab.allsongs.AllSongsFragment.sAllSongsAdapter;
 
 import android.app.LoaderManager;
@@ -38,6 +41,7 @@ import com.krissmile31.mockproject.interfaces.OnShowMusic;
 import com.krissmile31.mockproject.models.Album;
 import com.krissmile31.mockproject.models.Artist;
 import com.krissmile31.mockproject.models.Genre;
+import com.krissmile31.mockproject.models.Playlist;
 import com.krissmile31.mockproject.models.Song;
 import com.krissmile31.mockproject.nowplaying.NowPlayingFragment;
 import com.krissmile31.mockproject.settings.SettingFragment;
@@ -63,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
     private TextView mMiniSongPlayer, mMiniSingerPlayer;
     private boolean mIsLoaded;
     public static List<Song> sSongList = new ArrayList<>();
+    public static List<Playlist> sPlaylist = new ArrayList<>();
     public static List<Album> sAlbumList = new ArrayList<>();
     public static List<Artist> sArtistList = new ArrayList<>();
     public static List<Genre> sGenreList = new ArrayList<>();
@@ -166,20 +171,6 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
 
     }
 
-    public static void setIconPlaying(ImageView icon, int play, int pause) {
-        if (sSongPlaying) {
-            icon.setImageResource(play);
-            pauseMusic();
-            sSongPlaying = false;
-        }
-
-        else  {
-            icon.setImageResource(pause);
-            resumeMusic();
-            sSongPlaying = true;
-        }
-    }
-
     private void openNowPlaying(Song song) {
 
 
@@ -199,10 +190,14 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
                 break;
 
             case R.id.btn_pre:
+                preMusic(this);
+                onDisplayData(getCurrentSong(sCurrentSongIndex));
 
                 break;
 
             case R.id.btn_next:
+                nextMusic(this);
+                onDisplayData(getCurrentSong(sCurrentSongIndex));
 
                 break;
 
@@ -274,6 +269,14 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
 
                 // Playlists
                 long playlistId = cursor.getLong((int) cursor.getColumnIndex(MediaStore.Audio.Playlists._ID));
+                String playlistName = cursor.getString((int) cursor.getColumnIndex(MediaStore.Audio.Playlists.DISPLAY_NAME));
+//                Uri thumbnailPlaylist = ContentUris.withAppendedId(Uri.parse("content://media/external/audio/albumart"),
+//                        cursor.getLong((int) cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID)));
+                Uri thumbnailPlaylist = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, playlistId);
+                Log.e(TAG, "onLoadFinished: " + cursor.getString((int) cursor.getColumnIndex(MediaStore.Audio.Playlists.DISPLAY_NAME)) );
+//                Log.e(TAG, "onLoadFinished: " + cursor.getInt((int) cursor.getColumnIndex(MediaStore.Audio.Playlists.NUM_TRACKS)));
+//                int noSongsPlaylist = cursor.getInt((int) cursor.getColumnIndex(MediaStore.Audio.Playlists.NUM_TRACKS));
+                sPlaylist.add(new Playlist(playlistId, playlistName, thumbnailPlaylist.toString()));
                 // ... tobe continued
 
                 // Albums

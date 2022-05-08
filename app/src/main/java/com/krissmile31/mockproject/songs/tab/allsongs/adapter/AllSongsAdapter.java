@@ -1,10 +1,8 @@
 package com.krissmile31.mockproject.songs.tab.allsongs.adapter;
 
 
-import static com.krissmile31.mockproject.MainActivity.setIconPlaying;
-import static com.krissmile31.mockproject.services.PlaySongService.pauseMusic;
-import static com.krissmile31.mockproject.services.PlaySongService.resumeMusic;
-import static com.krissmile31.mockproject.services.PlaySongService.sSongPlaying;
+import static com.krissmile31.mockproject.services.ServiceUtils.getThumbnail;
+import static com.krissmile31.mockproject.services.ServiceUtils.setIconPlaying;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -21,9 +19,8 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.krissmile31.mockproject.MainActivity;
 import com.krissmile31.mockproject.R;
-import com.krissmile31.mockproject.interfaces.OnItemClickListener;
+import com.krissmile31.mockproject.interfaces.OnSongClickListener;
 import com.krissmile31.mockproject.models.Song;
 import com.krissmile31.mockproject.services.PlaySongService;
 import com.squareup.picasso.Picasso;
@@ -32,13 +29,13 @@ import java.util.List;
 
 public class AllSongsAdapter extends RecyclerView.Adapter<AllSongsAdapter.MyViewHolder> {
     private List<Song> mSongList;
-    private OnItemClickListener mListener;
+    private OnSongClickListener mListener;
 
     public AllSongsAdapter(List<Song> songList) {
         mSongList = songList;
     }
 
-    public AllSongsAdapter(List<Song> songList, OnItemClickListener listener) {
+    public AllSongsAdapter(List<Song> songList, OnSongClickListener listener) {
         mSongList = songList;
         mListener = listener;
     }
@@ -47,7 +44,8 @@ public class AllSongsAdapter extends RecyclerView.Adapter<AllSongsAdapter.MyView
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
-        View itemView = LayoutInflater.from(context).inflate(R.layout.all_songs_item, parent, false);
+        View itemView = LayoutInflater.from(context).inflate(R.layout.all_songs_item,
+                parent, false);
         return new MyViewHolder(itemView, context);
     }
 
@@ -81,9 +79,7 @@ public class AllSongsAdapter extends RecyclerView.Adapter<AllSongsAdapter.MyView
         }
 
         public void bind(Song song) {
-//            img_all_songs.setImageResource(album.getThumbnail());
-            Picasso.get().load(song.getImage()).placeholder(R.drawable.ic_logo)
-                    .error(R.drawable.ic_logo).fit().into(mThumbnailSong);
+            getThumbnail(song.getImage(), mThumbnailSong);
             mTvSong.setText(song.getSong());
             mTvSinger.setText(song.getSinger());
 
@@ -96,7 +92,6 @@ public class AllSongsAdapter extends RecyclerView.Adapter<AllSongsAdapter.MyView
                     }
 
                     mBtnPlaySong.setImageResource(R.drawable.ic_pause_gradie);
-
 
                     Intent intent = new Intent(mContext, PlaySongService.class);
                     intent.putExtra("song_details", song);

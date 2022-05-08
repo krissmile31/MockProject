@@ -1,7 +1,19 @@
 package com.krissmile31.mockproject.services;
 
-import static com.krissmile31.mockproject.MainActivity.sSongList;
+import static android.content.ContentValues.TAG;
 import static com.krissmile31.mockproject.services.MyChannel.CHANNEL_ID;
+import static com.krissmile31.mockproject.services.ServiceUtils.BROADCAST_RECEIVER;
+import static com.krissmile31.mockproject.services.ServiceUtils.getCurrentSong;
+import static com.krissmile31.mockproject.services.ServiceUtils.nextMusic;
+import static com.krissmile31.mockproject.services.ServiceUtils.onSongCompletion;
+import static com.krissmile31.mockproject.services.ServiceUtils.pauseMusic;
+import static com.krissmile31.mockproject.services.ServiceUtils.playMusic;
+import static com.krissmile31.mockproject.services.ServiceUtils.preMusic;
+import static com.krissmile31.mockproject.services.ServiceUtils.releaseMusic;
+import static com.krissmile31.mockproject.services.ServiceUtils.resumeMusic;
+import static com.krissmile31.mockproject.services.ServiceUtils.sCurrentSongIndex;
+import static com.krissmile31.mockproject.services.ServiceUtils.sMediaPlayer;
+import static com.krissmile31.mockproject.services.ServiceUtils.sSongPlaying;
 
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -32,13 +44,7 @@ import com.squareup.picasso.Target;
 import java.io.IOException;
 
 public class PlaySongService extends Service {
-    public static MediaPlayer sMediaPlayer;
     private Song mGetSong;
-    public static boolean sSongPlaying;
-    private int mCurrentSongIndex;
-
-    public static final String BROADCAST_RECEIVER = "broadcast_receiver";
-    public static final String TAG = PlaySongService.class.getSimpleName();
     private final int PAUSE = 1;
     private final int RESUME = 2;
     private final int EXIT = 3;
@@ -66,7 +72,7 @@ public class PlaySongService extends Service {
 
             if (song != null) {
                 mGetSong = song;
-                playMusic(song);
+                playMusic(song, getApplicationContext());
                 sSongPlaying = true;
             }
         }
@@ -82,7 +88,8 @@ public class PlaySongService extends Service {
         Log.e(TAG, "onCreate()");
         sMediaPlayer = new MediaPlayer();
 
-        onCompletion();
+        // after timeout play a song
+        onSongCompletion(getApplicationContext());
 //        if(mediaPlayer == null)
 //            mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.song);
     }
@@ -109,7 +116,7 @@ public class PlaySongService extends Service {
 
             if (song != null) {
                 mGetSong = song;
-                playMusic(song);
+                playMusic(song, getApplicationContext());
                 sSongPlaying = true;
 
                 sendNotification(song);
@@ -123,23 +130,6 @@ public class PlaySongService extends Service {
         return START_NOT_STICKY;
     }
 
-    private void playMusic(Song song) {
-        try {
-            sMediaPlayer.reset();
-            sMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            sMediaPlayer.setDataSource(getApplicationContext(), Uri.parse(song.getData()));
-//            Log.e(TAG, "playMusic: " + song.getData());
-//            Log.e(TAG, "playMusic: " + song.getSinger());
-
-//            mSongPlaying = true;
-            sMediaPlayer.prepare();
-            sMediaPlayer.start();
-
-        } catch (IllegalArgumentException | IllegalStateException | IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     private void initMediaPlayer(Song song) {
         if (sMediaPlayer == null) {
@@ -161,15 +151,25 @@ public class PlaySongService extends Service {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("notification", "onNotiClick");
 
-        PendingIntent pendingIntent = null;
+        PendingIntent pendingIntent;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            pendingIntent = PendingIntent.getActivity(this, 0, intent,PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+            pendingIntent = PendingIntent.getActivity(
+                    this,
+                    0,
+                    intent,
+                    PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
         } else {
-            pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            pendingIntent = PendingIntent.getActivity(
+                    this,
+                    0,
+                    intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
 
         }
 
-        NotificationCompat.Builder notificationCompat = new NotificationCompat.Builder(this, CHANNEL_ID)
+        NotificationCompat.Builder notificationCompat = new NotificationCompat.Builder(
+                this,
+                CHANNEL_ID)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setSmallIcon(R.drawable.ic_logo)
                 .setContentTitle(song.getSong())
@@ -179,7 +179,8 @@ public class PlaySongService extends Service {
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.logo))
                 .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
                         .setShowActionsInCompactView(0, 1, 2)
-                        .setMediaSession(new MediaSessionCompat(this, "Play Music").getSessionToken()));
+                        .setMediaSession(new MediaSessionCompat(this,
+                                "Play Music").getSessionToken()));
 
         Picasso.get().load(song.getImage()).into(new Target() {
             @Override
@@ -201,16 +202,38 @@ public class PlaySongService extends Service {
 
         if (sSongPlaying) {
             notificationCompat
-                    .addAction(R.drawable.ic_baseline_skip_previous_24, "Previous", getPendingIntent(this, PREVIOUS))
-                    .addAction(R.drawable.ic_baseline_pause_24, "Pause", getPendingIntent(this, PAUSE))
-                    .addAction(R.drawable.ic_baseline_skip_next_24, "Next", getPendingIntent(this, NEXT))
-                    .addAction(R.drawable.ic_baseline_clear_24, "Exit", getPendingIntent(this, EXIT));
+                    .addAction(R.drawable.ic_baseline_skip_previous_24,
+                            "Previous",
+                            getPendingIntent(this, PREVIOUS))
+
+                    .addAction(R.drawable.ic_baseline_pause_24,
+                            "Pause",
+                            getPendingIntent(this, PAUSE))
+
+                    .addAction(R.drawable.ic_baseline_skip_next_24,
+                            "Next",
+                            getPendingIntent(this, NEXT))
+
+                    .addAction(R.drawable.ic_baseline_clear_24,
+                            "Exit",
+                            getPendingIntent(this, EXIT));
         } else {
             notificationCompat
-                    .addAction(R.drawable.ic_baseline_skip_previous_24, "Previous", getPendingIntent(this, PREVIOUS))
-                    .addAction(R.drawable.ic_baseline_play_arrow_24, "Play", getPendingIntent(this, RESUME))
-                    .addAction(R.drawable.ic_baseline_skip_next_24, "Next", getPendingIntent(this, NEXT))
-                    .addAction(R.drawable.ic_baseline_clear_24, "Exit", getPendingIntent(this, EXIT));
+                    .addAction(R.drawable.ic_baseline_skip_previous_24,
+                            "Previous",
+                            getPendingIntent(this, PREVIOUS))
+
+                    .addAction(R.drawable.ic_baseline_play_arrow_24,
+                            "Play",
+                            getPendingIntent(this, RESUME))
+
+                    .addAction(R.drawable.ic_baseline_skip_next_24,
+                            "Next",
+                            getPendingIntent(this, NEXT))
+
+                    .addAction(R.drawable.ic_baseline_clear_24,
+                            "Exit",
+                            getPendingIntent(this, EXIT));
         }
 
         Notification notification = notificationCompat.build();
@@ -248,70 +271,17 @@ public class PlaySongService extends Service {
                 break;
 
             case PREVIOUS:
-                preMusic();
+                preMusic(getApplicationContext());
+                sendNotification(getCurrentSong(sCurrentSongIndex));
                 break;
 
             case NEXT:
-                nextMusic();
+                nextMusic(getApplicationContext());
+                sendNotification(getCurrentSong(sCurrentSongIndex));
                 break;
         }
     }
 
-    public static void pauseMusic() {
-        if (sMediaPlayer != null && sSongPlaying) {
-            sMediaPlayer.pause();
-            sSongPlaying = false;
-
-        }
-    }
-
-    public static void resumeMusic() {
-        if (sMediaPlayer != null && !sSongPlaying) {
-            sMediaPlayer.start();
-            sSongPlaying = true;
-        }
-    }
-
-    private void playCurrentSong(int position) {
-        Song song = sSongList.get(position);
-        playMusic(song);
-        sendNotification(song);
-        sSongPlaying = true;
-    }
-
-    private void preMusic() {
-        if (mCurrentSongIndex > 0)
-            mCurrentSongIndex--;
-        else
-            mCurrentSongIndex = sSongList.size() - 1;
-
-        playCurrentSong(mCurrentSongIndex);
-    }
-
-    private void nextMusic() {
-        if (mCurrentSongIndex >= sSongList.size() - 1)
-            mCurrentSongIndex = 0;
-        else
-            mCurrentSongIndex++;
-
-        playCurrentSong(mCurrentSongIndex);
-    }
-
-    private void onCompletion() {
-        sMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mediaPlayer) {
-
-                if (mCurrentSongIndex >= sSongList.size() - 1) {
-                    mCurrentSongIndex = 0;
-                } else {
-//                    playMusic(sSongList.get(mCurrentSongIndex + 1));
-                    mCurrentSongIndex++;
-                }
-                playMusic(sSongList.get(mCurrentSongIndex));
-            }
-        });
-    }
 
 
     @Override
@@ -320,12 +290,5 @@ public class PlaySongService extends Service {
         Log.e(TAG, "onDestroy()");
 
         releaseMusic();
-    }
-
-    public static void releaseMusic() {
-        if (sMediaPlayer != null) {
-            sMediaPlayer.release();
-            sMediaPlayer = null;
-        }
     }
 }
