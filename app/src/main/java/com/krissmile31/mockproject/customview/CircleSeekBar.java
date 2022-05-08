@@ -28,7 +28,6 @@ public class CircleSeekBar extends View {
     private float mCircleWidth, mCircleHeight;
     private float mCircleRadius;
     private float mOnProgress;
-    private float mIndicatorPosition;
     private OnCircleSeekBarListener mListener;
     private float mCxIndicator, mCyIndicator;
 
@@ -118,7 +117,8 @@ public class CircleSeekBar extends View {
         mColorsShader = new int[]{START_COLOR, CENTER_COLOR, END_COLOR};
         mPositionsShader = new float[]{0, 1, 0};
 
-        mGradientColor = new LinearGradient(0, 0, 0, getHeight(), mColorsShader, mPositionsShader, Shader.TileMode.MIRROR);
+        mGradientColor = new LinearGradient(0, 0, 0, getHeight(),
+                mColorsShader, mPositionsShader, Shader.TileMode.MIRROR);
 
     }
 
@@ -243,8 +243,13 @@ public class CircleSeekBar extends View {
 
     public void changePathIndicator(){
 
-        mCxIndicator = (float) (mCircleRectF.centerX() + (mCircleRadius - INDICATOR_RADIUS + STROKE_WIDTH/2) * Math.cos(Math.toRadians(-90 + mOnProgress * 360 /100f)));
-        mCyIndicator = (float) (mCircleRectF.centerY() + (mCircleRadius - INDICATOR_RADIUS + STROKE_WIDTH/2) * Math.sin(Math.toRadians(-90 + mOnProgress * 360/100f)));
+        mCxIndicator = (float) (mCircleRectF.centerX()
+                + (mCircleRadius - INDICATOR_RADIUS + STROKE_WIDTH/2)
+                * Math.cos(Math.toRadians(-90 + mOnProgress * 360 /100f)));
+
+        mCyIndicator = (float) (mCircleRectF.centerY()
+                + (mCircleRadius - INDICATOR_RADIUS + STROKE_WIDTH/2)
+                * Math.sin(Math.toRadians(-90 + mOnProgress * 360/100f)));
 
     }
 

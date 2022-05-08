@@ -1,16 +1,13 @@
-package com.krissmile31.mockproject.services;
+package com.krissmile31.mockproject.utils;
 
-import static com.krissmile31.mockproject.MainActivity.sSongList;
+import static com.krissmile31.mockproject.utils.SongUtils.*;
 
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.widget.ImageView;
 
-import com.krissmile31.mockproject.R;
 import com.krissmile31.mockproject.models.Song;
-import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 
@@ -18,23 +15,6 @@ public class ServiceUtils implements MediaPlayer.OnCompletionListener {
     public static boolean sSongPlaying;
     public static int sCurrentSongIndex;
     public static MediaPlayer sMediaPlayer;
-
-    public static final String BROADCAST_RECEIVER = "broadcast_receiver";
-    public static final String TAG = PlaySongService.class.getSimpleName();
-
-    public static void setIconPlaying(ImageView icon, int play, int pause) {
-        if (sSongPlaying) {
-            icon.setImageResource(play);
-            pauseMusic();
-            sSongPlaying = false;
-        }
-
-        else  {
-            icon.setImageResource(pause);
-            resumeMusic();
-            sSongPlaying = true;
-        }
-    }
 
     public static void pauseMusic() {
         if (sMediaPlayer != null && sSongPlaying) {
@@ -117,13 +97,5 @@ public class ServiceUtils implements MediaPlayer.OnCompletionListener {
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
 
-    }
-
-    public static void getThumbnail(String data, ImageView drawable) {
-        Picasso.get().load(data)
-                .placeholder(R.drawable.ic_logo)
-                .error(R.drawable.ic_logo)
-                .fit()
-                .into(drawable);
     }
 }

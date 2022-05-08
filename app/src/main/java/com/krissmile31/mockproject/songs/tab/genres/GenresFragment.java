@@ -1,6 +1,6 @@
 package com.krissmile31.mockproject.songs.tab.genres;
 
-import static com.krissmile31.mockproject.MainActivity.sGenreList;
+import static com.krissmile31.mockproject.utils.SongUtils.sGenreList;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

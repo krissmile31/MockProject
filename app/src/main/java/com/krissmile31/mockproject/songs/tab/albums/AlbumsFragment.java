@@ -1,6 +1,7 @@
 package com.krissmile31.mockproject.songs.tab.albums;
 
-import static com.krissmile31.mockproject.MainActivity.sAlbumList;
+import static com.krissmile31.mockproject.utils.Constants.*;
+import static com.krissmile31.mockproject.utils.SongUtils.*;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -43,7 +44,7 @@ public class AlbumsFragment extends Fragment {
         @Override
         public void onItemClick(Album album) {
             Bundle bundle = new Bundle();
-            bundle.putSerializable("album_details", album);
+            bundle.putSerializable(ALBUM_DETAIL, album);
 
 //            bundle.putString("name", "Krissmile31");
             AlbumDetailsFragment albumDetailsFragment = new AlbumDetailsFragment();
@@ -51,7 +52,7 @@ public class AlbumsFragment extends Fragment {
             getActivity().getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.constraint_fragment_songs, albumDetailsFragment)
-                    .addToBackStack("album_details")
+                    .addToBackStack(ALBUM_DETAIL)
                     .commit();
 
         }

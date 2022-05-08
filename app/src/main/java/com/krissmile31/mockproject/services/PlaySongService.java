@@ -1,19 +1,10 @@
 package com.krissmile31.mockproject.services;
 
 import static android.content.ContentValues.TAG;
-import static com.krissmile31.mockproject.services.MyChannel.CHANNEL_ID;
-import static com.krissmile31.mockproject.services.ServiceUtils.BROADCAST_RECEIVER;
-import static com.krissmile31.mockproject.services.ServiceUtils.getCurrentSong;
-import static com.krissmile31.mockproject.services.ServiceUtils.nextMusic;
-import static com.krissmile31.mockproject.services.ServiceUtils.onSongCompletion;
-import static com.krissmile31.mockproject.services.ServiceUtils.pauseMusic;
-import static com.krissmile31.mockproject.services.ServiceUtils.playMusic;
-import static com.krissmile31.mockproject.services.ServiceUtils.preMusic;
-import static com.krissmile31.mockproject.services.ServiceUtils.releaseMusic;
-import static com.krissmile31.mockproject.services.ServiceUtils.resumeMusic;
-import static com.krissmile31.mockproject.services.ServiceUtils.sCurrentSongIndex;
-import static com.krissmile31.mockproject.services.ServiceUtils.sMediaPlayer;
-import static com.krissmile31.mockproject.services.ServiceUtils.sSongPlaying;
+import static com.krissmile31.mockproject.utils.Constants.BROADCAST_RECEIVER;
+import static com.krissmile31.mockproject.utils.ServiceUtils.*;
+import static com.krissmile31.mockproject.utils.Constants.*;
+
 
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -33,7 +24,7 @@ import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
-import com.krissmile31.mockproject.LogUtils;
+import com.krissmile31.mockproject.utils.LogUtils;
 import com.krissmile31.mockproject.MainActivity;
 import com.krissmile31.mockproject.R;
 import com.krissmile31.mockproject.models.Song;
@@ -68,7 +59,7 @@ public class PlaySongService extends Service {
         Log.e(TAG, "onBind()");
 
         if (intent != null) {
-            Song song = (Song) intent.getSerializableExtra("song_details");
+            Song song = (Song) intent.getSerializableExtra(SONG_DETAIL);
 
             if (song != null) {
                 mGetSong = song;
@@ -110,9 +101,8 @@ public class PlaySongService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         if (intent != null) {
-            Song song = (Song) intent.getSerializableExtra("song_details");
+            Song song = (Song) intent.getSerializableExtra(SONG_DETAIL);
 //            Log.e(TAG, "playMusic: " + song.getData());
-
 
             if (song != null) {
                 mGetSong = song;
@@ -149,7 +139,7 @@ public class PlaySongService extends Service {
     private void sendNotification(Song song) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("notification", "onNotiClick");
+        intent.putExtra(NOTIFICATION, song);
 
         PendingIntent pendingIntent;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
@@ -244,7 +234,8 @@ public class PlaySongService extends Service {
         Intent intent = new Intent(this, SongReceiver.class);
         intent.putExtra(BROADCAST_RECEIVER, action);
 
-        return PendingIntent.getBroadcast(context, action, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getBroadcast(context, action, intent,
+                PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     private void handleActionControlSong(int action) {

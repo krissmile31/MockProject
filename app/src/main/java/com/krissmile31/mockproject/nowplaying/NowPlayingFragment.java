@@ -1,10 +1,8 @@
 package com.krissmile31.mockproject.nowplaying;
 
-import static com.krissmile31.mockproject.services.ServiceUtils.getCurrentSong;
-import static com.krissmile31.mockproject.services.ServiceUtils.nextMusic;
-import static com.krissmile31.mockproject.services.ServiceUtils.preMusic;
-import static com.krissmile31.mockproject.services.ServiceUtils.sCurrentSongIndex;
-import static com.krissmile31.mockproject.services.ServiceUtils.setIconPlaying;
+import static com.krissmile31.mockproject.utils.Constants.*;
+import static com.krissmile31.mockproject.utils.ServiceUtils.*;
+import static com.krissmile31.mockproject.utils.SongUtils.*;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -58,7 +56,7 @@ public class NowPlayingFragment extends Fragment implements View.OnClickListener
 
     private void getDataSongPlaying() {
         Bundle bundle = this.getArguments();
-        Song song = (Song) bundle.get("play_song_details");
+        Song song = (Song) bundle.get(NOW_PLAYING);
         Log.e("TAG", "onDisplayData: " + bundle );
 
         displaySongNowPlaying(song);

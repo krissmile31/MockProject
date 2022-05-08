@@ -2,7 +2,6 @@ package com.krissmile31.mockproject.songs.tab.allsongs;
 
 import static android.content.ContentValues.TAG;
 import static com.krissmile31.mockproject.MainActivity.sMiniPlayer;
-import static com.krissmile31.mockproject.MainActivity.sSongList;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -23,7 +22,9 @@ import com.krissmile31.mockproject.models.Song;
 import com.krissmile31.mockproject.nowplaying.NowPlayingFragment;
 import com.krissmile31.mockproject.songs.tab.allsongs.adapter.AllSongsAdapter;
 
-import static com.krissmile31.mockproject.services.ServiceUtils.sCurrentSongIndex;
+import static com.krissmile31.mockproject.utils.SongUtils.*;
+import static com.krissmile31.mockproject.utils.ServiceUtils.*;
+import static com.krissmile31.mockproject.utils.Constants.*;
 
 public class AllSongsFragment extends Fragment {
     private RecyclerView mRclAllSongs;
@@ -80,14 +81,14 @@ public class AllSongsFragment extends Fragment {
 
     private void openNowPlaying(Song song) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable("play_song_details", song);
+        bundle.putSerializable(NOW_PLAYING, song);
         NowPlayingFragment nowPlayingFragment = new NowPlayingFragment();
         nowPlayingFragment.setArguments(bundle);
 
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.drawLayout, nowPlayingFragment)
-                .addToBackStack("now_playing")
+                .addToBackStack(NOW_PLAYING)
                 .commit();
     }
 

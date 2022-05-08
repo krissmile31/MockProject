@@ -1,8 +1,8 @@
 package com.krissmile31.mockproject.songs.tab.allsongs.adapter;
 
 
-import static com.krissmile31.mockproject.services.ServiceUtils.getThumbnail;
-import static com.krissmile31.mockproject.services.ServiceUtils.setIconPlaying;
+import static com.krissmile31.mockproject.utils.SongUtils.*;
+import static com.krissmile31.mockproject.utils.Constants.*;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -23,7 +23,6 @@ import com.krissmile31.mockproject.R;
 import com.krissmile31.mockproject.interfaces.OnSongClickListener;
 import com.krissmile31.mockproject.models.Song;
 import com.krissmile31.mockproject.services.PlaySongService;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -94,7 +93,7 @@ public class AllSongsAdapter extends RecyclerView.Adapter<AllSongsAdapter.MyView
                     mBtnPlaySong.setImageResource(R.drawable.ic_pause_gradie);
 
                     Intent intent = new Intent(mContext, PlaySongService.class);
-                    intent.putExtra("song_details", song);
+                    intent.putExtra(SONG_DETAIL, song);
 
                     // started
                     mContext.startService(intent);
@@ -111,19 +110,19 @@ public class AllSongsAdapter extends RecyclerView.Adapter<AllSongsAdapter.MyView
                 }
             });
 
-            itemView.findViewById(R.id.tv_all_songs).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mBtnPlaySong.setImageResource(R.drawable.ic_played);
-
-                    if (mIsConnected) {
-                        mContext.unbindService(serviceConnection);
-                        mIsConnected = false;
-                    }
-
-                    mContext.stopService(new Intent(mContext, PlaySongService.class));
-                }
-            });
+//            itemView.findViewById(R.id.tv_all_songs).setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    mBtnPlaySong.setImageResource(R.drawable.ic_played);
+//
+//                    if (mIsConnected) {
+//                        mContext.unbindService(serviceConnection);
+//                        mIsConnected = false;
+//                    }
+//
+//                    mContext.stopService(new Intent(mContext, PlaySongService.class));
+//                }
+//            });
         }
 
         public ServiceConnection serviceConnection = new ServiceConnection() {

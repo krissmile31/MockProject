@@ -1,12 +1,8 @@
 package com.krissmile31.mockproject;
 
-import static android.service.controls.ControlsProviderService.TAG;
-import static com.krissmile31.mockproject.services.ServiceUtils.getCurrentSong;
-import static com.krissmile31.mockproject.services.ServiceUtils.nextMusic;
-import static com.krissmile31.mockproject.services.ServiceUtils.preMusic;
-import static com.krissmile31.mockproject.services.ServiceUtils.releaseMusic;
-import static com.krissmile31.mockproject.services.ServiceUtils.sCurrentSongIndex;
-import static com.krissmile31.mockproject.services.ServiceUtils.setIconPlaying;
+import static com.krissmile31.mockproject.utils.ServiceUtils.*;
+import static com.krissmile31.mockproject.utils.SongUtils.*;
+import static com.krissmile31.mockproject.utils.Constants.*;
 import static com.krissmile31.mockproject.songs.tab.allsongs.AllSongsFragment.sAllSongsAdapter;
 
 import android.app.LoaderManager;
@@ -18,7 +14,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -35,27 +30,19 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 import com.krissmile31.mockproject.home.HomeFragment;
-import com.krissmile31.mockproject.interfaces.OnBackPressedListener;
-import com.krissmile31.mockproject.interfaces.OnDataMiniPlayer;
-import com.krissmile31.mockproject.interfaces.OnShowMusic;
-import com.krissmile31.mockproject.models.Album;
-import com.krissmile31.mockproject.models.Artist;
-import com.krissmile31.mockproject.models.Genre;
-import com.krissmile31.mockproject.models.Playlist;
-import com.krissmile31.mockproject.models.Song;
+import com.krissmile31.mockproject.interfaces.*;
+import com.krissmile31.mockproject.models.*;
 import com.krissmile31.mockproject.nowplaying.NowPlayingFragment;
 import com.krissmile31.mockproject.settings.SettingFragment;
 import com.krissmile31.mockproject.songs.MusicFragment;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements OnBackPressedListener, OnShowMusic,
-        OnDataMiniPlayer,
-        LoaderManager.LoaderCallbacks<Cursor>, View.OnClickListener, NavigationBarView.OnItemSelectedListener {
+        OnDataMiniPlayer, LoaderManager.LoaderCallbacks<Cursor>,
+        View.OnClickListener, NavigationBarView.OnItemSelectedListener {
 
     private BottomNavigationView mBottomNavigationView;
     private NavigationView mNavigationView;
@@ -66,12 +53,7 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
     private ImageView mMiniExitPlayer;
     private TextView mMiniSongPlayer, mMiniSingerPlayer;
     private boolean mIsLoaded;
-    public static List<Song> sSongList = new ArrayList<>();
-    public static List<Playlist> sPlaylist = new ArrayList<>();
-    public static List<Album> sAlbumList = new ArrayList<>();
-    public static List<Artist> sArtistList = new ArrayList<>();
-    public static List<Genre> sGenreList = new ArrayList<>();
-
+    private OnMiniPlayerClickListener onMiniPlayerClickListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,31 +91,20 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
     @Override
     protected void onNewIntent(Intent intent) {
         Bundle extras = intent.getExtras();
-        Log.e("TAG", "onCreate: " + extras );
-
         if (extras != null) {
-            if (extras.containsKey("onNotiClick")) {
-                Log.e("TAG", "onCreate: " + extras);
+            if (extras.containsKey(NOTIFICATION)) {
+                Song song = (Song) intent.getSerializableExtra(NOTIFICATION);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(NOW_PLAYING, song);
+                NowPlayingFragment nowPlayingFragment = new NowPlayingFragment();
+                nowPlayingFragment.setArguments(bundle);
 
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.drawLayout, new NowPlayingFragment())
-                        .addToBackStack("now_playing").commit();
-
+                        .replace(R.id.drawLayout, nowPlayingFragment)
+                        .addToBackStack(NOW_PLAYING).commit();
             }
         }
         super.onNewIntent(intent);
-
-    }
-
-    private void openNowPlaying() {
-        String extras = getIntent().getStringExtra("notification");
-        if (extras != null && extras.equals("onNotiClick")) {
-            Log.e("TAG", "onCreate: " + extras );
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragmentContainer, new NowPlayingFragment())
-                    .addToBackStack("bottom_nav").commit();
-
-        }
     }
 
     public void replaceFragment(Fragment fragment) {
@@ -270,10 +241,10 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
                 // Playlists
                 long playlistId = cursor.getLong((int) cursor.getColumnIndex(MediaStore.Audio.Playlists._ID));
                 String playlistName = cursor.getString((int) cursor.getColumnIndex(MediaStore.Audio.Playlists.DISPLAY_NAME));
-//                Uri thumbnailPlaylist = ContentUris.withAppendedId(Uri.parse("content://media/external/audio/albumart"),
-//                        cursor.getLong((int) cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID)));
-                Uri thumbnailPlaylist = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, playlistId);
-                Log.e(TAG, "onLoadFinished: " + cursor.getString((int) cursor.getColumnIndex(MediaStore.Audio.Playlists.DISPLAY_NAME)) );
+                Uri thumbnailPlaylist = ContentUris.withAppendedId(Uri.parse("content://com.google.android.music.MusicContent/playlists"),
+                        playlistId);
+//                Uri thumbnailPlaylist = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, playlistId);
+//                Log.e(TAG, "onLoadFinished: " + cursor.getString((int) cursor.getColumnIndex(MediaStore.Audio.Playlists.DISPLAY_NAME)) );
 //                Log.e(TAG, "onLoadFinished: " + cursor.getInt((int) cursor.getColumnIndex(MediaStore.Audio.Playlists.NUM_TRACKS)));
 //                int noSongsPlaylist = cursor.getInt((int) cursor.getColumnIndex(MediaStore.Audio.Playlists.NUM_TRACKS));
                 sPlaylist.add(new Playlist(playlistId, playlistName, thumbnailPlaylist.toString()));

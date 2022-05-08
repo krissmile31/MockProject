@@ -1,6 +1,7 @@
 package com.krissmile31.mockproject.songs.tab.artists;
 
-import static com.krissmile31.mockproject.MainActivity.sArtistList;
+import static com.krissmile31.mockproject.utils.Constants.*;
+import static com.krissmile31.mockproject.utils.SongUtils.*;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,9 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.krissmile31.mockproject.R;
 import com.krissmile31.mockproject.interfaces.OnArtistClickListener;
-import com.krissmile31.mockproject.interfaces.OnSongClickListener;
 import com.krissmile31.mockproject.models.Artist;
-import com.krissmile31.mockproject.models.Song;
 import com.krissmile31.mockproject.songs.tab.artists.adapter.ArtistAdapter;
 import com.krissmile31.mockproject.songs.tab.artists.artistdetails.ArtistDetailsFragment;
 
@@ -45,14 +44,14 @@ public class ArtistsFragment extends Fragment {
         @Override
         public void onItemClick(Artist artist) {
             Bundle bundle = new Bundle();
-            bundle.putSerializable("artist_details", artist);
+            bundle.putSerializable(ARTIST_DETAIL, artist);
             ArtistDetailsFragment artistDetailsFragment = new ArtistDetailsFragment();
             artistDetailsFragment.setArguments(bundle);
 
             getActivity().getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.constraint_fragment_songs, artistDetailsFragment)
-                    .addToBackStack("artist_details")
+                    .addToBackStack(ARTIST_DETAIL)
                     .commit();
         }
     };

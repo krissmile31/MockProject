@@ -1,6 +1,7 @@
 package com.krissmile31.mockproject.songs.tab.artists.artistdetails;
 
-import static com.krissmile31.mockproject.services.ServiceUtils.getThumbnail;
+import static com.krissmile31.mockproject.utils.Constants.*;
+import static com.krissmile31.mockproject.utils.SongUtils.*;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -70,7 +71,7 @@ public class ArtistDetailsFragment extends Fragment {
         mRclTopSongs.setLayoutManager(new LinearLayoutManager(getContext()));
 
         Bundle bundle = this.getArguments();
-        Artist artist = (Artist) bundle.get("artist_details");
+        Artist artist = (Artist) bundle.get(ARTIST_DETAIL);
         getThumbnail(artist.getThumbnailArtist(), mThumbnailArtistDetail);
         mTvArtistDetail.setText(artist.getArtistName());
 

@@ -1,6 +1,6 @@
 package com.krissmile31.mockproject.services.BroadcastReceiver;
 
-import static com.krissmile31.mockproject.services.ServiceUtils.BROADCAST_RECEIVER;
+import static com.krissmile31.mockproject.utils.Constants.BROADCAST_RECEIVER;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

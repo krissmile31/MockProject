@@ -1,6 +1,6 @@
 package com.krissmile31.mockproject.songs.tab.playlists;
 
-import static com.krissmile31.mockproject.MainActivity.sPlaylist;
+import static com.krissmile31.mockproject.utils.SongUtils.sPlaylist;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

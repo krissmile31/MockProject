@@ -1,6 +1,6 @@
 package com.krissmile31.mockproject.songs.tab.playlists.adapter;
 
-import static com.krissmile31.mockproject.services.ServiceUtils.getThumbnail;
+import static com.krissmile31.mockproject.utils.SongUtils.*;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.krissmile31.mockproject.R;
 import com.krissmile31.mockproject.models.Playlist;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 

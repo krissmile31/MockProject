@@ -18,9 +18,9 @@ import com.krissmile31.mockproject.interfaces.OnBackPressedListener;
 import com.krissmile31.mockproject.models.Album;
 import com.krissmile31.mockproject.models.Song;
 import com.krissmile31.mockproject.songs.tab.albums.albumdetails.adapter.AlbumDetailsAdapter;
-import com.squareup.picasso.Picasso;
 
-import static com.krissmile31.mockproject.services.ServiceUtils.*;
+import static com.krissmile31.mockproject.utils.SongUtils.*;
+
 
 import java.util.ArrayList;
 import java.util.List;

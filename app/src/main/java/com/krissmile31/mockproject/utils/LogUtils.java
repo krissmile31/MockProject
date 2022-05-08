@@ -1,5 +1,7 @@
-package com.krissmile31.mockproject;
+package com.krissmile31.mockproject.utils;
 import android.util.Log;
+
+import com.krissmile31.mockproject.BuildConfig;
 
 public class LogUtils {
 
