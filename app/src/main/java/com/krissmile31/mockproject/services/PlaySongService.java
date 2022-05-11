@@ -1,8 +1,8 @@
 package com.krissmile31.mockproject.services;
 
-import static android.content.ContentValues.TAG;
 import static com.krissmile31.mockproject.utils.Constants.BROADCAST_RECEIVER;
 import static com.krissmile31.mockproject.utils.ServiceUtils.*;
+import static com.krissmile31.mockproject.utils.SongUtils.*;
 import static com.krissmile31.mockproject.utils.Constants.*;
 
 
@@ -13,34 +13,34 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.IBinder;
+import android.provider.MediaStore;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.krissmile31.mockproject.utils.LogUtils;
 import com.krissmile31.mockproject.MainActivity;
 import com.krissmile31.mockproject.R;
 import com.krissmile31.mockproject.models.Song;
-import com.krissmile31.mockproject.services.BroadcastReceiver.SongReceiver;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
+import com.krissmile31.mockproject.broadcast.ForegroundReceiver;
 
 import java.io.IOException;
 
 public class PlaySongService extends Service {
-    private Song mGetSong;
-    private final int PAUSE = 1;
-    private final int RESUME = 2;
-    private final int EXIT = 3;
-    private final int PREVIOUS = 4;
-    private final int NEXT = 5;
+//    private final int PAUSE = 1;
+//    private final int RESUME = 2;
+//    private final int EXIT = 3;
+//    private final int PREVIOUS = 4;
+//    private final int NEXT = 5;
+
+    private final String TAG = PlaySongService.class.getSimpleName();
 
     private MySongBinder mMySongBinder = new MySongBinder();
 
@@ -58,18 +58,7 @@ public class PlaySongService extends Service {
         // TODO: Return the communication channel to the service.
         Log.e(TAG, "onBind()");
 
-        if (intent != null) {
-            Song song = (Song) intent.getSerializableExtra(SONG_DETAIL);
-
-            if (song != null) {
-                mGetSong = song;
-                playMusic(song, getApplicationContext());
-                sSongPlaying = true;
-            }
-        }
-        handleActionControlSong(intent.getIntExtra(BROADCAST_RECEIVER, 0));
-
-
+        startMediaPlayer(intent);
         return mMySongBinder;
     }
 
@@ -81,8 +70,6 @@ public class PlaySongService extends Service {
 
         // after timeout play a song
         onSongCompletion(getApplicationContext());
-//        if(mediaPlayer == null)
-//            mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.song);
     }
 
     @Override
@@ -100,43 +87,30 @@ public class PlaySongService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        if (intent != null) {
-            Song song = (Song) intent.getSerializableExtra(SONG_DETAIL);
-//            Log.e(TAG, "playMusic: " + song.getData());
-
-            if (song != null) {
-                mGetSong = song;
-                playMusic(song, getApplicationContext());
-                sSongPlaying = true;
-
-                sendNotification(song);
-            }
-        }
-
-        handleActionControlSong(intent.getIntExtra(BROADCAST_RECEIVER, 0));
-
-        LogUtils.d(String.valueOf(sSongPlaying));
+        startMediaPlayer(intent);
 
         return START_NOT_STICKY;
     }
 
+    private void startMediaPlayer(Intent intent) {
 
-    private void initMediaPlayer(Song song) {
-        if (sMediaPlayer == null) {
-            sMediaPlayer = new MediaPlayer();
+        if (intent != null) {
+            Song song = sCurrentSong();
 
+            if (song != null) {
+                playMusic(song, getApplicationContext());
+                sSongPlaying = true;
+                sendNotification(song);
+            }
         }
+        handleActionControlSong(intent.getIntExtra(BROADCAST_RECEIVER, 0));
 
-        sMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        try {
-            sMediaPlayer.setDataSource(getApplicationContext(), Uri.parse(song.getData()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//            Song song = (Song) intent.getSerializableExtra(SONG_DETAIL);
 
+        LogUtils.d(String.valueOf(sSongPlaying));
     }
 
-    private void sendNotification(Song song) {
+    public void sendNotification(Song song) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra(NOTIFICATION, song);
@@ -157,6 +131,22 @@ public class PlaySongService extends Service {
 
         }
 
+        Bitmap bitmap = null;
+        try
+        {
+            bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(),
+                    Uri.parse(song.getImage()));
+        }
+        catch (Exception e)
+        {
+            //handle exception
+
+        }
+
+        if (bitmap == null) {
+            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
+        }
+
         NotificationCompat.Builder notificationCompat = new NotificationCompat.Builder(
                 this,
                 CHANNEL_ID)
@@ -166,29 +156,32 @@ public class PlaySongService extends Service {
                 .setContentText(song.getSinger())
                 .setContentIntent(pendingIntent)
 //                .setLargeIcon(BitmapFactory.decodeResource(getResources(), album.getThumbnail()))
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.logo))
+                .setLargeIcon(bitmap)
                 .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
                         .setShowActionsInCompactView(0, 1, 2)
                         .setMediaSession(new MediaSessionCompat(this,
                                 "Play Music").getSessionToken()));
 
-        Picasso.get().load(song.getImage()).into(new Target() {
-            @Override
-            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-//                Log.d(TAG, "onBitmapLoaded: " + bitmap);
-                notificationCompat.setLargeIcon(bitmap);
-            }
+        Log.d(TAG, "onPicassoStartLoading: " );
 
-            @Override
-            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-
-            }
-
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-            }
-        });
+//        Target target = new Target() {
+//            @Override
+//            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+//                Log.d(TAG, "onBitmapLoaded: " );
+//                notificationCompat.setLargeIcon(bitmap);
+//            }
+//
+//            @Override
+//            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+//
+//            }
+//
+//            @Override
+//            public void onPrepareLoad(Drawable placeHolderDrawable) {
+//
+//            }
+//        };
+//        Picasso.get().load(song.getImage()).into(target);
 
         if (sSongPlaying) {
             notificationCompat
@@ -231,7 +224,7 @@ public class PlaySongService extends Service {
     }
 
     private PendingIntent getPendingIntent(Context context, int action) {
-        Intent intent = new Intent(this, SongReceiver.class);
+        Intent intent = new Intent(this, ForegroundReceiver.class);
         intent.putExtra(BROADCAST_RECEIVER, action);
 
         return PendingIntent.getBroadcast(context, action, intent,
@@ -241,39 +234,37 @@ public class PlaySongService extends Service {
     private void handleActionControlSong(int action) {
         switch (action) {
             case PAUSE:
-                pauseMusic();
-                sendNotification(mGetSong);
+                pauseMusic(getApplicationContext());
+//                sendNotification(sCurrentSong());
                 break;
 
             case RESUME:
-                resumeMusic();
-                sendNotification(mGetSong);
+                resumeMusic(getApplicationContext());
+//                sendNotification(sCurrentSong());
                 break;
 
             case EXIT:
-//                sMediaPlayer.release();
+                isInForeground = false;
                 stopForeground(true);
                 releaseMusic();
+                initMediaPlayer(sCurrentSong(), getApplicationContext());
+                setIconStatusAll();
+                sendActionMediaPlayer(getApplicationContext(), EXIT);
 
-                initMediaPlayer(mGetSong);
-//                playMusic(mGetSong);
-//                pauseMusic();
 //                stopSelf();
                 break;
 
             case PREVIOUS:
                 preMusic(getApplicationContext());
-                sendNotification(getCurrentSong(sCurrentSongIndex));
+//                sendNotification(sCurrentSong());
                 break;
 
             case NEXT:
                 nextMusic(getApplicationContext());
-                sendNotification(getCurrentSong(sCurrentSongIndex));
+//                sendNotification(sCurrentSong());
                 break;
         }
     }
-
-
 
     @Override
     public void onDestroy() {

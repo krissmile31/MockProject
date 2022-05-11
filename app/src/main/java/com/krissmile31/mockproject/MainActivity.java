@@ -3,7 +3,7 @@ package com.krissmile31.mockproject;
 import static com.krissmile31.mockproject.utils.ServiceUtils.*;
 import static com.krissmile31.mockproject.utils.SongUtils.*;
 import static com.krissmile31.mockproject.utils.Constants.*;
-import static com.krissmile31.mockproject.songs.tab.allsongs.AllSongsFragment.sAllSongsAdapter;
+import static com.krissmile31.mockproject.musics.tab.allsongs.AllSongsFragment.sAllSongsAdapter;
 
 import android.app.LoaderManager;
 import android.content.ContentUris;
@@ -34,7 +34,7 @@ import com.krissmile31.mockproject.interfaces.*;
 import com.krissmile31.mockproject.models.*;
 import com.krissmile31.mockproject.nowplaying.NowPlayingFragment;
 import com.krissmile31.mockproject.settings.SettingFragment;
-import com.krissmile31.mockproject.songs.MusicFragment;
+import com.krissmile31.mockproject.musics.MusicFragment;
 import com.squareup.picasso.Picasso;
 
 import java.util.Collections;
@@ -47,11 +47,14 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
     private BottomNavigationView mBottomNavigationView;
     private NavigationView mNavigationView;
     private DrawerLayout mDrawerLayout;
-    private ImageView mMenuSideBar;
+    public static ImageView sMenuSideBar;
     public static ConstraintLayout sMiniPlayer;
-    private ImageView mMiniThumbnailPlayer, mMiniBtnPlay, mMiniBtnPre, mMiniBtnNext;
-    private ImageView mMiniExitPlayer;
-    private TextView mMiniSongPlayer, mMiniSingerPlayer;
+    private static ImageView mMiniThumbnailPlayer;
+    private static ImageView mMiniBtnPre;
+    private static ImageView mMiniBtnNext;
+    private static ImageView mMiniExitPlayer;
+    private static TextView mMiniSongPlayer;
+    private static TextView mMiniSingerPlayer;
     private boolean mIsLoaded;
     private OnMiniPlayerClickListener onMiniPlayerClickListener;
 
@@ -63,13 +66,13 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
         mBottomNavigationView = findViewById(R.id.bottomNavigation);
         mNavigationView = findViewById(R.id.navigationView);
         mDrawerLayout = findViewById(R.id.drawLayout);
-        mMenuSideBar = findViewById(R.id.menu_side_bar);
+        sMenuSideBar = findViewById(R.id.menu_side_bar);
 
         sMiniPlayer = findViewById(R.id.mini_player);
         mMiniThumbnailPlayer = findViewById(R.id.thumbnail_play_song);
         mMiniSongPlayer = findViewById(R.id.tv_song_background);
         mMiniSingerPlayer = findViewById(R.id.tv_singer_background);
-        mMiniBtnPlay = findViewById(R.id.btn_play);
+        sMiniBtnPlay = findViewById(R.id.btn_play);
         mMiniBtnPre = findViewById(R.id.btn_pre);
         mMiniBtnNext = findViewById(R.id.btn_next);
         mMiniExitPlayer = findViewById(R.id.btn_exit);
@@ -79,10 +82,12 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
         mNavigationView.setItemIconTintList(null);
 
         replaceFragment(new MusicFragment());
-        mMenuSideBar.setOnClickListener(this); // open side bar
+        sMenuSideBar.setOnClickListener(this); // open side bar
         mBottomNavigationView.setOnItemSelectedListener(this);
 
         onNewIntent(getIntent());
+
+        registerActionMusicPlayer(this);
 
 //        Log.e("TAG", "onCreate: " + getIntent().getStringExtra("notification"));
 //        openNowPlaying();
@@ -93,9 +98,10 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
         Bundle extras = intent.getExtras();
         if (extras != null) {
             if (extras.containsKey(NOTIFICATION)) {
-                Song song = (Song) intent.getSerializableExtra(NOTIFICATION);
+//                Song song = (Song) intent.getSerializableExtra(NOTIFICATION);
+//                Song song = getCurrentSong(sCurrentSongIndex);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable(NOW_PLAYING, song);
+                bundle.putSerializable(SONG_DETAIL, sCurrentSong());
                 NowPlayingFragment nowPlayingFragment = new NowPlayingFragment();
                 nowPlayingFragment.setArguments(bundle);
 
@@ -123,23 +129,39 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
 
     @Override
     public void onBackStackPressed() {
+        setData();
         super.onBackPressed();
     }
 
     @Override
     public void onDisplayData(Song song) {
         sMiniPlayer.setVisibility(View.VISIBLE);
-        mMiniBtnPlay.setImageResource(R.drawable.ic_pause_empty);
+        sMiniBtnPlay.setImageResource(R.drawable.ic_pause_empty);
         Picasso.get().load(song.getImage()).placeholder(R.drawable.ic_logo)
                 .error(R.drawable.ic_logo).into(mMiniThumbnailPlayer);
         mMiniSongPlayer.setText(song.getSong());
         mMiniSingerPlayer.setText(song.getSinger());
 
-        mMiniBtnPlay.setOnClickListener(this);
+        sMiniBtnPlay.setOnClickListener(this);
         mMiniBtnPre.setOnClickListener(this);
         mMiniBtnNext.setOnClickListener(this);
         mMiniExitPlayer.setOnClickListener(this);
 
+    }
+
+    public static void setData() {
+        Song song = getCurrentSong(sCurrentSongIndex);
+        sMiniPlayer.setVisibility(View.VISIBLE);
+        sMiniBtnPlay.setImageResource(R.drawable.ic_pause_empty);
+        Picasso.get().load(song.getImage()).placeholder(R.drawable.ic_logo)
+                .error(R.drawable.ic_logo).into(mMiniThumbnailPlayer);
+        mMiniSongPlayer.setText(song.getSong());
+        mMiniSingerPlayer.setText(song.getSinger());
+
+//        sMiniBtnPlay.setOnClickListener(this);
+//        mMiniBtnPre.setOnClickListener(this);
+//        mMiniBtnNext.setOnClickListener(this);
+//        mMiniExitPlayer.setOnClickListener(this);
     }
 
     private void openNowPlaying(Song song) {
@@ -157,18 +179,23 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
             case R.id.mini_player:
 
             case R.id.btn_play:
-                setIconPlaying(mMiniBtnPlay, R.drawable.ic_play_empty, R.drawable.ic_pause_empty);
+                setIconPlaying(sMiniBtnPlay, R.drawable.ic_play_empty, R.drawable.ic_pause_empty, this);
+                setIconStatusAll();
+                checkExistForeground(this);
+
                 break;
 
             case R.id.btn_pre:
                 preMusic(this);
                 onDisplayData(getCurrentSong(sCurrentSongIndex));
+                checkExistForeground(this);
 
                 break;
 
             case R.id.btn_next:
                 nextMusic(this);
                 onDisplayData(getCurrentSong(sCurrentSongIndex));
+                checkExistForeground(this);
 
                 break;
 

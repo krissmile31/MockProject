@@ -14,19 +14,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MockProject">
-<!--        <activity-->
-<!--            android:name=".MainActivity2"-->
-<!--            android:exported="true" >-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
 
         <service android:name=".services.PlaySongService" />
 
-        <receiver android:name=".services.BroadcastReceiver.SongReceiver" />
+        <receiver android:name=".broadcast.ForegroundReceiver" />
+
+        <receiver android:name=".broadcast.SongReceiver"/>
 
         <activity
             android:name=".SplashScreenActivity"

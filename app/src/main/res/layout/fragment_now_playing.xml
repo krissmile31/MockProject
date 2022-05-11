@@ -152,8 +152,8 @@
 
         <ImageView
             android:id="@+id/equaliser_now_playing"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="224dp"
+            android:layout_height="75dp"
             android:src="@drawable/ic_equaliser_now_playing"
             app:layout_constraintTop_toBottomOf="@id/tv_details_now_playing"
             app:layout_constraintStart_toStartOf="parent"
@@ -185,8 +185,8 @@
 
             <ImageView
                 android:id="@+id/play_now_playing"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="39dp"
                 android:layout_weight="2"
                 android:src="@drawable/ic_play_song_action"/>
 

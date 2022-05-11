@@ -7,7 +7,7 @@
     android:id="@+id/constraint_fragment_songs"
     android:background="@color/background"
     android:theme="@style/Theme.MockProject"
-    tools:context=".songs.MusicFragment">
+    tools:context=".musics.MusicFragment">
 
     <LinearLayout
         android:id="@+id/linear_song"
@@ -25,6 +25,7 @@
             android:src="@drawable/ic_burger_menu" />
 
         <TextView
+            android:id="@+id/tv_songs_hide_search"
             android:layout_width="0dp"
             android:layout_height="@dimen/height_linear"
             android:gravity="center"
@@ -33,7 +34,21 @@
             android:textColor="@color/white"
             android:textSize="17sp" />
 
+        <EditText
+            android:id="@+id/edt_search_songs"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:paddingHorizontal="5dp"
+            android:hint="Search ..."
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:visibility="gone"
+            android:layout_weight="10"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
         <ImageView
+            android:id="@+id/img_search_open"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

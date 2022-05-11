@@ -20,6 +20,7 @@ public class ServiceConnection {
 
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
+            sPlaySongService = null;
             sIsConnected = false;
         }
     };
