@@ -1,22 +1,27 @@
 package com.krissmile31.mockproject;
 
-import static com.krissmile31.mockproject.utils.ServiceUtils.*;
+import static com.krissmile31.mockproject.utils.ServiceUtils.sMediaPlayer;
 import static com.krissmile31.mockproject.utils.SongUtils.*;
 import static com.krissmile31.mockproject.utils.Constants.*;
 import static com.krissmile31.mockproject.musics.tab.allsongs.AllSongsFragment.sAllSongsAdapter;
 
+import android.annotation.SuppressLint;
 import android.app.LoaderManager;
+import android.content.BroadcastReceiver;
 import android.content.ContentUris;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -35,6 +40,7 @@ import com.krissmile31.mockproject.models.*;
 import com.krissmile31.mockproject.nowplaying.NowPlayingFragment;
 import com.krissmile31.mockproject.settings.SettingFragment;
 import com.krissmile31.mockproject.musics.MusicFragment;
+import com.krissmile31.mockproject.utils.ServiceUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.Collections;
@@ -47,14 +53,19 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
     private BottomNavigationView mBottomNavigationView;
     private NavigationView mNavigationView;
     private DrawerLayout mDrawerLayout;
-    public static ImageView sMenuSideBar;
-    public static ConstraintLayout sMiniPlayer;
-    private static ImageView mMiniThumbnailPlayer;
-    private static ImageView mMiniBtnPre;
-    private static ImageView mMiniBtnNext;
-    private static ImageView mMiniExitPlayer;
-    private static TextView mMiniSongPlayer;
-    private static TextView mMiniSingerPlayer;
+    private ImageView mMenuSideBar, mMiniThumbnailPlayer, mMiniBtnPlay,
+            mMiniBtnPre, mMiniBtnNext, mMiniExitPlayer;
+    private ConstraintLayout mMiniPlayer;
+    private TextView mMiniSongPlayer, mMiniSingerPlayer;
+    private Song song;
+    private boolean isPlaying;
+    private int action;
+    public SeekBar seekBarMiniPlayer;
+    private static ServiceUtils serviceUtils = new ServiceUtils();
+    private Handler mHandler = new Handler();
+    private Runnable mRunnable;
+
+    private Cursor mCursor;
     private boolean mIsLoaded;
     private OnMiniPlayerClickListener onMiniPlayerClickListener;
 
@@ -66,31 +77,53 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
         mBottomNavigationView = findViewById(R.id.bottomNavigation);
         mNavigationView = findViewById(R.id.navigationView);
         mDrawerLayout = findViewById(R.id.drawLayout);
-        sMenuSideBar = findViewById(R.id.menu_side_bar);
+        mMenuSideBar = findViewById(R.id.menu_side_bar);
 
-        sMiniPlayer = findViewById(R.id.mini_player);
+        mMiniPlayer = findViewById(R.id.mini_player);
         mMiniThumbnailPlayer = findViewById(R.id.thumbnail_play_song);
         mMiniSongPlayer = findViewById(R.id.tv_song_background);
         mMiniSingerPlayer = findViewById(R.id.tv_singer_background);
-        sMiniBtnPlay = findViewById(R.id.btn_play);
+        mMiniBtnPlay = findViewById(R.id.btn_play);
         mMiniBtnPre = findViewById(R.id.btn_pre);
         mMiniBtnNext = findViewById(R.id.btn_next);
         mMiniExitPlayer = findViewById(R.id.btn_exit);
+        seekBarMiniPlayer = findViewById(R.id.seek_bar_mini_player);
 
         // set null to put gradient color vector
         mBottomNavigationView.setItemIconTintList(null);
         mNavigationView.setItemIconTintList(null);
 
         replaceFragment(new MusicFragment());
-        sMenuSideBar.setOnClickListener(this); // open side bar
+        mMenuSideBar.setOnClickListener(this); // open side bar
         mBottomNavigationView.setOnItemSelectedListener(this);
 
         onNewIntent(getIntent());
+    }
 
-        registerActionMusicPlayer(this);
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
 
-//        Log.e("TAG", "onCreate: " + getIntent().getStringExtra("notification"));
-//        openNowPlaying();
+            song = (Song) intent.getSerializableExtra(SONG_DETAIL);
+            isPlaying = intent.getBooleanExtra(IS_PLAYING, false);
+            action = intent.getIntExtra(SONG_STATUS, 0);
+
+            setData(song);
+
+        }
+    };
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        registerActionMusicPlayer(this, mReceiver);
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        unregisterActionMusicPlayer(this, mReceiver);
     }
 
     @Override
@@ -98,10 +131,8 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
         Bundle extras = intent.getExtras();
         if (extras != null) {
             if (extras.containsKey(NOTIFICATION)) {
-//                Song song = (Song) intent.getSerializableExtra(NOTIFICATION);
-//                Song song = getCurrentSong(sCurrentSongIndex);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable(SONG_DETAIL, sCurrentSong());
+                bundle.putSerializable(SONG_DETAIL, song);
                 NowPlayingFragment nowPlayingFragment = new NowPlayingFragment();
                 nowPlayingFragment.setArguments(bundle);
 
@@ -129,39 +160,77 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
 
     @Override
     public void onBackStackPressed() {
-        setData();
+//        setData(song);
         super.onBackPressed();
     }
 
     @Override
     public void onDisplayData(Song song) {
-        sMiniPlayer.setVisibility(View.VISIBLE);
-        sMiniBtnPlay.setImageResource(R.drawable.ic_pause_empty);
-        Picasso.get().load(song.getImage()).placeholder(R.drawable.ic_logo)
-                .error(R.drawable.ic_logo).into(mMiniThumbnailPlayer);
-        mMiniSongPlayer.setText(song.getSong());
-        mMiniSingerPlayer.setText(song.getSinger());
 
-        sMiniBtnPlay.setOnClickListener(this);
-        mMiniBtnPre.setOnClickListener(this);
-        mMiniBtnNext.setOnClickListener(this);
-        mMiniExitPlayer.setOnClickListener(this);
-
-    }
-
-    public static void setData() {
-        Song song = getCurrentSong(sCurrentSongIndex);
-        sMiniPlayer.setVisibility(View.VISIBLE);
-        sMiniBtnPlay.setImageResource(R.drawable.ic_pause_empty);
-        Picasso.get().load(song.getImage()).placeholder(R.drawable.ic_logo)
-                .error(R.drawable.ic_logo).into(mMiniThumbnailPlayer);
-        mMiniSongPlayer.setText(song.getSong());
-        mMiniSingerPlayer.setText(song.getSinger());
-
-//        sMiniBtnPlay.setOnClickListener(this);
+        setData(song);
+//        mMiniPlayer.setVisibility(View.VISIBLE);
+//        mMiniBtnPlay.setImageResource(R.drawable.ic_pause_empty);
+//        Picasso.get().load(song.getImage()).placeholder(R.drawable.ic_logo)
+//                .error(R.drawable.ic_logo).into(mMiniThumbnailPlayer);
+//        mMiniSongPlayer.setText(song.getSong());
+//        mMiniSingerPlayer.setText(song.getSinger());
+//
+//        mRunnable = new Runnable() {
+//            @SuppressLint("SetTextI18n")
+//            @Override
+//            public void run() {
+//                if (sMediaPlayer == null)
+//                    return;
+//
+//                seekBarMiniPlayer.setProgress(serviceUtils.getCurrentPosition());
+//                seekBarMiniPlayer.setMax(serviceUtils.getTotalTime());
+//
+//                mHandler.postDelayed(this, 0);
+//            }
+//        };
+//        mRunnable.run();
+//
+//        mMiniBtnPlay.setOnClickListener(this);
 //        mMiniBtnPre.setOnClickListener(this);
 //        mMiniBtnNext.setOnClickListener(this);
 //        mMiniExitPlayer.setOnClickListener(this);
+
+    }
+
+    public void setData(Song song) {
+//        Song song = serviceUtils.sCurrentSong();
+        mMiniPlayer.setVisibility(View.VISIBLE);
+//        mMiniBtnPlay.setImageResource(R.drawable.ic_pause_empty);
+
+        if (isPlaying)
+            mMiniBtnPlay.setImageResource(R.drawable.ic_pause_empty);
+        else
+            mMiniBtnPlay.setImageResource(R.drawable.ic_play_empty);
+
+        Picasso.get().load(song.getImage()).placeholder(R.drawable.ic_logo)
+                .error(R.drawable.ic_logo).into(mMiniThumbnailPlayer);
+        mMiniSongPlayer.setText(song.getSong());
+        mMiniSingerPlayer.setText(song.getSinger());
+
+        mRunnable = new Runnable() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void run() {
+                if (sMediaPlayer == null)
+                    return;
+
+                seekBarMiniPlayer.setProgress(serviceUtils.getCurrentPosition());
+                seekBarMiniPlayer.setMax(serviceUtils.getTotalTime());
+
+                mHandler.postDelayed(this, 0);
+            }
+        };
+        mRunnable.run();
+
+        mMiniBtnPlay.setOnClickListener(this);
+        mMiniBtnPre.setOnClickListener(this);
+        mMiniBtnNext.setOnClickListener(this);
+        mMiniExitPlayer.setOnClickListener(this);
     }
 
     private void openNowPlaying(Song song) {
@@ -177,31 +246,35 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
                 break;
 
             case R.id.mini_player:
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable(SONG_DETAIL, song);
+//                NowPlayingFragment nowPlayingFragment = new NowPlayingFragment();
+//                nowPlayingFragment.setArguments(bundle);
+
+                replaceFragment(new NowPlayingFragment());
+//                getSupportFragmentManager().beginTransaction()
+//                        .replace(R.id.drawLayout, new NowPlayingFragment())
+//                        .addToBackStack(NOW_PLAYING).commit();
 
             case R.id.btn_play:
-                setIconPlaying(sMiniBtnPlay, R.drawable.ic_play_empty, R.drawable.ic_pause_empty, this);
-                setIconStatusAll();
-                checkExistForeground(this);
+                if (isPlaying)
+                    serviceUtils.pauseMusic();
+                else
+                    serviceUtils.resumeMusic();
 
                 break;
 
             case R.id.btn_pre:
-                preMusic(this);
-                onDisplayData(getCurrentSong(sCurrentSongIndex));
-                checkExistForeground(this);
-
+                serviceUtils.preMusic(this);
                 break;
 
             case R.id.btn_next:
-                nextMusic(this);
-                onDisplayData(getCurrentSong(sCurrentSongIndex));
-                checkExistForeground(this);
-
+                serviceUtils.nextMusic(this);
                 break;
 
             case R.id.btn_exit:
-                sMiniPlayer.setVisibility(View.GONE);
-                releaseMusic();
+                mMiniPlayer.setVisibility(View.GONE);
+                serviceUtils.releaseMusic();
                 break;
 
         }
@@ -249,14 +322,18 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        mCursor = cursor;
         if (cursor != null && cursor.moveToFirst()) {
 
             do {
 
                 // All Songs
                 long id = cursor.getLong((int) cursor.getColumnIndex(MediaStore.Audio.Media._ID));
-                String song = cursor.getString((int) cursor.getColumnIndex(MediaStore.Audio.Media.TITLE));
-                String singer = cursor.getString((int) cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
+//                String song = cursor.getString((int) cursor.getColumnIndex(MediaStore.Audio.Media.TITLE));
+//                String singer = cursor.getString((int) cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
+                String song = getStringCursor(MediaStore.Audio.Media.TITLE);
+                String singer = getStringCursor(MediaStore.Audio.Media.ARTIST);
+//                Log.e("TAG", "onLoadFinished: " + getStringCursor(MediaStore.Audio.Media.DURATION) );
 
                 Uri data = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, id);
 //                Uri data = Uri.parse(cursor.getString((int) cursor.getColumnIndex(MediaStore.Audio.Media.DATA)));
@@ -317,5 +394,9 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
 
+    }
+
+    private String getStringCursor(String column) {
+        return mCursor.getString((int) mCursor.getColumnIndex(column));
     }
 }

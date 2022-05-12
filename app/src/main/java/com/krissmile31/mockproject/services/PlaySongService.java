@@ -1,7 +1,7 @@
 package com.krissmile31.mockproject.services;
 
 import static com.krissmile31.mockproject.utils.Constants.BROADCAST_RECEIVER;
-import static com.krissmile31.mockproject.utils.ServiceUtils.*;
+import static com.krissmile31.mockproject.utils.ServiceUtils.sIsPlaying;
 import static com.krissmile31.mockproject.utils.SongUtils.*;
 import static com.krissmile31.mockproject.utils.Constants.*;
 
@@ -13,7 +13,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Binder;
@@ -23,22 +22,22 @@ import android.support.v4.media.session.MediaSessionCompat;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.krissmile31.mockproject.utils.LogUtils;
 import com.krissmile31.mockproject.MainActivity;
 import com.krissmile31.mockproject.R;
 import com.krissmile31.mockproject.models.Song;
 import com.krissmile31.mockproject.broadcast.ForegroundReceiver;
-
-import java.io.IOException;
+import com.krissmile31.mockproject.utils.ServiceUtils;
 
 public class PlaySongService extends Service {
-//    private final int PAUSE = 1;
-//    private final int RESUME = 2;
-//    private final int EXIT = 3;
-//    private final int PREVIOUS = 4;
-//    private final int NEXT = 5;
+    private final int PAUSE = 1;
+    private final int RESUME = 2;
+    private final int EXIT = 3;
+    private final int PREVIOUS = 4;
+    private final int NEXT = 5;
+    private ServiceUtils serviceUtils = new ServiceUtils();
+
 
     private final String TAG = PlaySongService.class.getSimpleName();
 
@@ -66,10 +65,10 @@ public class PlaySongService extends Service {
     public void onCreate() {
         super.onCreate();
         Log.e(TAG, "onCreate()");
-        sMediaPlayer = new MediaPlayer();
+        serviceUtils.sMediaPlayer = new MediaPlayer();
 
         // after timeout play a song
-        onSongCompletion(getApplicationContext());
+        serviceUtils.onSongCompletion(getApplicationContext());
     }
 
     @Override
@@ -95,11 +94,11 @@ public class PlaySongService extends Service {
     private void startMediaPlayer(Intent intent) {
 
         if (intent != null) {
-            Song song = sCurrentSong();
+            Song song = serviceUtils.sCurrentSong();
 
             if (song != null) {
-                playMusic(song, getApplicationContext());
-                sSongPlaying = true;
+                serviceUtils.playMusic(song, getApplicationContext());
+                sIsPlaying = true;
                 sendNotification(song);
             }
         }
@@ -107,7 +106,7 @@ public class PlaySongService extends Service {
 
 //            Song song = (Song) intent.getSerializableExtra(SONG_DETAIL);
 
-        LogUtils.d(String.valueOf(sSongPlaying));
+        LogUtils.d(String.valueOf(sIsPlaying));
     }
 
     public void sendNotification(Song song) {
@@ -160,67 +159,47 @@ public class PlaySongService extends Service {
                 .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
                         .setShowActionsInCompactView(0, 1, 2)
                         .setMediaSession(new MediaSessionCompat(this,
-                                "Play Music").getSessionToken()));
+                                "Play Music").getSessionToken()))
+                .addAction(R.drawable.ic_baseline_skip_previous_24,
+                        "Previous",
+                        getPendingIntent(this, PREVIOUS))
+
+                .addAction(setDrawablePlaying(), setTitlePlaying(), setActionPlaying())
+
+                .addAction(R.drawable.ic_baseline_skip_next_24,
+                        "Next",
+                        getPendingIntent(this, NEXT))
+
+                .addAction(R.drawable.ic_baseline_clear_24,
+                        "Exit",
+                        getPendingIntent(this, EXIT));
 
         Log.d(TAG, "onPicassoStartLoading: " );
 
-//        Target target = new Target() {
-//            @Override
-//            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-//                Log.d(TAG, "onBitmapLoaded: " );
-//                notificationCompat.setLargeIcon(bitmap);
-//            }
-//
-//            @Override
-//            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-//
-//            }
-//
-//            @Override
-//            public void onPrepareLoad(Drawable placeHolderDrawable) {
-//
-//            }
-//        };
-//        Picasso.get().load(song.getImage()).into(target);
-
-        if (sSongPlaying) {
-            notificationCompat
-                    .addAction(R.drawable.ic_baseline_skip_previous_24,
-                            "Previous",
-                            getPendingIntent(this, PREVIOUS))
-
-                    .addAction(R.drawable.ic_baseline_pause_24,
-                            "Pause",
-                            getPendingIntent(this, PAUSE))
-
-                    .addAction(R.drawable.ic_baseline_skip_next_24,
-                            "Next",
-                            getPendingIntent(this, NEXT))
-
-                    .addAction(R.drawable.ic_baseline_clear_24,
-                            "Exit",
-                            getPendingIntent(this, EXIT));
-        } else {
-            notificationCompat
-                    .addAction(R.drawable.ic_baseline_skip_previous_24,
-                            "Previous",
-                            getPendingIntent(this, PREVIOUS))
-
-                    .addAction(R.drawable.ic_baseline_play_arrow_24,
-                            "Play",
-                            getPendingIntent(this, RESUME))
-
-                    .addAction(R.drawable.ic_baseline_skip_next_24,
-                            "Next",
-                            getPendingIntent(this, NEXT))
-
-                    .addAction(R.drawable.ic_baseline_clear_24,
-                            "Exit",
-                            getPendingIntent(this, EXIT));
-        }
-
         Notification notification = notificationCompat.build();
         startForeground(1, notification);
+    }
+    private PendingIntent setActionPlaying() {
+        if (sIsPlaying) {
+            return getPendingIntent(this, PAUSE);
+        }
+        else {
+            return getPendingIntent(this, RESUME);
+        }
+    }
+
+    private int setDrawablePlaying() {
+        if (sIsPlaying)
+            return R.drawable.ic_baseline_pause_24;
+        else
+            return R.drawable.ic_baseline_play_arrow_24;
+    }
+
+    private String setTitlePlaying() {
+        if (sIsPlaying)
+            return "Pause";
+        else
+            return "Play";
     }
 
     private PendingIntent getPendingIntent(Context context, int action) {
@@ -234,33 +213,32 @@ public class PlaySongService extends Service {
     private void handleActionControlSong(int action) {
         switch (action) {
             case PAUSE:
-                pauseMusic(getApplicationContext());
+                serviceUtils.pauseMusic();
 //                sendNotification(sCurrentSong());
                 break;
 
             case RESUME:
-                resumeMusic(getApplicationContext());
+                serviceUtils.resumeMusic();
 //                sendNotification(sCurrentSong());
                 break;
 
             case EXIT:
-                isInForeground = false;
+//                serviceUtils.isInForeground = false;
                 stopForeground(true);
-                releaseMusic();
-                initMediaPlayer(sCurrentSong(), getApplicationContext());
-                setIconStatusAll();
-                sendActionMediaPlayer(getApplicationContext(), EXIT);
+                serviceUtils.releaseMusic();
+                serviceUtils.initMediaPlayer(serviceUtils.sCurrentSong(), getApplicationContext());
+                serviceUtils.sendActionMediaPlayer(getApplicationContext(), EXIT);
 
 //                stopSelf();
                 break;
 
             case PREVIOUS:
-                preMusic(getApplicationContext());
+                serviceUtils.preMusic(getApplicationContext());
 //                sendNotification(sCurrentSong());
                 break;
 
             case NEXT:
-                nextMusic(getApplicationContext());
+                serviceUtils.nextMusic(getApplicationContext());
 //                sendNotification(sCurrentSong());
                 break;
         }
@@ -271,6 +249,6 @@ public class PlaySongService extends Service {
         super.onDestroy();
         Log.e(TAG, "onDestroy()");
 
-        releaseMusic();
+        serviceUtils.releaseMusic();
     }
 }

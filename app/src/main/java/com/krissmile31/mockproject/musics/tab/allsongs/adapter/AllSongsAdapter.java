@@ -2,13 +2,9 @@ package com.krissmile31.mockproject.musics.tab.allsongs.adapter;
 
 
 import static com.krissmile31.mockproject.musics.tab.allsongs.AllSongsFragment.sEmptySearch;
-import static com.krissmile31.mockproject.utils.ServiceUtils.*;
 import static com.krissmile31.mockproject.utils.SongUtils.*;
 
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.ServiceConnection;
-import android.os.IBinder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +20,7 @@ import com.krissmile31.mockproject.R;
 import com.krissmile31.mockproject.interfaces.OnSongClickListener;
 import com.krissmile31.mockproject.models.Song;
 import com.krissmile31.mockproject.services.PlaySongService;
+import com.krissmile31.mockproject.utils.ServiceUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +29,7 @@ public class AllSongsAdapter extends RecyclerView.Adapter<AllSongsAdapter.MyView
     private List<Song> mSongList;
     private List<Song> mSongFilter;
     private OnSongClickListener mListener;
+    private ServiceUtils serviceUtils = new ServiceUtils();
 
     public AllSongsAdapter(List<Song> songList) {
         mSongList = songList;
@@ -112,7 +110,7 @@ public class AllSongsAdapter extends RecyclerView.Adapter<AllSongsAdapter.MyView
         private ImageView mThumbnailSong;
         private TextView mTvSong;
         private TextView mTvSinger;
-//        private ImageView mBtnPlaySong;
+        private ImageView mBtnPlaySong;
         private PlaySongService mPlaySongService;
         private boolean mIsConnected;
 
@@ -123,7 +121,7 @@ public class AllSongsAdapter extends RecyclerView.Adapter<AllSongsAdapter.MyView
             mThumbnailSong = itemView.findViewById(R.id.img_all_songs);
             mTvSong = itemView.findViewById(R.id.tv_all_songs);
             mTvSinger = itemView.findViewById(R.id.tv_all_singer);
-            sBtnPlaySong = itemView.findViewById(R.id.play_song);
+            mBtnPlaySong = itemView.findViewById(R.id.play_song);
         }
 
         public void bind(Song song) {
@@ -139,12 +137,12 @@ public class AllSongsAdapter extends RecyclerView.Adapter<AllSongsAdapter.MyView
                         mListener.onItemClick(mSongList.get(position));
                     }
 
-                    sBtnPlaySong.setImageResource(R.drawable.ic_pause_gradie);
+                    mBtnPlaySong.setImageResource(R.drawable.ic_pause_gradie);
 
-                    startMusicPlayerService(mContext);
+                    serviceUtils.startMusicPlayerService(mContext);
 
 //                    Intent intent = new Intent(mContext, PlaySongService.class);
-//                    intent.putExtra(SONG_DETAIL, song);
+//                    intent.putExtra(SONG_DETAIL, );
 //
 //                    // started
 //                    mContext.startService(intent);
@@ -154,13 +152,13 @@ public class AllSongsAdapter extends RecyclerView.Adapter<AllSongsAdapter.MyView
 //                    ContextCompat.startForegroundService(mContext, intent);
                 }
             });
-            sBtnPlaySong.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    setIconPlaying(sBtnPlaySong, R.drawable.ic_played, R.drawable.ic_pause_gradie, mContext);
-                    setIconStatusAll();
-                }
-            });
+//            sBtnPlaySong.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    setIconPlaying(sBtnPlaySong, R.drawable.ic_played, R.drawable.ic_pause_gradie);
+////                    setIconStatusAll();
+//                }
+//            });
 
 //            itemView.findViewById(R.id.tv_all_songs).setOnClickListener(new View.OnClickListener() {
 //                @Override
@@ -177,20 +175,5 @@ public class AllSongsAdapter extends RecyclerView.Adapter<AllSongsAdapter.MyView
 //            });
         }
 
-//        public ServiceConnection serviceConnection = new ServiceConnection() {
-//            @Override
-//            public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-//                PlaySongService.MySongBinder mySongBinder = (PlaySongService.MySongBinder) iBinder;
-//                mPlaySongService = mySongBinder.getPlaySongService();
-//                mIsConnected = true;
-//
-//            }
-//
-//            @Override
-//            public void onServiceDisconnected(ComponentName componentName) {
-//                mIsConnected = false;
-//            }
-//        };
-//
     }
 }

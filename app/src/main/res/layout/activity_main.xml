@@ -57,9 +57,9 @@
             app:layout_constraintBottom_toTopOf="@id/bottomNavigation">
 
             <SeekBar
+                android:id="@+id/seek_bar_mini_player"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:progressDrawable="@drawable/gradient_color"
+                android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout

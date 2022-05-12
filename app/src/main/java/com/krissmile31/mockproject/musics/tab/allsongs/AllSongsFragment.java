@@ -1,16 +1,13 @@
 package com.krissmile31.mockproject.musics.tab.allsongs;
 
 import static android.content.ContentValues.TAG;
-import static com.krissmile31.mockproject.MainActivity.sMiniPlayer;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,9 +21,9 @@ import com.krissmile31.mockproject.interfaces.OnShowMusic;
 import com.krissmile31.mockproject.models.Song;
 import com.krissmile31.mockproject.nowplaying.NowPlayingFragment;
 import com.krissmile31.mockproject.musics.tab.allsongs.adapter.AllSongsAdapter;
+import com.krissmile31.mockproject.utils.ServiceUtils;
 
 import static com.krissmile31.mockproject.utils.SongUtils.*;
-import static com.krissmile31.mockproject.utils.ServiceUtils.*;
 import static com.krissmile31.mockproject.utils.Constants.*;
 
 public class AllSongsFragment extends Fragment {
@@ -35,6 +32,7 @@ public class AllSongsFragment extends Fragment {
     private OnShowMusic onShowMusic;
     private OnDataMiniPlayer onDataMiniPlayer;
     public static RelativeLayout sEmptySearch;
+    private ServiceUtils serviceUtils = new ServiceUtils();
 
     public AllSongsFragment() {
         // Required empty public constructor
@@ -67,21 +65,14 @@ public class AllSongsFragment extends Fragment {
             Log.e(TAG, "onItemClick: " + song.getData());
 
             // get position
-            sCurrentSongIndex = sSongList.indexOf(song);
-            song = sCurrentSong();
+            serviceUtils.sCurrentSongIndex = sSongList.indexOf(song);
+            song = serviceUtils.sCurrentSong();
 
             onDataMiniPlayer = (MainActivity) getActivity();
             if (onDataMiniPlayer != null)
                 onDataMiniPlayer.onDisplayData(song);
 
             openNowPlaying(song);
-
-            sMiniPlayer.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    openNowPlaying(sCurrentSong());
-                }
-            });
         }
     };
 

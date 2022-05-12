@@ -1,14 +1,7 @@
 package com.krissmile31.mockproject.utils;
 
-import static com.krissmile31.mockproject.MainActivity.setData;
-import static com.krissmile31.mockproject.nowplaying.NowPlayingFragment.displaySongNowPlaying;
-import static com.krissmile31.mockproject.nowplaying.NowPlayingFragment.getDataSongPlaying;
-import static com.krissmile31.mockproject.services.BoundService.ServiceConnection.sPlaySongService;
-import static com.krissmile31.mockproject.services.BoundService.ServiceConnection.serviceConnection;
-import static com.krissmile31.mockproject.utils.Constants.BROADCAST_RECEIVER;
-import static com.krissmile31.mockproject.utils.Constants.IS_PLAYING;
-import static com.krissmile31.mockproject.utils.Constants.SONG_DETAIL;
-import static com.krissmile31.mockproject.utils.Constants.SONG_STATUS;
+import static com.krissmile31.mockproject.services.BoundService.ServiceConnection.*;
+import static com.krissmile31.mockproject.utils.Constants.*;
 import static com.krissmile31.mockproject.utils.SongUtils.*;
 
 import android.content.Context;
@@ -16,6 +9,7 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.util.Log;
 
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -26,47 +20,42 @@ import com.krissmile31.mockproject.services.PlaySongService;
 import java.io.IOException;
 
 public class ServiceUtils implements MediaPlayer.OnCompletionListener {
-    public static boolean sSongPlaying;
+    public static boolean sIsPlaying;
     public static int sCurrentSongIndex;
     public static MediaPlayer sMediaPlayer;
-    public static boolean isInForeground = true;
-    public static Song sCurrentSong;
+    public boolean isInForeground = true;
 
-    public static final int PLAY = 1;
-    public static final int PAUSE = 2;
-    public static final int RESUME = 3;
-    public static final int PREVIOUS = 4;
-    public static final int NEXT = 5;
-    public static final int EXIT = 6;
+    private final int PAUSE = 1;
+    private final int RESUME = 2;
+    private final int EXIT = 3;
+    private final int PREVIOUS = 4;
+    private final int NEXT = 5;
 
-    public static Song sCurrentSong() {
+    public Song sCurrentSong() {
         return getCurrentSong(sCurrentSongIndex);
     }
 
-    public static void pauseMusic(Context context) {
-        if (sMediaPlayer != null && sSongPlaying) {
+    public void pauseMusic() {
+        if (sMediaPlayer != null && sIsPlaying) {
             sMediaPlayer.pause();
-            sSongPlaying = false;
-            setIconStatusAll();
-            sendActionMediaPlayer(context, PAUSE);
-            PlaySongService playSongService = new PlaySongService();
+            sIsPlaying = false;
+            sendActionMediaPlayer(sPlaySongService.getApplicationContext(), PAUSE);
             sPlaySongService.sendNotification(sCurrentSong());
 
         }
     }
 
-    public static void resumeMusic(Context context) {
-        if (sMediaPlayer != null && !sSongPlaying) {
+    public void resumeMusic() {
+        if (sMediaPlayer != null && !sIsPlaying) {
             sMediaPlayer.start();
-            sSongPlaying = true;
-            setIconStatusAll();
-            sendActionMediaPlayer(context, RESUME);
+            sIsPlaying = true;
+            sendActionMediaPlayer(sPlaySongService.getApplicationContext(), RESUME);
             sPlaySongService.sendNotification(sCurrentSong());
 
         }
     }
 
-//    public static void resumeMusic(Context context) {
+//    public void resumeMusic(Context context) {
 //        if (sMediaPlayer != null && !sSongPlaying) {
 //            sMediaPlayer.start();
 //            sSongPlaying = true;
@@ -76,15 +65,15 @@ public class ServiceUtils implements MediaPlayer.OnCompletionListener {
 //        }
 //    }
 
-    public static void releaseMusic() {
+    public void releaseMusic() {
         if (sMediaPlayer != null) {
             sMediaPlayer.release();
             sMediaPlayer = null;
-            sSongPlaying = false;
+            sIsPlaying = false;
         }
     }
 
-    public static void initMediaPlayer(Song song, Context context) {
+    public void initMediaPlayer(Song song, Context context) {
         if (sMediaPlayer == null) {
             sMediaPlayer = new MediaPlayer();
         }
@@ -96,7 +85,7 @@ public class ServiceUtils implements MediaPlayer.OnCompletionListener {
 
     }
 
-    public static void playMusic(Song song, Context context) {
+    public void playMusic(Song song, Context context) {
         try {
             sMediaPlayer.reset();
             sMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -108,42 +97,48 @@ public class ServiceUtils implements MediaPlayer.OnCompletionListener {
             e.printStackTrace();
         }
 
-        sendActionMediaPlayer(context, PLAY);
+        Log.e("TAG", "playMusic: " + sMediaPlayer.getDuration());
+
+//        sendActionMediaPlayer(context, PLAY);
     }
 
-    public static Song getCurrentSong(int position) {
+    public Song getCurrentSong(int position) {
         return sSongList.get(position);
     }
-    public static void playCurrentSong(int position, Context context) {
+    public void playCurrentSong(int position, Context context) {
         Song song = getCurrentSong(position);
         playMusic(song, context);
-        sSongPlaying = true;
+        sIsPlaying = true;
         sPlaySongService.sendNotification(sCurrentSong());
-        getDataSongPlaying();
-        setData();
+//        getDataSongPlaying();
+//        setData();
 
     }
 
-    public static void preMusic(Context context) {
+    public void preMusic(Context context) {
         if (sCurrentSongIndex > 0)
             sCurrentSongIndex--;
         else
             sCurrentSongIndex = sSongList.size() - 1;
 
         playCurrentSong(sCurrentSongIndex, context);
+        sendActionMediaPlayer(sPlaySongService.getApplicationContext(), PREVIOUS);
+
     }
 
-    public static void nextMusic(Context context) {
+    public void nextMusic(Context context) {
         if (sCurrentSongIndex < sSongList.size() - 1)
             sCurrentSongIndex++;
         else
             sCurrentSongIndex = 0;
 
         playCurrentSong(sCurrentSongIndex, context);
+        sendActionMediaPlayer(sPlaySongService.getApplicationContext(), NEXT);
+
     }
 
     // running out a song -> run next song
-    public static void onSongCompletion(Context context) {
+    public void onSongCompletion(Context context) {
         sMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
@@ -163,7 +158,46 @@ public class ServiceUtils implements MediaPlayer.OnCompletionListener {
 
     }
 
-    public static void startMusicPlayerService(Context context) {
+    public String getSongDuration(long milliseconds) {
+        long secondsConvert = milliseconds/1000;
+        int hours = (int) secondsConvert/3600;
+        int minutes = (int) (secondsConvert % 3600) / 60;
+        int seconds = (int) (secondsConvert % 3600) % 60;
+
+        String duration = "";
+
+//        if (hours > 0) {
+//            if (mi)
+//        }
+
+        if (seconds > 10)
+            return duration + minutes + ":" + seconds;
+        else
+            return duration + minutes + ":" + "0" + seconds;
+
+    }
+
+    public String getCurrentDuration() {
+        return getSongDuration(getCurrentPosition());
+    }
+
+    public String getTotalDuration() {
+        return getSongDuration(getTotalTime());
+    }
+
+    public float getProgress() {
+        return ((float)getCurrentPosition()/getTotalTime()) * 100;
+    }
+
+    public int getCurrentPosition() {
+        return sMediaPlayer.getCurrentPosition();
+    }
+
+    public int getTotalTime() {
+        return sMediaPlayer.getDuration();
+    }
+
+    public void startMusicPlayerService(Context context) {
 //        Song song = sSongList.get(sCurrentSongIndex);
         Intent intent = new Intent(context, PlaySongService.class);
         intent.putExtra(SONG_DETAIL, sCurrentSong());
@@ -176,16 +210,16 @@ public class ServiceUtils implements MediaPlayer.OnCompletionListener {
         ContextCompat.startForegroundService(context, intent);
     }
     
-    public static void checkExistForeground(Context context) {
+    public void checkExistForeground(Context context) {
         if (!isInForeground) {
             startMusicPlayerService(context);
         }
     }
 
-    public static void sendActionMediaPlayer(Context context, int action) {
+    public void sendActionMediaPlayer(Context context, int action) {
         Intent intent = new Intent(BROADCAST_RECEIVER);
         intent.putExtra(SONG_DETAIL, sCurrentSong());
-        intent.putExtra(IS_PLAYING, sSongPlaying);
+        intent.putExtra(IS_PLAYING, sIsPlaying);
         intent.putExtra(SONG_STATUS, action);
 
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent);

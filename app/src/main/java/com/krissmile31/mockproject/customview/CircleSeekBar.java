@@ -232,14 +232,14 @@ public class CircleSeekBar extends View {
 
     }
 
-//    //percent
-//    public void setProgress(float progress) {
-//        mOnProgress = progress;
-//        Log.d("", "setProgress: " + progress);
-//
-////        changePathIndicator();
-//        invalidate();
-//    }
+    //percent
+    public void setProgress(float progress) {
+        mOnProgress = progress;
+        Log.d("", "setProgress: " + progress);
+
+//        changePathIndicator();
+        invalidate();
+    }
 
     public void changePathIndicator(){
 
