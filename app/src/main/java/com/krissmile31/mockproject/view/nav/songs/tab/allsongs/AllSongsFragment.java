@@ -110,7 +110,7 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
 //            intent.putExtra("index", mSongList.indexOf(song));
             isSongListUpdated = true;
 
-            openNowPlaying(song);
+            openNowPlaying();
 
             mOnItemSongPlay.onSongPlay(mSongList.indexOf(song));
             mOnItemSongPlay.updateSongList(mSongList);
@@ -119,16 +119,16 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
         }
     };
 
-    private void openNowPlaying(Song song) {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(SONG_DETAIL, song);
-        NowPlayingFragment nowPlayingFragment = new NowPlayingFragment();
-        nowPlayingFragment.setArguments(bundle);
+    private void openNowPlaying() {
+//        Bundle bundle = new Bundle();
+//        bundle.putSerializable(SONG_DETAIL, song);
+//        NowPlayingFragment nowPlayingFragment = new NowPlayingFragment();
+//        nowPlayingFragment.setArguments(bundle);
 
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.drawLayout, nowPlayingFragment)
-                .addToBackStack(NOW_PLAYING)
+                .replace(R.id.drawLayout, new NowPlayingFragment())
+                .addToBackStack(null)
                 .commit();
     }
 

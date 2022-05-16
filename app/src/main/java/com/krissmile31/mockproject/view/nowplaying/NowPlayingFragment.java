@@ -25,9 +25,9 @@ import com.krissmile31.mockproject.R;
 import com.krissmile31.mockproject.customview.CircleSeekBar;
 import com.krissmile31.mockproject.dialog.PlaylistDialogFragment;
 import com.krissmile31.mockproject.interfaces.OnBackPressedListener;
+import com.krissmile31.mockproject.interfaces.OnNowPlayingListener;
 import com.krissmile31.mockproject.interfaces.OnSeekBarListener;
 import com.krissmile31.mockproject.models.Song;
-import com.krissmile31.mockproject.services.PlayService;
 import com.squareup.picasso.Picasso;
 
 public class NowPlayingFragment extends Fragment implements View.OnClickListener {
@@ -44,6 +44,7 @@ public class NowPlayingFragment extends Fragment implements View.OnClickListener
     private Handler mHandler = new Handler();
     private Runnable mRunnable;
     private OnSeekBarListener mOnSeekBarListener;
+    private OnNowPlayingListener mOnNowPlayingListener;
 
     public NowPlayingFragment() {
         // Required empty public constructor
@@ -56,19 +57,6 @@ public class NowPlayingFragment extends Fragment implements View.OnClickListener
         View view =  inflater.inflate(R.layout.fragment_now_playing, container, false);
 
         init(view);
-
-//        Bundle bundle = this.getArguments();
-//        Song song = (Song) bundle.getSerializable(SONG_DETAIL);
-//        Picasso.get().load(song.getThumbnail())
-//                .placeholder(R.drawable.ic_logo)
-//                .error(R.drawable.ic_logo)
-//                .fit()
-//                .into(mThumbnailNowPlaying);
-//        mSongNowPlaying.setText(song.getSongName());
-//        mSingerNowPlaying.setText(song.getSinger());
-//        mPlayNowPlaying.setImageResource(R.drawable.ic_pause_song_action);
-//        Glide.with(getContext()).load(R.drawable.equiliser_now_playing).into(mEquiliser);
-
         runSeekBar();
 
         mPlayNowPlaying.setOnClickListener(this);
@@ -97,6 +85,7 @@ public class NowPlayingFragment extends Fragment implements View.OnClickListener
         mBtnPlaylist = view.findViewById(R.id.btn_add_playlist);
 
         mOnSeekBarListener = (MainActivity) getActivity();
+        mOnNowPlayingListener = (MainActivity) getActivity();
     }
 
     @Override
@@ -142,42 +131,34 @@ public class NowPlayingFragment extends Fragment implements View.OnClickListener
                 .into(mThumbnailNowPlaying);
         mSongNowPlaying.setText(song.getSongName());
         mSingerNowPlaying.setText(song.getSinger());
-        mPlayNowPlaying.setImageResource(R.drawable.ic_pause_song_action);
-
     }
 
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-//            case R.id.play_now_playing:
-//
-//                if (mIsPlaying) {
-//                    pauseMusic();
-////            sendActionToService(PAUSE);
-//                }
-//
-//                else  {
-//                    resumeMusic();
-////            sendActionToService(RESUME);
-//
-//                }
-//                break;
-//
-//            case R.id.btn_back_now_playing:
-//                mOnBackPressedListener = (MainActivity) getActivity();
-//                mOnBackPressedListener.onBackStackPressed();
-//                break;
-//
-//            case R.id.previous_now_playing:
-//                preMusic();
-//
-//                break;
-//
-//            case R.id.next_now_playing:
-//                nextMusic();
-//
-//                break;
+            case R.id.play_now_playing:
+                if (mIsPlaying) {
+                    mOnNowPlayingListener.pauseMusic();
+                } else  {
+                    mOnNowPlayingListener.resumeMusic();
+                }
+                break;
+
+            case R.id.btn_back_now_playing:
+                mOnBackPressedListener = (MainActivity) getActivity();
+                mOnBackPressedListener.onBackStackPressed();
+                break;
+
+            case R.id.previous_now_playing:
+                mOnNowPlayingListener.preMusic();
+
+                break;
+
+            case R.id.next_now_playing:
+                mOnNowPlayingListener.nextMusic();
+
+                break;
 
 
             case R.id.btn_add_playlist:
@@ -262,13 +243,15 @@ public class NowPlayingFragment extends Fragment implements View.OnClickListener
                 mCurrentDuration.setText(setTvCurrentDuration);
                 mTotalDuration.setText(setTvTotalDuration);
 
-                mCircleSeekBar.setProgress((float) currentDuration/totalDuration *100);
+                mCircleSeekBar.setProgress((float) currentDuration/totalDuration * 100);
                 mSeekBar.setProgress((int) currentDuration);
                 mSeekBar.setMax((int) totalDuration);
+                mHandler.postDelayed(this, 0);
 
             }
         };
-        mHandler.postDelayed(mRunnable, 0);
+//        mHandler.postDelayed(mRunnable, 0);
+        mRunnable.run();
     }
 
 }

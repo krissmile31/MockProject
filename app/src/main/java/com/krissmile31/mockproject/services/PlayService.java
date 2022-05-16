@@ -122,6 +122,8 @@ public class PlayService extends android.app.Service implements MediaPlayer.OnCo
     public void sendNotification(Song song) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+//                | Intent.FLAG_ACTIVITY_SINGLE_TOP );
         intent.putExtra(NOTIFICATION, song);
 
         PendingIntent pendingIntent;
@@ -137,7 +139,6 @@ public class PlayService extends android.app.Service implements MediaPlayer.OnCo
                     0,
                     intent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
-
         }
 
         Bitmap bitmap = null;
@@ -146,7 +147,6 @@ public class PlayService extends android.app.Service implements MediaPlayer.OnCo
                     Uri.parse(song.getThumbnail()));
         } catch (Exception e) {
             //handle exception
-
         }
 
         if (bitmap == null) {
@@ -381,7 +381,7 @@ public class PlayService extends android.app.Service implements MediaPlayer.OnCo
         playMusic(mCurrentSong);
     }
 
-    public String getSongDuration(long milliseconds) {
+    private String getSongDuration(long milliseconds) {
         long secondsConvert = milliseconds / 1000;
         int hours = (int) secondsConvert / 3600;
         int minutes = (int) (secondsConvert % 3600) / 60;
@@ -393,7 +393,7 @@ public class PlayService extends android.app.Service implements MediaPlayer.OnCo
 //            if (mi)
 //        }
 
-        if (seconds > 10)
+        if (seconds >= 10)
             return duration + minutes + ":" + seconds;
         else
             return duration + minutes + ":" + "0" + seconds;

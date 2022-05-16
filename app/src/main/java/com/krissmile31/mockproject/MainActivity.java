@@ -35,6 +35,7 @@ import com.krissmile31.mockproject.interfaces.OnBackPressedListener;
 import com.krissmile31.mockproject.interfaces.OnDataMiniPlayer;
 import com.krissmile31.mockproject.interfaces.OnItemSongPlay;
 import com.krissmile31.mockproject.interfaces.OnMiniPlayerClickListener;
+import com.krissmile31.mockproject.interfaces.OnNowPlayingListener;
 import com.krissmile31.mockproject.interfaces.OnSeekBarListener;
 import com.krissmile31.mockproject.models.Song;
 import com.krissmile31.mockproject.services.PlayService;
@@ -47,7 +48,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements OnBackPressedListener,
-        OnSeekBarListener,
+        OnSeekBarListener, OnNowPlayingListener,
         View.OnClickListener, NavigationBarView.OnItemSelectedListener, OnItemSongPlay {
 
     private BottomNavigationView mBottomNavigationView;
@@ -67,6 +68,8 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
     public PlayService service;
     public boolean isConnected;
     private OnMiniPlayerClickListener onMiniPlayerClickListener;
+
+    private final String TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,7 +127,6 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
         LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver,
                 new IntentFilter(BROADCAST_RECEIVER));
 
-
         // bound service
 
     }
@@ -161,16 +163,27 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
     @Override
     protected void onNewIntent(Intent intent) {
         Bundle extras = intent.getExtras();
+        Log.e("TAG", "onNewIntent: " + extras);
+
         if (extras != null) {
+            Log.e("TAG", "onNewIntent: " + extras);
+
             if (extras.containsKey(NOTIFICATION)) {
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(SONG_DETAIL, song);
-                NowPlayingFragment nowPlayingFragment = new NowPlayingFragment();
-                nowPlayingFragment.setArguments(bundle);
+//                Song song = (Song) intent.getSerializableExtra(NOTIFICATION);
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable(NOW_PLAYING, song);
+//                NowPlayingFragment nowPlayingFragment = new NowPlayingFragment();
+//                nowPlayingFragment.setArguments(bundle);
+
+                Log.e("TAG", "onNewIntent: " + (Song) intent.getSerializableExtra(NOTIFICATION));
+
+                Log.e("TAG", "onNewIntent: " + extras.get(NOTIFICATION));
+
+                Log.e("TAG", "onNewIntent: " + song);
 
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.drawLayout, nowPlayingFragment)
-                        .addToBackStack(NOW_PLAYING).commit();
+                        .replace(R.id.drawLayout, new NowPlayingFragment())
+                        .addToBackStack(null).commit();
             }
         }
         super.onNewIntent(intent);
@@ -236,20 +249,15 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
                     return;
                 seekBarMiniPlayer.setProgress(service.getCurrentPosition());
                 seekBarMiniPlayer.setMax(service.getTotalTime());
-
+                mHandler.postDelayed(this, 0);
             }
         };
-        mHandler.postDelayed(mRunnable, 0);
+        mRunnable.run();
 
         mMiniBtnPlay.setOnClickListener(this);
         mMiniBtnPre.setOnClickListener(this);
         mMiniBtnNext.setOnClickListener(this);
         mMiniExitPlayer.setOnClickListener(this);
-    }
-
-    private void openNowPlaying(Song song) {
-
-
     }
 
     @Override
@@ -270,26 +278,26 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
 //                        .replace(R.id.drawLayout, new NowPlayingFragment())
 //                        .addToBackStack(NOW_PLAYING).commit();
 
-//            case R.id.btn_play:
-//                if (isPlaying)
-//                    serviceUtils.pauseMusic();
-//                else
-//                    serviceUtils.resumeMusic();
-//
-//                break;
-//
-//            case R.id.btn_pre:
-//                serviceUtils.preMusic(this);
-//                break;
-//
-//            case R.id.btn_next:
-//                serviceUtils.nextMusic(this);
-//                break;
-//
-//            case R.id.btn_exit:
-//                mMiniPlayer.setVisibility(View.GONE);
-//                serviceUtils.releaseMusic();
-//                break;
+            case R.id.btn_play:
+                if (isPlaying)
+                    service.pauseMusic();
+                else
+                    service.resumeMusic();
+
+                break;
+
+            case R.id.btn_pre:
+                service.preMusic();
+                break;
+
+            case R.id.btn_next:
+                service.nextMusic();
+                break;
+
+            case R.id.btn_exit:
+                mMiniPlayer.setVisibility(View.GONE);
+                service.releaseMusic();
+                break;
 
         }
     }
@@ -367,5 +375,25 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
     @Override
     public String getTotalDuration() {
         return service.getTotalDuration();
+    }
+
+    @Override
+    public void pauseMusic() {
+        service.pauseMusic();
+    }
+
+    @Override
+    public void resumeMusic() {
+        service.resumeMusic();
+    }
+
+    @Override
+    public void preMusic() {
+        service.preMusic();
+    }
+
+    @Override
+    public void nextMusic() {
+        service.nextMusic();
     }
 }
