@@ -41,10 +41,8 @@ public class PlaylistDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_playlist_detail, container, false);
-        mRclPlaylistDetail = view.findViewById(R.id.rcl_playlist_detail);
-        mThumbnailPlaylist = view.findViewById(R.id.thumbnail_playlist_detail);
-        mTvPlaylist = view.findViewById(R.id.playlist_name);
-        mBtnBackPlaylistDetail = view.findViewById(R.id.btn_back_playlist_details);
+
+        init(view);
 
         displaySongs();
         displayPlaylistName();
@@ -58,6 +56,13 @@ public class PlaylistDetailFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void init(View view) {
+        mRclPlaylistDetail = view.findViewById(R.id.rcl_playlist_detail);
+        mThumbnailPlaylist = view.findViewById(R.id.thumbnail_playlist_detail);
+        mTvPlaylist = view.findViewById(R.id.playlist_name);
+        mBtnBackPlaylistDetail = view.findViewById(R.id.btn_back_playlist_details);
     }
 
     private void displaySongs() {

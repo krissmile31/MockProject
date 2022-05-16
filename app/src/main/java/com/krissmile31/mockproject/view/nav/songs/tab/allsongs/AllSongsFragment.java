@@ -1,6 +1,7 @@
 package com.krissmile31.mockproject.view.nav.songs.tab.allsongs;
 
 import android.content.ContentUris;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,11 +27,13 @@ import com.krissmile31.mockproject.interfaces.OnDataMiniPlayer;
 import com.krissmile31.mockproject.interfaces.OnItemSongPlay;
 import com.krissmile31.mockproject.interfaces.OnSongClickListener;
 import com.krissmile31.mockproject.models.Song;
+import com.krissmile31.mockproject.services.PlayService;
 import com.krissmile31.mockproject.view.nowplaying.NowPlayingFragment;
 import com.krissmile31.mockproject.view.nav.songs.tab.allsongs.adapter.AllSongsAdapter;
 
 import static com.krissmile31.mockproject.utils.Constants.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -42,6 +45,8 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
     private OnDataMiniPlayer onDataMiniPlayer;
     private RelativeLayout mEmptySearch;
     private List<Song> mSongList = new ArrayList<>();
+    OnItemSongPlay mOnItemSongPlay;
+    boolean isSongListUpdated;
 
     public AllSongsFragment() {
         // Required empty public constructor
@@ -52,18 +57,25 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_all_songs, container, false);
-        mRclAllSongs = view.findViewById(R.id.rcl_all_songs);
-        mEmptySearch = view.findViewById(R.id.empty_search);
-
-        mOnItemSongPlay = (OnItemSongPlay) getActivity();
+        init(view);
 
         displayAllSongs();
 
         return view;
     }
 
+    private void init(View view) {
+        mRclAllSongs = view.findViewById(R.id.rcl_all_songs);
+        mEmptySearch = view.findViewById(R.id.empty_search);
+
+        mOnItemSongPlay = (OnItemSongPlay) getActivity();
+
+    }
+
     private void displayAllSongs() {
         initLoader();
+        Log.e("TAG", "displayAllSongs: " + mSongList);
+
         mAllSongsAdapter = new AllSongsAdapter(mSongList, mListener);
         mRclAllSongs.setAdapter(mAllSongsAdapter);
         mRclAllSongs.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -88,19 +100,24 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
 //                onDataMiniPlayer.onDisplayData(song);
 
 //            sRecentSongList.add(song);
-            SongManager songManager = SongManager.getInstance(getContext());
-            songManager.add(song);
-            Log.e("TAG", "onItemClick: " + song.getSongName());
+//            SongManager songManager = SongManager.getInstance(getContext());
+//            songManager.add(song);
+//            Log.e("TAG", "onItemClick: " + song.getSongName());
+
+
+            Intent intent = new Intent(getContext(), PlayService.class);
+            intent.putExtra(SONG_DETAIL, song);
+//            intent.putExtra("index", mSongList.indexOf(song));
+            isSongListUpdated = true;
 
             openNowPlaying(song);
-            mOnItemSongPlay.onSongPlay(song);
+
+            mOnItemSongPlay.onSongPlay(mSongList.indexOf(song));
             mOnItemSongPlay.updateSongList(mSongList);
+            getContext().startService(intent);
+
         }
     };
-
-    OnItemSongPlay mOnItemSongPlay;
-    boolean isSongListUpdated;
-
 
     private void openNowPlaying(Song song) {
         Bundle bundle = new Bundle();
@@ -113,6 +130,26 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
                 .replace(R.id.drawLayout, nowPlayingFragment)
                 .addToBackStack(NOW_PLAYING)
                 .commit();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.e("TAG", "onStart: " + mSongList);
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e("TAG", "onResume: " + mSongList);
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.e("TAG", "onPause: " + mSongList);
     }
 
     @NonNull
@@ -131,6 +168,8 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
 
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
+
+        Log.e("TAG", "onLoadFinished: " + mSongList);
 
         if (cursor != null && cursor.moveToFirst()) {
 

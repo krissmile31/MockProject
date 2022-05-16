@@ -30,6 +30,8 @@ import com.krissmile31.mockproject.models.Song;
 import com.krissmile31.mockproject.services.broadcast.SongReceiver;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlayService extends android.app.Service implements MediaPlayer.OnCompletionListener {
     private final int PLAY = 6;
@@ -41,6 +43,7 @@ public class PlayService extends android.app.Service implements MediaPlayer.OnCo
 
     private boolean mIsPlaying;
     private Song mCurrentSong;
+    private List<Song> mSongList = new ArrayList<>();
     public MediaPlayer mediaPlayer;
 
     public int mCurrentSongIndex;
@@ -53,7 +56,7 @@ public class PlayService extends android.app.Service implements MediaPlayer.OnCo
     }
 
     public class MySongBinder extends Binder {
-        public PlayService getPlaySongService() {
+        public PlayService getPlayService() {
             return PlayService.this;
         }
     }
@@ -63,7 +66,7 @@ public class PlayService extends android.app.Service implements MediaPlayer.OnCo
         // TODO: Return the communication channel to the service.
         Log.e(TAG, "onBind()");
 
-        startMediaPlayer(intent);
+//        startMediaPlayer(intent);
         return mMySongBinder;
     }
 
@@ -73,8 +76,7 @@ public class PlayService extends android.app.Service implements MediaPlayer.OnCo
         Log.e(TAG, "onCreate()");
         mediaPlayer = new MediaPlayer();
 
-        // after timeout play a song
-//        onSongCompletion(getApplicationContext());
+//         after timeout play a song
     }
 
     @Override
@@ -100,16 +102,14 @@ public class PlayService extends android.app.Service implements MediaPlayer.OnCo
     private void startMediaPlayer(Intent intent) {
 
         if (intent != null) {
-//            Song song = serviceUtils.sCurrentSong();
             Song song = (Song) intent.getSerializableExtra(SONG_DETAIL);
-            mCurrentSong = song;
 
             if (song != null) {
                 mCurrentSong = song;
                 mIsPlaying = true;
                 playMusic(song);
                 sendNotification(song);
-                Log.e(TAG, "startMediaPlayer: " + mediaPlayer.getDuration() );
+                Log.e(TAG, "startMediaPlayer: " + mediaPlayer.getDuration());
             }
         }
         handleActionControlSong(intent.getIntExtra(BROADCAST_RECEIVER, 0));
@@ -141,13 +141,10 @@ public class PlayService extends android.app.Service implements MediaPlayer.OnCo
         }
 
         Bitmap bitmap = null;
-        try
-        {
+        try {
             bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(),
                     Uri.parse(song.getThumbnail()));
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             //handle exception
 
         }
@@ -185,16 +182,16 @@ public class PlayService extends android.app.Service implements MediaPlayer.OnCo
                         "Exit",
                         getPendingIntent(this, EXIT));
 
-        Log.d(TAG, "onPicassoStartLoading: " );
+        Log.d(TAG, "onPicassoStartLoading: ");
 
         Notification notification = notificationCompat.build();
         startForeground(1, notification);
     }
+
     private PendingIntent setActionPlaying() {
         if (mIsPlaying) {
             return getPendingIntent(this, PAUSE);
-        }
-        else {
+        } else {
             return getPendingIntent(this, RESUME);
         }
     }
@@ -235,17 +232,17 @@ public class PlayService extends android.app.Service implements MediaPlayer.OnCo
                 stopForeground(true);
                 releaseMusic();
                 initMediaPlayer(mCurrentSong);
-//                sendActionMediaPlayer(EXIT);
+                sendActionMediaPlayer(mCurrentSong, mIsPlaying, EXIT);
 
 //                stopSelf();
                 break;
 
             case PREVIOUS:
-//                preMusic();
+                preMusic();
                 break;
 
             case NEXT:
-//                nextMusic();
+                nextMusic();
                 break;
         }
     }
@@ -258,16 +255,11 @@ public class PlayService extends android.app.Service implements MediaPlayer.OnCo
         releaseMusic();
     }
 
-
-//    public Song sCurrentSong() {
-//        return getCurrentSong(sCurrentSongIndex);
-//    }
-
     public void pauseMusic() {
         if (mediaPlayer != null && mIsPlaying) {
             mediaPlayer.pause();
             mIsPlaying = false;
-//            sendActionMediaPlayer(PAUSE);
+            sendActionMediaPlayer(mCurrentSong, mIsPlaying, PAUSE);
             sendNotification(mCurrentSong);
 
         }
@@ -277,7 +269,7 @@ public class PlayService extends android.app.Service implements MediaPlayer.OnCo
         if (mediaPlayer != null && !mIsPlaying) {
             mediaPlayer.start();
             mIsPlaying = true;
-//            sendActionMediaPlayer(RESUME);
+            sendActionMediaPlayer(mCurrentSong, mIsPlaying, RESUME);
             sendNotification(mCurrentSong);
 
         }
@@ -320,54 +312,54 @@ public class PlayService extends android.app.Service implements MediaPlayer.OnCo
         sendActionMediaPlayer(song, mIsPlaying, PLAY);
     }
 
-//    public Song getCurrentSong(int position) {
+    //    public Song getCurrentSong(int position) {
 //        return sSongList.get(position);
 //    }
-//    public void playCurrentSong(int position) {
-////        Song song = getCurrentSong(position);
-//        mCurrentSong = sSongList.get(position);
-//        playMusic(mCurrentSong);
-//        mIsPlaying = true;
-//        sendNotification(mCurrentSong);
-//
-//    }
+    public void playCurrentSong(int position) {
+//        Song song = getCurrentSong(position);
+        mCurrentSong = mSongList.get(position);
+        playMusic(mCurrentSong);
+        mIsPlaying = true;
+        sendNotification(mCurrentSong);
+
+    }
 //
     public void preMusic() {
         if (mCurrentSongIndex > 0) {
             mCurrentSongIndex--;
         } else {
-//            mCurrentSongIndex = sSongList.size() - 1;
+            mCurrentSongIndex = mSongList.size() - 1;
         }
 
-//        playCurrentSong(mCurrentSongIndex);
+        playCurrentSong(mCurrentSongIndex);
 
         sendActionMediaPlayer(mCurrentSong, mIsPlaying, PREVIOUS);
-//        sRecentSongList.add(mCurrentSong);
-        SongManager songManager = SongManager.getInstance(this);
-        songManager.add(mCurrentSong);
+//        SongManager songManager = SongManager.getInstance(this);
+//        songManager.add(mCurrentSong);
 
     }
 
     public void nextMusic() {
-//        if (mCurrentSongIndex < sSongList.size() - 1)
-//            mCurrentSongIndex++;
-//        else
+        if (mCurrentSongIndex < mSongList.size() - 1) {
+            mCurrentSongIndex++;
+        } else {
             mCurrentSongIndex = 0;
+        }
 
-//        playCurrentSong(mCurrentSongIndex);
-//        sendActionMediaPlayer(mCurrentSong, mIsPlaying, NEXT);
+        playCurrentSong(mCurrentSongIndex);
+        sendActionMediaPlayer(mCurrentSong, mIsPlaying, NEXT);
 //        sRecentSongList.add(mCurrentSong);
-        SongManager songManager = SongManager.getInstance(this);
-        songManager.add(mCurrentSong);
+//        SongManager songManager = SongManager.getInstance(this);
+//        songManager.add(mCurrentSong);
 
     }
 
     // running out a song -> run next song
 //    public void onSongCompletion(Context context) {
-//        mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+//        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 //            @Override
 //            public void onCompletion(MediaPlayer mediaPlayer) {
-//                if (mCurrentSongIndex < sSongList.size() - 1) {
+//                if (mCurrentSongIndex < mSongList.size() - 1) {
 //                    mCurrentSongIndex++;
 //
 //                } else {
@@ -378,24 +370,20 @@ public class PlayService extends android.app.Service implements MediaPlayer.OnCo
 //        });
 //    }
 
-    public void setSongList(){
-
-    }
-
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
-//        if (mCurrentSongIndex < sSongList.size() - 1) {
-//            mCurrentSongIndex++;
-//
-//        } else {
-//            mCurrentSongIndex = 0;
-//        }
-//        playMusic(mCurrentSong);
+        if (mCurrentSongIndex < mSongList.size() - 1) {
+            mCurrentSongIndex++;
+
+        } else {
+            mCurrentSongIndex = 0;
+        }
+        playMusic(mCurrentSong);
     }
 
     public String getSongDuration(long milliseconds) {
-        long secondsConvert = milliseconds/1000;
-        int hours = (int) secondsConvert/3600;
+        long secondsConvert = milliseconds / 1000;
+        int hours = (int) secondsConvert / 3600;
         int minutes = (int) (secondsConvert % 3600) / 60;
         int seconds = (int) (secondsConvert % 3600) % 60;
 
@@ -421,7 +409,7 @@ public class PlayService extends android.app.Service implements MediaPlayer.OnCo
     }
 
     public float getProgress() {
-        return ((float)getCurrentPosition()/getTotalTime()) * 100;
+        return ((float) getCurrentPosition() / getTotalTime()) * 100;
     }
 
     public int getCurrentPosition() {
@@ -452,4 +440,16 @@ public class PlayService extends android.app.Service implements MediaPlayer.OnCo
 
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
+
+    public void setSongList(List<Song> songList) {
+        mSongList = songList;
+        Log.e(TAG, "setSongList: " + songList);
+    }
+
+    public void setIndex(int position) {
+        mCurrentSongIndex = position;
+        Log.e(TAG, "setSongList: " + position);
+
+    }
+
 }

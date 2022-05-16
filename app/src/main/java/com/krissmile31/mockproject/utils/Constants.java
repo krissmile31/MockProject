@@ -19,5 +19,8 @@ public class Constants {
     public static final String PLAYLIST_NAME = "playlist_name";
     public static final String PLAYLIST_THUMBNAIL = "playlist_thumbnail";
 
+    public static final String LIST_SONG = "list_song";
+
+
 
 }

@@ -20,7 +20,6 @@ import com.krissmile31.mockproject.R;
 import com.krissmile31.mockproject.interfaces.OnSongClickListener;
 import com.krissmile31.mockproject.models.Song;
 import com.krissmile31.mockproject.services.PlayService;
-import com.krissmile31.mockproject.services.boundservice.BoundService;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -112,9 +111,6 @@ public class AllSongsAdapter extends RecyclerView.Adapter<AllSongsAdapter.MyView
         private TextView mTvSong;
         private TextView mTvSinger;
         private ImageView mBtnPlaySong;
-        private PlayService mService;
-        private BoundService boundService = new BoundService();
-        private boolean mIsConnected;
 
         public MyViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
@@ -143,19 +139,19 @@ public class AllSongsAdapter extends RecyclerView.Adapter<AllSongsAdapter.MyView
                         mListener.onItemClick(mSongList.get(position));
                     }
 
-                    mBtnPlaySong.setImageResource(R.drawable.ic_pause_gradie);
+//                    mBtnPlaySong.setImageResource(R.drawable.ic_pause_gradie);
 
 //                    serviceUtils.startMusicPlayerService(mContext);
 
-                    Intent intent = new Intent(mContext, PlayService.class);
-                    intent.putExtra(SONG_DETAIL, song);
-
-                    // started
-                    mContext.startService(intent);
+//                    Intent intent = new Intent(mContext, PlayService.class);
+//                    intent.putExtra(SONG_DETAIL, song);
+//
+//                    // started
+//                    mContext.startService(intent);
 
                     // bound service
-                    mContext.bindService(intent, boundService.serviceConnection, Context.BIND_AUTO_CREATE);
-                    ContextCompat.startForegroundService(mContext, intent);
+//                    mContext.bindService(intent, boundService.serviceConnection, Context.BIND_AUTO_CREATE);
+                   // ContextCompat.startForegroundService(mContext, intent);
                 }
             });
 //            sBtnPlaySong.setOnClickListener(new View.OnClickListener() {
