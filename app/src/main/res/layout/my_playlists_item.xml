@@ -9,7 +9,7 @@
         android:id="@+id/img_my_playlists"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/queen_colle"/>
+        android:src="@drawable/muzic"/>
 
     <TextView
         android:id="@+id/tv_playlist_name"

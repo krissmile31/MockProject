@@ -16,7 +16,6 @@
             android:id="@+id/img_all_songs"
             android:layout_width="46dp"
             android:layout_height="46dp"
-            android:src="@drawable/beyonce_artists"
             app:strokeColor="@color/white"
             app:strokeWidth="0.5dp"
             app:shapeAppearanceOverlay="@style/CornerImage_circle" />

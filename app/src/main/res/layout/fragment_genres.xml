@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".musics.tab.genres.GenresFragment">
+    tools:context=".view.nav.songs.tab.genres.GenresFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcl_genres"

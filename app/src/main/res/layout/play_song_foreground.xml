@@ -9,7 +9,6 @@
         android:id="@+id/thumnail_foreground"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/be_the_girl"
         android:layout_marginRight="@dimen/margin_layout"/>
 
     <LinearLayout

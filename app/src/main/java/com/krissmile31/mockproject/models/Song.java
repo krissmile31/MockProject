@@ -4,10 +4,9 @@ import java.io.Serializable;
 
 public class Song implements Serializable {
     private long id;
-    private String image;
+    private String thumbnail;
     private String data;
-    private int thumbnail;
-    private String song;
+    private String songName;
     private String singer;
     private int music;
     private int quantityAlbums;
@@ -16,92 +15,94 @@ public class Song implements Serializable {
     private String genre;
     private int year;
     private int duration;
+    private int thumbnails;
 
     public Song() {
     }
 
-    public Song(String song) {
-        this.song = song;
+    public Song(String songName) {
+        this.songName = songName;
     }
 
-    public Song(int thumbnail, String song, String singer) {
-        this.thumbnail = thumbnail;
-        this.song = song;
+    public Song(int thumbnails, String songName, String singer) {
+        this.thumbnails = thumbnails;
+        this.songName = songName;
         this.singer = singer;
     }
 
 
 
-    public Song(String song, String singer) {
-        this.song = song;
+
+    public Song(String songName, String singer) {
+        this.songName = songName;
         this.singer = singer;
     }
 
-    public Song(int thumbnail, String singer) {
-        this.thumbnail = thumbnail;
+    public Song(int thumbnails, String singer) {
+        this.thumbnails = thumbnails;
         this.singer = singer;
     }
 
-    public Song(int thumbnail, String song, String singer, int music) {
-        this.thumbnail = thumbnail;
-        this.song = song;
+    public Song(int thumbnails, String songName, String singer, int music) {
+        this.thumbnails = thumbnails;
+        this.songName = songName;
         this.singer = singer;
         this.music = music;
     }
 
-    public Song(int thumbnail, String singer, int quantityAlbums, int quantitySongs) {
-        this.thumbnail = thumbnail;
+    public Song(int thumbnails, String singer, int quantityAlbums, int quantitySongs) {
+        this.thumbnails = thumbnails;
         this.singer = singer;
         this.quantityAlbums = quantityAlbums;
         this.quantitySongs = quantitySongs;
     }
 
-    public Song(int thumbnail, String singer, int quantitySongs, String albumName) {
-        this.thumbnail = thumbnail;
+    public Song(int thumbnails, String singer, int quantitySongs, String albumName) {
+        this.thumbnails = thumbnails;
         this.singer = singer;
         this.quantitySongs = quantitySongs;
         this.albumName = albumName;
     }
 
-    public Song(int thumbnail, int quantitySongs, String genre) {
-        this.thumbnail = thumbnail;
+    public Song(int thumbnails, int quantitySongs, String genre) {
+        this.thumbnails = thumbnails;
         this.quantitySongs = quantitySongs;
         this.genre = genre;
     }
 
-    public Song(int thumbnail, String albumName, int year) {
-        this.thumbnail = thumbnail;
+    public Song(int thumbnails, String albumName, int year) {
+        this.thumbnails = thumbnails;
         this.albumName = albumName;
         this.year = year;
     }
 
-    public Song(long id, int thumbnail, String song, String singer) {
+    public Song(long id, int thumbnails, String songName, String singer) {
+        this.id = id;
+        this.thumbnails = thumbnails;
+        this.songName = songName;
+        this.singer = singer;
+    }
+
+    public Song(long id, String songName, String singer) {
         this.id = id;
         this.thumbnail = thumbnail;
-        this.song = song;
+        this.data = data;
+        this.songName = songName;
         this.singer = singer;
     }
 
-    public Song(long id, String song, String singer) {
+    public Song(long id, String songName, String singer, String thumbnail, String data) {
         this.id = id;
-        this.image = image;
+        this.thumbnail = thumbnail;
         this.data = data;
-        this.song = song;
+        this.songName = songName;
         this.singer = singer;
     }
 
-    public Song(long id, String song, String singer, String image, String data) {
-        this.id = id;
-        this.image = image;
-        this.data = data;
-        this.song = song;
-        this.singer = singer;
-    }
-
-    public Song(long id, String song, String singer, String data) {
+    public Song(long id, String songName, String singer, String data) {
         this.id = id;
         this.data = data;
-        this.song = song;
+        this.songName = songName;
         this.singer = singer;
     }
 
@@ -113,12 +114,12 @@ public class Song implements Serializable {
         this.id = id;
     }
 
-    public String getImage() {
-        return image;
+    public String getThumbnail() {
+        return thumbnail;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 
     public String getData() {
@@ -129,20 +130,20 @@ public class Song implements Serializable {
         this.data = data;
     }
 
-    public int getThumbnail() {
-        return thumbnail;
+    public int getThumbnails() {
+        return thumbnails;
     }
 
-    public void setThumbnail(int thumbnail) {
-        this.thumbnail = thumbnail;
+    public void setThumbnails(int thumbnails) {
+        this.thumbnails = thumbnails;
     }
 
-    public String getSong() {
-        return song;
+    public String getSongName() {
+        return songName;
     }
 
-    public void setSong(String song) {
-        this.song = song;
+    public void setSongName(String songName) {
+        this.songName = songName;
     }
 
     public String getSinger() {

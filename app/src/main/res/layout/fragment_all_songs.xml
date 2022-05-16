@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".musics.tab.allsongs.AllSongsFragment">
+    tools:context=".view.nav.songs.tab.allsongs.AllSongsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcl_all_songs"

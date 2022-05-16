@@ -7,7 +7,7 @@
     android:id="@+id/constraint_fragment_songs"
     android:background="@color/background"
     android:theme="@style/Theme.MockProject"
-    tools:context=".musics.MusicFragment">
+    tools:context=".view.nav.songs.MusicFragment">
 
     <LinearLayout
         android:id="@+id/linear_song"

@@ -4,11 +4,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1375" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/drawable/add_playlists.xml" value="0.1335" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/drawable/background_button_album_details.xml" value="0.1" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/drawable/background_button_details.xml" value="0.1525" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/drawable/background_follow_artist_details.xml" value="0.1485" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/drawable/background_play_album_details.xml" value="0.1525" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/drawable/circle_inside_dvd.xml" value="0.1395" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/drawable/dialog_playlist.xml" value="0.11" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/drawable/foreground.xml" value="0.1455" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/drawable/gradient_color.xml" value="0.1375" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/drawable/home_item.xml" value="0.1375" />
@@ -53,6 +55,7 @@
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/albums_item.xml" value="0.17346014492753623" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/all_songs_item.xml" value="0.25" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/artists_item.xml" value="0.25" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/create_playlist_dialog.xml" value="0.16893115942028986" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/dada.xml" value="0.14175724637681159" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/fkjff.xml" value="0.14175724637681159" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/fragment_album_details.xml" value="0.11" />
@@ -65,6 +68,9 @@
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/fragment_home.xml" value="0.1539855072463768" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/fragment_music.xml" value="0.165" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/fragment_now_playing.xml" value="0.165" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/fragment_playlist.xml" value="0.13858695652173914" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/fragment_playlist_detail.xml" value="0.13858695652173914" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/fragment_playlist_dialog.xml" value="0.16893115942028986" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/fragment_playlists.xml" value="0.165" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/fragment_setting.xml" value="0.1539855072463768" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/genres_item.xml" value="0.17346014492753623" />
@@ -74,6 +80,10 @@
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/my_playlists_item.xml" value="0.14673913043478262" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/play_song_background.xml" value="0.25" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/play_song_foreground.xml" value="0.165" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/playlist_detail.xml" value="0.13858695652173914" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/playlist_detail_item.xml" value="0.13858695652173914" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/playlist_dialog_fragment.xml" value="0.13858695652173914" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/playlist_dialog_item.xml" value="0.16893115942028986" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/playlist_item.xml" value="0.1539855072463768" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/recently_played_item.xml" value="0.25" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/top_albums_item.xml" value="0.16621376811594202" />

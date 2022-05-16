@@ -14,4 +14,10 @@ public class Constants {
     public static final String IS_PLAYING = "song_playing";
     public static final String SONG_STATUS = "song_action_status";
 
+    public static final String ALBUM_ART = "content://media/external/audio/albumart";
+
+    public static final String PLAYLIST_NAME = "playlist_name";
+    public static final String PLAYLIST_THUMBNAIL = "playlist_thumbnail";
+
+
 }

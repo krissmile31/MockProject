@@ -26,6 +26,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/header_num_songs"
                     style="@style/text_header_nav"
                     android:text="328"/>
                 <TextView
@@ -47,6 +48,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/header_num_albums"
                     android:text="52"
                     style="@style/text_header_nav"/>
                 <TextView
@@ -67,6 +69,7 @@
                 android:gravity="center">
 
                 <TextView
+                    android:id="@+id/header_num_artists"
                     style="@style/text_header_nav"
                     android:text="87"/>
                 <TextView

@@ -14,7 +14,6 @@
         android:layout_height="118dp"
         android:backgroundTintMode="screen"
         android:scaleType="fitXY"
-        android:src="@drawable/classical_genres"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

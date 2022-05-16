@@ -17,7 +17,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
-import android.widget.Toast;
 
 public class SplashScreenActivity extends AppCompatActivity {
     private final String READ_EXTERNAL_STORAGE = Manifest.permission.READ_EXTERNAL_STORAGE;
@@ -31,6 +30,8 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 //        startActivity(new Intent(SplashScreenActivity.this, MainActivity.class));
         checkPermission();
+//        getLoaderManager().initLoader(0, null, this);
+
 //        finish();
     }
 
@@ -58,7 +59,8 @@ public class SplashScreenActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         Log.e(TAG, "onRequestPermissionsResult: ");

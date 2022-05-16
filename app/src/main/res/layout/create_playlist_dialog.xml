@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_create_playlist"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:padding="@dimen/padding_layout"
+    android:layout_margin="@dimen/margin_layout"
+    android:background="@drawable/add_playlists"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:id="@+id/layout_create_playlist"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="200dp"-->
+<!--        android:padding="@dimen/padding_layout"-->
+<!--        android:background="@drawable/add_playlists"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent">-->
+
+        <TextView
+            android:id="@+id/tv_create_playlist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create Playlist"
+            android:textColor="@color/white"
+            android:textSize="18sp"/>
+
+        <EditText
+            android:id="@+id/edt_create_playlist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Playlist Name ..."
+            android:layout_marginTop="@dimen/margin_layout"
+            app:layout_constraintTop_toBottomOf="@id/tv_create_playlist"/>
+
+        <TextView
+            android:id="@+id/btn_oke_create_playlist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OK"
+            android:textColor="@color/purple_200"
+            android:layout_marginEnd="@dimen/padding_layout"
+            android:layout_marginTop="@dimen/margin_layout"
+            app:layout_constraintTop_toBottomOf="@id/edt_create_playlist"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:clickable="true"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/btn_cancle_create_playlist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@id/btn_oke_create_playlist"
+            app:layout_constraintTop_toBottomOf="@id/edt_create_playlist"
+            android:text="CANCEL"
+            android:textColor="@color/purple_200"
+            android:layout_marginEnd="@dimen/padding_layout"
+            android:layout_marginTop="@dimen/margin_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:clickable="true"
+            android:textSize="18sp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--</androidx.constraintlayout.widget.ConstraintLayout>-->

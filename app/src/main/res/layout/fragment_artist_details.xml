@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".musics.tab.artists.artistdetails.ArtistDetailsFragment">
+    android:padding="10dp"
+    tools:context=".view.nav.songs.tab.artists.artistdetails.ArtistDetailsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linear_artist_details"
@@ -52,8 +53,7 @@
             android:id="@+id/thumbnail_artist_detail"
             android:layout_width="match_parent"
             android:layout_height="169dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/image_artist_details" />
+            android:scaleType="fitXY"/>
 
         <ImageView
             android:layout_width="match_parent"

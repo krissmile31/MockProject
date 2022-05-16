@@ -10,7 +10,6 @@
         android:id="@+id/thumbnail_artists"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/beyonce_artists"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

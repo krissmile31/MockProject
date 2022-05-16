@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingRight="@dimen/padding_layout"
+    android:background="@color/background"
+    android:padding="@dimen/padding_layout">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/thumbnail_playlist_item"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/my_top_tracks"
+        android:scaleType="fitXY"
+        app:shapeAppearanceOverlay="@style/Playlist_Thumbnail_Style" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:layout_marginStart="@dimen/margin_layout">
+        <TextView
+            android:id="@+id/tv_playlist_item_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Queens Collection"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:ellipsize="end"
+            android:singleLine="true" />
+        <TextView
+            android:id="@+id/tv_playlist_item_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Queens "
+            android:textSize="12sp"
+            android:textColor="@color/singer"
+            android:ellipsize="end"
+            android:singleLine="true"/>
+    </LinearLayout>
+
+
+</LinearLayout>

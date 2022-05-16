@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/background"
-    tools:context=".musics.tab.albums.albumdetails.AlbumDetailsFragment">
+    android:padding="10dp"
+    tools:context=".view.nav.songs.tab.albums.albumdetails.AlbumDetailsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linear_album_details"
@@ -52,8 +53,7 @@
             android:id="@+id/thumbnail_album_detail"
             android:layout_width="match_parent"
             android:layout_height="169dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/image_album_details"/>
+            android:scaleType="fitXY"/>
 
         <ImageView
             android:layout_width="match_parent"
@@ -70,8 +70,7 @@
             <ImageView
                 android:id="@+id/thumbnail_album_details"
                 android:layout_width="87dp"
-                android:layout_height="87dp"
-                android:src="@drawable/album_art_details"/>
+                android:layout_height="87dp"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
