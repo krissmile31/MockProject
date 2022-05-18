@@ -92,6 +92,10 @@ public class NowPlayingFragment extends Fragment implements View.OnClickListener
 
         service = ((MainActivity) requireActivity()).getService();
 
+        if (service.getCurrentSong() != null) {
+            mSong = service.getCurrentSong();
+            displaySongNowPlaying(mSong);
+        }
 
 //        mSeekBar.getProgressDrawable().setColorFilter();
     }

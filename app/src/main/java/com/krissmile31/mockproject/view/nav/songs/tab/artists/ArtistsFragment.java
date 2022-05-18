@@ -21,8 +21,10 @@ import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.krissmile31.mockproject.MainActivity;
 import com.krissmile31.mockproject.R;
 import com.krissmile31.mockproject.interfaces.OnArtistClickListener;
+import com.krissmile31.mockproject.interfaces.OnListArtistListener;
 import com.krissmile31.mockproject.models.Album;
 import com.krissmile31.mockproject.models.Artist;
 import com.krissmile31.mockproject.view.nav.songs.tab.artists.adapter.ArtistAdapter;
@@ -35,6 +37,7 @@ public class ArtistsFragment extends Fragment implements LoaderManager.LoaderCal
     private ArtistAdapter mArtistAdapter;
     private RecyclerView mRclArtists;
     private List<Artist> mArtistList = new ArrayList<>();
+    private OnListArtistListener mOnListArtistListener;
 
     public ArtistsFragment() {
         // Required empty public constructor
@@ -45,11 +48,15 @@ public class ArtistsFragment extends Fragment implements LoaderManager.LoaderCal
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_artists, container, false);
-        mRclArtists = view.findViewById(R.id.rcl_artist);
-
+        init(view);
         displayArtist();
 
         return view;
+    }
+
+    private void init(View view) {
+        mRclArtists = view.findViewById(R.id.rcl_artist);
+        mOnListArtistListener = (MainActivity) getActivity();
     }
 
     private void displayArtist() {
@@ -110,6 +117,7 @@ public class ArtistsFragment extends Fragment implements LoaderManager.LoaderCal
                 mArtistList.add(new Artist(artistId, artistName, thumbnail.toString(), numSongsAlbum, numSongsArtist));
             } while (cursor.moveToNext());
         }
+        mOnListArtistListener.getListArtist(mArtistList.size());
         mArtistAdapter.notifyDataSetChanged();
     }
 

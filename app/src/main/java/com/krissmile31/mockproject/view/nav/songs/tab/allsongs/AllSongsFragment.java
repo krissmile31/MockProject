@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,9 +29,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.krissmile31.mockproject.MainActivity;
 import com.krissmile31.mockproject.R;
+import com.krissmile31.mockproject.database.recentsong.SongManager;
 import com.krissmile31.mockproject.interfaces.OnBtnPlayIconClick;
 import com.krissmile31.mockproject.interfaces.OnDataMiniPlayer;
 import com.krissmile31.mockproject.interfaces.OnItemSongPlay;
+import com.krissmile31.mockproject.interfaces.OnListSongListener;
 import com.krissmile31.mockproject.interfaces.OnSongClickListener;
 import com.krissmile31.mockproject.models.Song;
 import com.krissmile31.mockproject.services.PlayService;
@@ -44,7 +47,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
     private RecyclerView mRclAllSongs;
     private AllSongsAdapter mAllSongsAdapter;
     private OnDataMiniPlayer onDataMiniPlayer;
@@ -55,9 +58,10 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
     private PlayService service;
     private OnBtnPlayIconClick mOnIconListener;
     private Song mSong;
-    private int action;
+    private int action, size;
     private boolean mIsPlaying;
     private ImageView mIconPlay;
+    OnListSongListener onListSongListener;
 
     public AllSongsFragment() {
         // Required empty public constructor
@@ -81,38 +85,9 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
 
         mOnItemSongPlay = (OnItemSongPlay) getActivity();
         service = ((MainActivity) requireActivity()).getService();
+        onListSongListener = (MainActivity) getActivity();
 
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver,
-                new IntentFilter(BROADCAST_RECEIVER));
-
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
-    }
-
-    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-            mSong = (Song) intent.getSerializableExtra(SONG_DETAIL);
-            mIsPlaying = intent.getBooleanExtra(IS_PLAYING, false);
-            action = intent.getIntExtra(SONG_STATUS, 0);
-
-            if (mIsPlaying) {
-                mIconPlay.setImageResource(R.drawable.ic_pause_gradie);
-            } else  {
-                mIconPlay.setImageResource(R.drawable.ic_played);
-            }
-        }};
-
 
     private void displayAllSongs() {
         initLoader();
@@ -130,11 +105,11 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
 
     private OnSongClickListener mListener = new OnSongClickListener() {
         @Override
-        public void onItemClick(Song song, ImageView icon) {
-            mIconPlay = icon;
+        public void onItemClick(Song song) {
+
 //            sRecentSongList.add(song);
-//            SongManager songManager = SongManager.getInstance(getContext());
-//            songManager.add(song);
+            SongManager songManager = SongManager.getInstance(getContext());
+            songManager.add(song);
 //            Log.e("TAG", "onItemClick: " + song.getSongName());
 
             Intent intent = new Intent(getContext(), PlayService.class);
@@ -152,7 +127,9 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
         @Override
         public void onIconClick(ImageView icon) {
             mOnIconListener = (MainActivity) getActivity();
-            mOnIconListener.onIconClick();
+            if (mOnIconListener != null) {
+                mOnIconListener.onIconClick(icon);
+            }
         }
     };
 
@@ -214,6 +191,12 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
             }
         });
 
+        Log.e("TAG", "getSongListSize: " + mSongList.size());
+
+        size = mSongList.size();
+
+        onListSongListener.getListSong(mSongList.size());
+
         mAllSongsAdapter.notifyDataSetChanged();
     }
 
@@ -225,4 +208,5 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
     private Uri getUri() {
         return MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
     }
+
 }

@@ -21,8 +21,10 @@ import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.krissmile31.mockproject.MainActivity;
 import com.krissmile31.mockproject.R;
 import com.krissmile31.mockproject.interfaces.OnAlbumClickListener;
+import com.krissmile31.mockproject.interfaces.OnListAlbumListener;
 import com.krissmile31.mockproject.models.Album;
 import com.krissmile31.mockproject.view.nav.songs.tab.albums.adapter.AlbumsAdapter;
 import com.krissmile31.mockproject.view.nav.songs.tab.albums.albumdetails.AlbumDetailsFragment;
@@ -34,6 +36,7 @@ public class AlbumsFragment extends Fragment implements LoaderManager.LoaderCall
     private RecyclerView mRclAlbums;
     private AlbumsAdapter mAlbumsAdapter;
     private List<Album> mAlbumList = new ArrayList<>();
+    private OnListAlbumListener mOnListAlbumListener;
 
     public AlbumsFragment() {
         // Required empty public constructor
@@ -44,12 +47,18 @@ public class AlbumsFragment extends Fragment implements LoaderManager.LoaderCall
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_albums, container, false);
-        mRclAlbums = view.findViewById(R.id.rcl_albums);
-
+        init(view);
         displayAlbum();
 
         return view;
     }
+
+    private void init(View view) {
+        mRclAlbums = view.findViewById(R.id.rcl_albums);
+
+        mOnListAlbumListener = (MainActivity) getActivity();
+    }
+
 
     private void displayAlbum() {
         initLoader();
@@ -112,6 +121,7 @@ public class AlbumsFragment extends Fragment implements LoaderManager.LoaderCall
                 mAlbumList.add(new Album(albumId, thumbnail.toString(), albumName, albumSinger, numSongsAlbum));
             } while (cursor.moveToNext());
         }
+        mOnListAlbumListener.getListAlbum(mAlbumList.size());
         mAlbumsAdapter.notifyDataSetChanged();
     }
 

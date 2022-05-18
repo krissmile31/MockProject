@@ -18,6 +18,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.krissmile31.mockproject.R;
 import com.krissmile31.mockproject.view.nav.songs.tab.MusicFragmentAdapter;
+import com.krissmile31.mockproject.view.nav.songs.tab.allsongs.AllSongsFragment;
 
 public class MusicFragment extends Fragment {
     private TabLayout mTabLayout;

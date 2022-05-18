@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -33,20 +34,22 @@ import com.google.android.material.navigation.NavigationView;
 import com.krissmile31.mockproject.interfaces.OnBackPressedListener;
 import com.krissmile31.mockproject.interfaces.OnBtnPlayIconClick;
 import com.krissmile31.mockproject.interfaces.OnItemSongPlay;
+import com.krissmile31.mockproject.interfaces.OnListAlbumListener;
+import com.krissmile31.mockproject.interfaces.OnListArtistListener;
+import com.krissmile31.mockproject.interfaces.OnListSongListener;
 import com.krissmile31.mockproject.interfaces.OnMiniPlayerClickListener;
 import com.krissmile31.mockproject.models.Song;
 import com.krissmile31.mockproject.services.PlayService;
 import com.krissmile31.mockproject.view.nav.home.HomeFragment;
 import com.krissmile31.mockproject.view.nav.settings.SettingFragment;
 import com.krissmile31.mockproject.view.nav.songs.MusicFragment;
-import com.krissmile31.mockproject.view.nav.songs.tab.allsongs.AllSongsFragment;
 import com.krissmile31.mockproject.view.nowplaying.NowPlayingFragment;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements OnBackPressedListener,
-        OnBtnPlayIconClick,
+        OnBtnPlayIconClick, OnListSongListener, OnListAlbumListener, OnListArtistListener,
         View.OnClickListener, NavigationBarView.OnItemSelectedListener, OnItemSongPlay {
 
     private BottomNavigationView mBottomNavigationView;
@@ -56,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
             mMiniBtnPre, mMiniBtnNext, mMiniExitPlayer;
     private ConstraintLayout mMiniPlayer;
     private TextView mMiniSongPlayer, mMiniSingerPlayer,
-            mHeaderNumSongs, mHeaderNumAlbums, getmHeaderNumArtists;
+            mHeaderNumSongs, mHeaderNumAlbums, mHeaderNumArtists;
     private Song song;
     private boolean isPlaying;
     private int action;
@@ -78,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
 
         // set null to put gradient color vector
         mBottomNavigationView.setItemIconTintList(null);
-//        mNavigationView.setItemIconTintList(null);
+        mNavigationView.setItemIconTintList(null);
 
         mMiniPlayer.setVisibility(View.GONE);
         seekBarMiniPlayer.setVisibility(View.GONE);
@@ -89,12 +92,12 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
         mMenuSideBar.setOnClickListener(this); // open side bar
         mBottomNavigationView.setOnItemSelectedListener(this);
 
-        onNewIntent(getIntent());
+//        onNewIntent(getIntent());
     }
 
     private void init() {
         mBottomNavigationView = findViewById(R.id.bottomNavigation);
-//        mNavigationView = findViewById(R.id.navigationView);
+        mNavigationView = findViewById(R.id.navigationView);
         mDrawerLayout = findViewById(R.id.drawLayout);
         mMenuSideBar = findViewById(R.id.menu_side_bar);
 
@@ -108,9 +111,11 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
         mMiniExitPlayer = findViewById(R.id.btn_exit);
         seekBarMiniPlayer = findViewById(R.id.seek_bar_mini_player);
 
-        mHeaderNumSongs = findViewById(R.id.header_num_songs);
-        mHeaderNumAlbums = findViewById(R.id.header_num_albums);
-        getmHeaderNumArtists = findViewById(R.id.header_num_artists);
+        View headerNav = LayoutInflater.from(this).inflate(R.layout.header_nav, mNavigationView);
+
+        mHeaderNumSongs = (TextView) headerNav.findViewById(R.id.header_num_songs);
+        mHeaderNumAlbums = (TextView) headerNav.findViewById(R.id.header_num_albums);
+        mHeaderNumArtists = (TextView) headerNav.findViewById(R.id.header_num_artists);
 
     }
 
@@ -162,32 +167,32 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
 
     @Override
     protected void onNewIntent(Intent intent) {
-        Bundle extras = intent.getExtras();
-        if (extras != null) {
-            if (extras.containsKey(NOTIFICATION)) {
-//                startFragmentFromNotification();
-//                Song song = (Song) intent.getSerializableExtra(NOTIFICATION);
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable(NOW_PLAYING, song);
-//                NowPlayingFragment nowPlayingFragment = new NowPlayingFragment();
-//                nowPlayingFragment.setArguments(bundle);
-
-//                Log.e("Rain", "Song: " + (Song) intent.getSerializableExtra(NOTIFICATION));
+//        Bundle extras = intent.getExtras();
+//        if (extras != null) {
+//            if (extras.containsKey(NOTIFICATION)) {
+////                startFragmentFromNotification();
+////                Song song = (Song) intent.getSerializableExtra(NOTIFICATION);
+////                Bundle bundle = new Bundle();
+////                bundle.putSerializable(NOW_PLAYING, song);
+////                NowPlayingFragment nowPlayingFragment = new NowPlayingFragment();
+////                nowPlayingFragment.setArguments(bundle);
 //
-//                Log.e("Rain", ": " + extras.get(NOTIFICATION));
-//
+////                Log.e("Rain", "Song: " + (Song) intent.getSerializableExtra(NOTIFICATION));
+////
+////                Log.e("Rain", ": " + extras.get(NOTIFICATION));
+////
 //                Log.e("Rain", "onNewIntent: " + song.getSongName());
-
+//
 //                getSupportFragmentManager().beginTransaction()
 //                        .replace(R.id.drawLayout, new NowPlayingFragment())
 //                        .addToBackStack(null).commit();
 //
-//                Log.e("connect", "isConnected: " + isConnected );
-////                service.updateViewFromNotification();
-//                replaceFragment(new NowPlayingFragment());
-
-            }
-        }
+////                Log.e("connect", "isConnected: " + isConnected );
+//////                service.updateViewFromNotification();
+////                replaceFragment(new NowPlayingFragment());
+//
+//            }
+//        }
         super.onNewIntent(intent);
     }
 
@@ -229,12 +234,6 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
 //        }
         super.onBackPressed();
     }
-
-//    private void setSideBar() {
-//        mHeaderNumSongs.setText(String.valueOf(mSongList.size()));
-//        mHeaderNumAlbums.setText(String.valueOf(sAlbumList.size()));
-//        getmHeaderNumArtists.setText(String.valueOf(sArtistList.size()));
-//    }
 
 //    @Override
 //    public void onDisplayData(Song song) {
@@ -343,6 +342,33 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
             PlayService.MySongBinder mySongBinder = (PlayService.MySongBinder) iBinder;
             service = mySongBinder.getPlayService();
             isConnected = true;
+            Intent intent = getIntent();
+            Bundle extras = intent.getExtras();
+            if (extras != null) {
+                if (extras.containsKey(NOTIFICATION)) {
+//                startFragmentFromNotification();
+//                Song song = (Song) intent.getSerializableExtra(NOTIFICATION);
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable(NOW_PLAYING, song);
+//                NowPlayingFragment nowPlayingFragment = new NowPlayingFragment();
+//                nowPlayingFragment.setArguments(bundle);
+
+//                Log.e("Rain", "Song: " + (Song) intent.getSerializableExtra(NOTIFICATION));
+//
+//                Log.e("Rain", ": " + extras.get(NOTIFICATION));
+//
+//                    Log.e("Rain", "onNewIntent: " + song.getSongName());
+
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.drawLayout, new NowPlayingFragment())
+                            .addToBackStack(null).commit();
+
+//                Log.e("connect", "isConnected: " + isConnected );
+////                service.updateViewFromNotification();
+//                replaceFragment(new NowPlayingFragment());
+
+                }
+            }
         }
 
         @Override
@@ -367,11 +393,28 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
     }
 
     @Override
-    public void onIconClick() {
+    public void onIconClick(ImageView icon) {
         if (isPlaying) {
             service.pauseMusic();
+            icon.setImageResource(R.drawable.ic_played);
         } else {
             service.resumeMusic();
+            icon.setImageResource(R.drawable.ic_pause_gradie);
         }
+    }
+
+    @Override
+    public void getListSong(int size) {
+        mHeaderNumSongs.setText(String.valueOf(size));
+    }
+
+    @Override
+    public void getListAlbum(int size) {
+        mHeaderNumAlbums.setText(String.valueOf(size));
+    }
+
+    @Override
+    public void getListArtist(int size) {
+        mHeaderNumArtists.setText(String.valueOf(size));
     }
 }

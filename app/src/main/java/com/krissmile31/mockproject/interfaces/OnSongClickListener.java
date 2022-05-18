@@ -5,7 +5,7 @@ import android.widget.ImageView;
 import com.krissmile31.mockproject.models.Song;
 
 public interface OnSongClickListener {
-    void onItemClick(Song song, ImageView icon);
+    void onItemClick(Song song);
     void onIconClick(ImageView icon);
 
 }

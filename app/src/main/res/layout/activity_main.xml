@@ -15,7 +15,6 @@
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/above_seek_bar"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:paddingHorizontal="10dp"
@@ -47,8 +46,13 @@
             <FrameLayout
                 android:id="@+id/fragmentContainer"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
+            <androidx.fragment.app.FragmentContainerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></androidx.fragment.app.FragmentContainerView>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -197,17 +201,17 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--    <com.google.android.material.navigation.NavigationView-->
-<!--        android:id="@+id/navigationView"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_gravity="start"-->
-<!--        android:background="@color/side_bar_background"-->
-<!--        android:visibility="gone"-->
-<!--        app:headerLayout="@layout/header_nav"-->
-<!--        app:itemTextColor="@color/white"-->
-<!--        app:menu="@menu/side_bar">-->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigationView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/side_bar_background"
+        android:visibility="gone"
+        app:headerLayout="@layout/header_nav"
+        app:itemTextColor="@color/white"
+        app:menu="@menu/side_bar">
 
-<!--    </com.google.android.material.navigation.NavigationView>-->
+    </com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -4,6 +4,7 @@ import static com.krissmile31.mockproject.utils.Constants.SONG_DETAIL;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ public class AllSongsAdapter extends RecyclerView.Adapter<AllSongsAdapter.MyView
     private List<Song> mSongList;
     private List<Song> mSongFilter;
     private OnSongClickListener mListener;
+    private int currentPosition = -1;
 
     public AllSongsAdapter(List<Song> songList) {
         mSongList = songList;
@@ -53,7 +55,8 @@ public class AllSongsAdapter extends RecyclerView.Adapter<AllSongsAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.bind(mSongList.get(position));
+//        Log.e("AllSongAdapter", "onBindViewHolder: "+position  );
+        holder.bind(mSongList.get(position), position);
     }
 
     @Override
@@ -123,7 +126,7 @@ public class AllSongsAdapter extends RecyclerView.Adapter<AllSongsAdapter.MyView
             mBtnPlaySong = itemView.findViewById(R.id.play_song);
         }
 
-        public void bind(Song song) {
+        public void bind(Song song, int position) {
             Picasso.get().load(song.getThumbnail())
                     .placeholder(R.drawable.ic_logo)
                     .error(R.drawable.ic_logo)
@@ -135,10 +138,14 @@ public class AllSongsAdapter extends RecyclerView.Adapter<AllSongsAdapter.MyView
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    int position = getAdapterPosition();
-                    if (mListener != null && position != RecyclerView.NO_POSITION) {
-                        mListener.onItemClick(mSongList.get(position), mBtnPlaySong);
+                    int oldPos=currentPosition;
+
+                    currentPosition = position;
+                    if (mListener != null && currentPosition != RecyclerView.NO_POSITION) {
+                        mListener.onItemClick(mSongList.get(currentPosition));
                     }
+                    notifyItemChanged(oldPos);
+                    notifyItemChanged(currentPosition);
 
 //                    serviceUtils.startMusicPlayerService(mContext);
 
@@ -157,12 +164,21 @@ public class AllSongsAdapter extends RecyclerView.Adapter<AllSongsAdapter.MyView
             mBtnPlaySong.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    int position = getAdapterPosition();
-                    if (mListener != null && position != RecyclerView.NO_POSITION) {
+                    currentPosition = getAdapterPosition();
+                    if (mListener != null && currentPosition != RecyclerView.NO_POSITION) {
                         mListener.onIconClick(mBtnPlaySong);
                     }
                 }
             });
+
+            if (position == currentPosition) {
+                mBtnPlaySong.setImageResource(R.drawable.ic_pause_gradie);
+//                Log.e("AllSongAdapter", "bind: ic_pause_gradie" );
+            } else {
+                mBtnPlaySong.setImageResource(R.drawable.ic_played);
+//                Log.e("AllSongAdapter", "bind: ic_played" );
+//
+            }
 //            sBtnPlaySong.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View view) {

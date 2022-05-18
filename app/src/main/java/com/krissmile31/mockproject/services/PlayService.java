@@ -125,9 +125,9 @@ public class PlayService extends android.app.Service implements MediaPlayer.OnCo
 
     public void sendNotification(Song song) {
         Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-//                | Intent.FLAG_ACTIVITY_SINGLE_TOP );
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                | Intent.FLAG_ACTIVITY_SINGLE_TOP );
         intent.putExtra(NOTIFICATION, song);
 
         PendingIntent pendingIntent;
@@ -456,6 +456,10 @@ public class PlayService extends android.app.Service implements MediaPlayer.OnCo
         mCurrentSongIndex = position;
 //        Log.e(TAG, "setSongList: " + position);
 
+    }
+
+    public Song getCurrentSong() {
+        return mCurrentSong;
     }
 
     public boolean isPlaying() {

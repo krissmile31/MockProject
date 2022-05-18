@@ -1,5 +1,7 @@
 package com.krissmile31.mockproject.interfaces;
 
+import android.widget.ImageView;
+
 public interface OnBtnPlayIconClick {
-    void onIconClick();
+    void onIconClick(ImageView icon);
 }
