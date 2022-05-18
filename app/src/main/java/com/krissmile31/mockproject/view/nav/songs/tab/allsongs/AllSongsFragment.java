@@ -1,7 +1,10 @@
 package com.krissmile31.mockproject.view.nav.songs.tab.allsongs;
 
+import android.content.BroadcastReceiver;
 import android.content.ContentUris;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
@@ -18,11 +22,13 @@ import androidx.fragment.app.Fragment;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.krissmile31.mockproject.MainActivity;
 import com.krissmile31.mockproject.R;
-import com.krissmile31.mockproject.database.recentsong.SongManager;
+import com.krissmile31.mockproject.interfaces.OnBtnPlayIconClick;
 import com.krissmile31.mockproject.interfaces.OnDataMiniPlayer;
 import com.krissmile31.mockproject.interfaces.OnItemSongPlay;
 import com.krissmile31.mockproject.interfaces.OnSongClickListener;
@@ -33,7 +39,6 @@ import com.krissmile31.mockproject.view.nav.songs.tab.allsongs.adapter.AllSongsA
 
 import static com.krissmile31.mockproject.utils.Constants.*;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -45,8 +50,14 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
     private OnDataMiniPlayer onDataMiniPlayer;
     private RelativeLayout mEmptySearch;
     private List<Song> mSongList = new ArrayList<>();
-    OnItemSongPlay mOnItemSongPlay;
-    boolean isSongListUpdated;
+    private OnItemSongPlay mOnItemSongPlay;
+    private boolean isSongListUpdated;
+    private PlayService service;
+    private OnBtnPlayIconClick mOnIconListener;
+    private Song mSong;
+    private int action;
+    private boolean mIsPlaying;
+    private ImageView mIconPlay;
 
     public AllSongsFragment() {
         // Required empty public constructor
@@ -69,8 +80,39 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
         mEmptySearch = view.findViewById(R.id.empty_search);
 
         mOnItemSongPlay = (OnItemSongPlay) getActivity();
+        service = ((MainActivity) requireActivity()).getService();
 
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver,
+                new IntentFilter(BROADCAST_RECEIVER));
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
+    }
+
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            mSong = (Song) intent.getSerializableExtra(SONG_DETAIL);
+            mIsPlaying = intent.getBooleanExtra(IS_PLAYING, false);
+            action = intent.getIntExtra(SONG_STATUS, 0);
+
+            if (mIsPlaying) {
+                mIconPlay.setImageResource(R.drawable.ic_pause_gradie);
+            } else  {
+                mIconPlay.setImageResource(R.drawable.ic_played);
+            }
+        }};
+
 
     private void displayAllSongs() {
         initLoader();
@@ -88,26 +130,15 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
 
     private OnSongClickListener mListener = new OnSongClickListener() {
         @Override
-        public void onItemClick(Song song) {
-
-            // get position
-//            serviceUtils.sCurrentSongIndex = sSongList.indexOf(song);
-
-//            mService.mCurrentSongIndex = sSongList.indexOf(song);
-
-//            onDataMiniPlayer = (MainActivity) getActivity();
-//            if (onDataMiniPlayer != null)
-//                onDataMiniPlayer.onDisplayData(song);
-
+        public void onItemClick(Song song, ImageView icon) {
+            mIconPlay = icon;
 //            sRecentSongList.add(song);
 //            SongManager songManager = SongManager.getInstance(getContext());
 //            songManager.add(song);
 //            Log.e("TAG", "onItemClick: " + song.getSongName());
 
-
             Intent intent = new Intent(getContext(), PlayService.class);
             intent.putExtra(SONG_DETAIL, song);
-//            intent.putExtra("index", mSongList.indexOf(song));
             isSongListUpdated = true;
 
             openNowPlaying();
@@ -116,6 +147,12 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
             mOnItemSongPlay.updateSongList(mSongList);
             getContext().startService(intent);
 
+        }
+
+        @Override
+        public void onIconClick(ImageView icon) {
+            mOnIconListener = (MainActivity) getActivity();
+            mOnIconListener.onIconClick();
         }
     };
 
@@ -130,26 +167,6 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
                 .replace(R.id.drawLayout, new NowPlayingFragment())
                 .addToBackStack(null)
                 .commit();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.e("TAG", "onStart: " + mSongList);
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.e("TAG", "onResume: " + mSongList);
-
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.e("TAG", "onPause: " + mSongList);
     }
 
     @NonNull
@@ -168,9 +185,7 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
 
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
-
-        Log.e("TAG", "onLoadFinished: " + mSongList);
-
+        mSongList.clear();
         if (cursor != null && cursor.moveToFirst()) {
 
             do {

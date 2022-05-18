@@ -88,4 +88,5 @@
         <item name="android:textSize">@dimen/tv_action_now_playing</item>
         <item name="android:textColor">@color/tv_details_now_playing</item>
     </style>
+
 </resources>

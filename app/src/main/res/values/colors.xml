@@ -45,4 +45,6 @@
     <color name="centerColor">#DA549A</color>
     <color name="endColor">#D9519D</color>
 
+    <color name="seek_bar">#E47083</color>
+
 </resources>

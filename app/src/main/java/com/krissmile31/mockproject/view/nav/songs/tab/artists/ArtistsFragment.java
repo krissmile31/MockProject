@@ -98,6 +98,7 @@ public class ArtistsFragment extends Fragment implements LoaderManager.LoaderCal
 
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
+        mArtistList.clear();
         if (cursor != null && cursor.moveToFirst()) {
 
             do {

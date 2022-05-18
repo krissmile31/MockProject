@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.krissmile31.mockproject.MainActivity;
 import com.krissmile31.mockproject.R;
 import com.krissmile31.mockproject.interfaces.OnSongClickListener;
 import com.krissmile31.mockproject.models.Song;
@@ -136,10 +137,8 @@ public class AllSongsAdapter extends RecyclerView.Adapter<AllSongsAdapter.MyView
                 public void onClick(View view) {
                     int position = getAdapterPosition();
                     if (mListener != null && position != RecyclerView.NO_POSITION) {
-                        mListener.onItemClick(mSongList.get(position));
+                        mListener.onItemClick(mSongList.get(position), mBtnPlaySong);
                     }
-
-//                    mBtnPlaySong.setImageResource(R.drawable.ic_pause_gradie);
 
 //                    serviceUtils.startMusicPlayerService(mContext);
 
@@ -152,6 +151,16 @@ public class AllSongsAdapter extends RecyclerView.Adapter<AllSongsAdapter.MyView
                     // bound service
 //                    mContext.bindService(intent, boundService.serviceConnection, Context.BIND_AUTO_CREATE);
                    // ContextCompat.startForegroundService(mContext, intent);
+                }
+            });
+
+            mBtnPlaySong.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    if (mListener != null && position != RecyclerView.NO_POSITION) {
+                        mListener.onIconClick(mBtnPlaySong);
+                    }
                 }
             });
 //            sBtnPlaySong.setOnClickListener(new View.OnClickListener() {

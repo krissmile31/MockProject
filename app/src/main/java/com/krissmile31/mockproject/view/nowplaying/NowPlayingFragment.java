@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ import com.krissmile31.mockproject.interfaces.OnBackPressedListener;
 import com.krissmile31.mockproject.interfaces.OnNowPlayingListener;
 import com.krissmile31.mockproject.interfaces.OnSeekBarListener;
 import com.krissmile31.mockproject.models.Song;
+import com.krissmile31.mockproject.services.PlayService;
 import com.squareup.picasso.Picasso;
 
 public class NowPlayingFragment extends Fragment implements View.OnClickListener {
@@ -43,8 +45,9 @@ public class NowPlayingFragment extends Fragment implements View.OnClickListener
     private int action;
     private Handler mHandler = new Handler();
     private Runnable mRunnable;
-    private OnSeekBarListener mOnSeekBarListener;
-    private OnNowPlayingListener mOnNowPlayingListener;
+//    private OnSeekBarListener service;
+//    private OnNowPlayingListener service;
+    private PlayService service;
 
     public NowPlayingFragment() {
         // Required empty public constructor
@@ -57,6 +60,7 @@ public class NowPlayingFragment extends Fragment implements View.OnClickListener
         View view =  inflater.inflate(R.layout.fragment_now_playing, container, false);
 
         init(view);
+//        display();
         runSeekBar();
 
         mPlayNowPlaying.setOnClickListener(this);
@@ -84,8 +88,12 @@ public class NowPlayingFragment extends Fragment implements View.OnClickListener
         mTotalDuration = view.findViewById(R.id.total_duration_now_playing);
         mBtnPlaylist = view.findViewById(R.id.btn_add_playlist);
 
-        mOnSeekBarListener = (MainActivity) getActivity();
-        mOnNowPlayingListener = (MainActivity) getActivity();
+//        service = (MainActivity) getActivity();
+
+        service = ((MainActivity) requireActivity()).getService();
+
+
+//        mSeekBar.getProgressDrawable().setColorFilter();
     }
 
     @Override
@@ -123,6 +131,16 @@ public class NowPlayingFragment extends Fragment implements View.OnClickListener
             }
         }};
 
+    private void display() {
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            Song song = (Song) bundle.get(NOW_PLAYING);
+            if (song != null) {
+                displaySongNowPlaying(song);
+            }
+        }
+    }
+
     private void displaySongNowPlaying(Song song) {
         Picasso.get().load(song.getThumbnail())
                 .placeholder(R.drawable.ic_logo)
@@ -139,9 +157,9 @@ public class NowPlayingFragment extends Fragment implements View.OnClickListener
         switch (view.getId()) {
             case R.id.play_now_playing:
                 if (mIsPlaying) {
-                    mOnNowPlayingListener.pauseMusic();
+                    service.pauseMusic();
                 } else  {
-                    mOnNowPlayingListener.resumeMusic();
+                    service.resumeMusic();
                 }
                 break;
 
@@ -151,12 +169,12 @@ public class NowPlayingFragment extends Fragment implements View.OnClickListener
                 break;
 
             case R.id.previous_now_playing:
-                mOnNowPlayingListener.preMusic();
+                service.preMusic();
 
                 break;
 
             case R.id.next_now_playing:
-                mOnNowPlayingListener.nextMusic();
+                service.nextMusic();
 
                 break;
 
@@ -230,13 +248,15 @@ public class NowPlayingFragment extends Fragment implements View.OnClickListener
 //                mSeekBar.setProgress(serviceUtils.getCurrentPosition());
 //                mSeekBar.setMax(serviceUtils.getTotalTime());
 
-                mOnSeekBarListener.checkMedia();
+                if (service.mediaPlayer == null) {
+                    return;
+                }
 
-                long currentDuration = mOnSeekBarListener.currentDuration();
-                long totalDuration = mOnSeekBarListener.totalDuration();
+                long currentDuration = service.getCurrentPosition();
+                long totalDuration = service.getTotalTime();
 
-                String setTvCurrentDuration = mOnSeekBarListener.getCurrentDuration();
-                String setTvTotalDuration = mOnSeekBarListener.getTotalDuration();
+                String setTvCurrentDuration = service.getCurrentDuration();
+                String setTvTotalDuration = service.getTotalDuration();
 
                 mSongDurationPlaying.setText(setTvCurrentDuration + " | " + setTvTotalDuration);
 

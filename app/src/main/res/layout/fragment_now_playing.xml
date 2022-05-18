@@ -163,6 +163,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_layout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/equaliser_now_playing">
 
@@ -170,7 +171,12 @@
                 android:id="@+id/seek_bar_now_playing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_layout" />
+                android:progressTint="@color/seek_bar"
+                android:thumbTint="@color/seek_bar"
+                android:layout_marginStart="-10dp"
+                android:layout_marginEnd="-10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/current_duration_now_playing"
@@ -192,6 +198,7 @@
         <View
             android:id="@+id/divider_now_playing"
             style="@style/divider"
+            android:visibility="invisible"
             android:layout_marginTop="@dimen/margin_layout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/equaliser_now_playing" />

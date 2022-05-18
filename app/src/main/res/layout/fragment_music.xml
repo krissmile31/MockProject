@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraint_fragment_songs"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/constraint_fragment_songs"
     android:background="@color/background"
     android:theme="@style/Theme.MockProject"
     tools:context=".view.nav.songs.MusicFragment">
@@ -28,8 +28,8 @@
             android:id="@+id/tv_songs_hide_search"
             android:layout_width="0dp"
             android:layout_height="@dimen/height_linear"
-            android:gravity="center"
             android:layout_weight="10"
+            android:gravity="center"
             android:text="@string/songs"
             android:textColor="@color/white"
             android:textSize="17sp" />
@@ -38,14 +38,14 @@
             android:id="@+id/edt_search_songs"
             android:layout_width="0dp"
             android:layout_height="40dp"
-            android:paddingHorizontal="5dp"
-            android:hint="Search ..."
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:visibility="gone"
             android:layout_weight="10"
+            android:ellipsize="end"
+            android:hint="Search ..."
+            android:maxLines="1"
+            android:paddingHorizontal="5dp"
             android:textColor="@color/white"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/img_search_open"
@@ -60,48 +60,51 @@
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/linear_song"
         android:layout_marginTop="@dimen/margin_layout"
         android:background="@color/background"
-        app:tabTextAppearance="@style/text_tab_layout"
-        app:tabTextColor="@color/white"
-        app:tabSelectedTextColor="@color/itemTextColor"
+        app:layout_constraintTop_toBottomOf="@id/linear_song"
         app:tabIndicator="@drawable/gradient_color"
         app:tabIndicatorColor="@null"
-        app:tabIndicatorHeight="1dp">
+        app:tabIndicatorHeight="1dp"
+        app:tabSelectedTextColor="@color/itemTextColor"
+        app:tabTextAppearance="@style/text_tab_layout"
+        app:tabTextColor="@color/white">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:tabSelectedTextColor="@color/white"
-            android:text="@string/all_songs"/>
+            android:text="@string/all_songs"
+            app:tabSelectedTextColor="@color/white" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/playlists"/>
+            android:text="@string/playlists" />
+
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/albums"/>
+            android:text="@string/albums" />
+
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/artists"/>
+            android:text="@string/artists" />
+
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/genres"/>
+            android:text="@string/genres" />
 
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="@dimen/margin_layout"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tabLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

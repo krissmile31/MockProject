@@ -80,6 +80,7 @@ public class GenresFragment extends Fragment implements LoaderManager.LoaderCall
 
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
+        mGenreList.clear();
         if (cursor != null && cursor.moveToFirst()) {
 
             do {

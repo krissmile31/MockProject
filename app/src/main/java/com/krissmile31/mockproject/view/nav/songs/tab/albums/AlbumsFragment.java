@@ -99,7 +99,7 @@ public class AlbumsFragment extends Fragment implements LoaderManager.LoaderCall
 
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
-
+        mAlbumList.clear();
         if (cursor != null && cursor.moveToFirst()) {
 
             do {

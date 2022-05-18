@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -32,23 +31,22 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 import com.krissmile31.mockproject.interfaces.OnBackPressedListener;
-import com.krissmile31.mockproject.interfaces.OnDataMiniPlayer;
+import com.krissmile31.mockproject.interfaces.OnBtnPlayIconClick;
 import com.krissmile31.mockproject.interfaces.OnItemSongPlay;
 import com.krissmile31.mockproject.interfaces.OnMiniPlayerClickListener;
-import com.krissmile31.mockproject.interfaces.OnNowPlayingListener;
-import com.krissmile31.mockproject.interfaces.OnSeekBarListener;
 import com.krissmile31.mockproject.models.Song;
 import com.krissmile31.mockproject.services.PlayService;
 import com.krissmile31.mockproject.view.nav.home.HomeFragment;
 import com.krissmile31.mockproject.view.nav.settings.SettingFragment;
 import com.krissmile31.mockproject.view.nav.songs.MusicFragment;
+import com.krissmile31.mockproject.view.nav.songs.tab.allsongs.AllSongsFragment;
 import com.krissmile31.mockproject.view.nowplaying.NowPlayingFragment;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements OnBackPressedListener,
-        OnSeekBarListener, OnNowPlayingListener,
+        OnBtnPlayIconClick,
         View.OnClickListener, NavigationBarView.OnItemSelectedListener, OnItemSongPlay {
 
     private BottomNavigationView mBottomNavigationView;
@@ -80,9 +78,10 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
 
         // set null to put gradient color vector
         mBottomNavigationView.setItemIconTintList(null);
-        mNavigationView.setItemIconTintList(null);
+//        mNavigationView.setItemIconTintList(null);
 
         mMiniPlayer.setVisibility(View.GONE);
+        seekBarMiniPlayer.setVisibility(View.GONE);
 
         bindService();
 
@@ -95,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
 
     private void init() {
         mBottomNavigationView = findViewById(R.id.bottomNavigation);
-        mNavigationView = findViewById(R.id.navigationView);
+//        mNavigationView = findViewById(R.id.navigationView);
         mDrawerLayout = findViewById(R.id.drawLayout);
         mMenuSideBar = findViewById(R.id.menu_side_bar);
 
@@ -119,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
         Intent intent = new Intent(this, PlayService.class);
 //        intent.putExtra(SONG_DETAIL, song);
         bindService(intent, serviceConnection, BIND_AUTO_CREATE);
+
     }
 
     @Override
@@ -163,30 +163,47 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
     @Override
     protected void onNewIntent(Intent intent) {
         Bundle extras = intent.getExtras();
-        Log.e("TAG", "onNewIntent: " + extras);
-
         if (extras != null) {
-            Log.e("TAG", "onNewIntent: " + extras);
-
             if (extras.containsKey(NOTIFICATION)) {
+//                startFragmentFromNotification();
 //                Song song = (Song) intent.getSerializableExtra(NOTIFICATION);
 //                Bundle bundle = new Bundle();
 //                bundle.putSerializable(NOW_PLAYING, song);
 //                NowPlayingFragment nowPlayingFragment = new NowPlayingFragment();
 //                nowPlayingFragment.setArguments(bundle);
 
-                Log.e("TAG", "onNewIntent: " + (Song) intent.getSerializableExtra(NOTIFICATION));
+//                Log.e("Rain", "Song: " + (Song) intent.getSerializableExtra(NOTIFICATION));
+//
+//                Log.e("Rain", ": " + extras.get(NOTIFICATION));
+//
+//                Log.e("Rain", "onNewIntent: " + song.getSongName());
 
-                Log.e("TAG", "onNewIntent: " + extras.get(NOTIFICATION));
+//                getSupportFragmentManager().beginTransaction()
+//                        .replace(R.id.drawLayout, new NowPlayingFragment())
+//                        .addToBackStack(null).commit();
+//
+//                Log.e("connect", "isConnected: " + isConnected );
+////                service.updateViewFromNotification();
+//                replaceFragment(new NowPlayingFragment());
 
-                Log.e("TAG", "onNewIntent: " + song);
-
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.drawLayout, new NowPlayingFragment())
-                        .addToBackStack(null).commit();
             }
         }
         super.onNewIntent(intent);
+    }
+
+    private void startFragmentFromNotification() {
+
+        if (isConnected) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.drawLayout, new NowPlayingFragment())
+                    .addToBackStack(null).commit();
+
+            Log.e("connect", "isConnected: " + isConnected);
+            service.updateViewFromNotification();
+        } else {
+            startFragmentFromNotification();
+        }
+
     }
 
     public void replaceFragment(Fragment fragment) {
@@ -226,6 +243,7 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
 
     public void setData(Song song) {
         mMiniPlayer.setVisibility(View.VISIBLE);
+        seekBarMiniPlayer.setVisibility(View.VISIBLE);
 //        mMiniBtnPlay.setImageResource(R.drawable.ic_pause_empty);
 
         if (isPlaying)
@@ -273,10 +291,10 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
 //                NowPlayingFragment nowPlayingFragment = new NowPlayingFragment();
 //                nowPlayingFragment.setArguments(bundle);
 
-                replaceFragment(new NowPlayingFragment());
-//                getSupportFragmentManager().beginTransaction()
-//                        .replace(R.id.drawLayout, new NowPlayingFragment())
-//                        .addToBackStack(NOW_PLAYING).commit();
+//                replaceFragment(new NowPlayingFragment());
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.drawLayout, new NowPlayingFragment())
+                        .addToBackStack(null).commit();
 
             case R.id.btn_play:
                 if (isPlaying)
@@ -298,7 +316,6 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
                 mMiniPlayer.setVisibility(View.GONE);
                 service.releaseMusic();
                 break;
-
         }
     }
 
@@ -335,9 +352,8 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
         }
     };
 
-    @Override
-    protected void onPause() {
-        super.onPause();
+    public PlayService getService() {
+        return service;
     }
 
     @Override
@@ -351,49 +367,11 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
     }
 
     @Override
-    public void checkMedia() {
-        if (service.mediaPlayer == null) {
-            return;
+    public void onIconClick() {
+        if (isPlaying) {
+            service.pauseMusic();
+        } else {
+            service.resumeMusic();
         }
-    }
-
-    @Override
-    public int currentDuration() {
-        return service.getCurrentPosition();
-    }
-
-    @Override
-    public int totalDuration() {
-        return service.getTotalTime();
-    }
-
-    @Override
-    public String getCurrentDuration() {
-        return service.getCurrentDuration();
-    }
-
-    @Override
-    public String getTotalDuration() {
-        return service.getTotalDuration();
-    }
-
-    @Override
-    public void pauseMusic() {
-        service.pauseMusic();
-    }
-
-    @Override
-    public void resumeMusic() {
-        service.resumeMusic();
-    }
-
-    @Override
-    public void preMusic() {
-        service.preMusic();
-    }
-
-    @Override
-    public void nextMusic() {
-        service.nextMusic();
     }
 }

@@ -55,6 +55,10 @@ public class PlayService extends android.app.Service implements MediaPlayer.OnCo
     public PlayService() {
     }
 
+    public void updateViewFromNotification() {
+        sendActionMediaPlayer(mCurrentSong, mIsPlaying, PLAY);
+    }
+
     public class MySongBinder extends Binder {
         public PlayService getPlayService() {
             return PlayService.this;
@@ -438,18 +442,23 @@ public class PlayService extends android.app.Service implements MediaPlayer.OnCo
         intent.putExtra(IS_PLAYING, isPlaying);
         intent.putExtra(SONG_STATUS, action);
 
+//        Log.e(TAG, "sendActionMediaPlayer: " + song.getSongName());
+
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
     public void setSongList(List<Song> songList) {
         mSongList = songList;
-        Log.e(TAG, "setSongList: " + songList);
+//        Log.e(TAG, "setSongList: " + songList);
     }
 
     public void setIndex(int position) {
         mCurrentSongIndex = position;
-        Log.e(TAG, "setSongList: " + position);
+//        Log.e(TAG, "setSongList: " + position);
 
     }
 
+    public boolean isPlaying() {
+        return mIsPlaying;
+    }
 }

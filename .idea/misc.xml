@@ -46,9 +46,10 @@
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/drawable/setting_item.xml" value="0.1375" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/drawable/splash_background.xml" value="0.11" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/drawable/splashbackground.xml" value="0.1375" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/drawable/thumb_seekbar.xml" value="0.1135" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/drawable/thumbnail_album_details.xml" value="0.139" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/activity_home.xml" value="0.14175724637681159" />
-        <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/activity_main.xml" value="0.14175724637681159" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/activity_main2.xml" value="0.1796875" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/activity_splash_screen.xml" value="0.14175724637681159" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/album_details_item.xml" value="0.17527173913043478" />
@@ -78,6 +79,7 @@
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/hot_recommended.xml" value="0.1539855072463768" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/hot_recommended_item.xml" value="0.1539855072463768" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/my_playlists_item.xml" value="0.14673913043478262" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/play.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/play_song_background.xml" value="0.25" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/play_song_foreground.xml" value="0.165" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MockProject/app/src/main/res/layout/playlist_detail.xml" value="0.13858695652173914" />
