@@ -9,8 +9,8 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/thumbnail_playlist_item"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="@dimen/thumbnail_playlist_item_size"
+        android:layout_height="@dimen/thumbnail_playlist_item_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:src="@drawable/my_top_tracks"
@@ -27,8 +27,7 @@
             android:id="@+id/tv_playlist_item_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Queens Collection"
-            android:textSize="12sp"
+            android:textSize="@dimen/text_size_playlist_item"
             android:textColor="@color/white"
             android:ellipsize="end"
             android:singleLine="true" />
@@ -36,12 +35,9 @@
             android:id="@+id/tv_playlist_item_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Queens "
-            android:textSize="12sp"
+            android:textSize="@dimen/text_size_playlist_item"
             android:textColor="@color/singer"
             android:ellipsize="end"
             android:singleLine="true"/>
     </LinearLayout>
-
-
 </LinearLayout>

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:theme="@style/Theme.MockProject"
-    tools:context=".view.nav.songs.MusicFragment">
+    tools:context=".nav.songs.MusicFragment">
 
     <LinearLayout
         android:id="@+id/linear_song"
@@ -32,19 +32,19 @@
             android:gravity="center"
             android:text="@string/songs"
             android:textColor="@color/white"
-            android:textSize="17sp" />
+            android:textSize="@dimen/text_size_songs_title" />
 
         <EditText
             android:id="@+id/edt_search_songs"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="@dimen/edit_search_height"
             android:layout_weight="10"
             android:ellipsize="end"
             android:hint="Search ..."
             android:maxLines="1"
-            android:paddingHorizontal="5dp"
+            android:paddingHorizontal="@dimen/padding_element"
             android:textColor="@color/white"
-            android:textSize="14sp"
+            android:textSize="@dimen/text_size_edit_search"
             android:visibility="gone" />
 
         <ImageView
@@ -65,7 +65,7 @@
         app:layout_constraintTop_toBottomOf="@id/linear_song"
         app:tabIndicator="@drawable/gradient_color"
         app:tabIndicatorColor="@null"
-        app:tabIndicatorHeight="1dp"
+        app:tabIndicatorHeight="@dimen/tabIndicatorHeight"
         app:tabSelectedTextColor="@color/itemTextColor"
         app:tabTextAppearance="@style/text_tab_layout"
         app:tabTextColor="@color/white">

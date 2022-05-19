@@ -15,7 +15,6 @@
         android:id="@+id/tv_name_top_albums"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Fire Dragon"
         android:textColor="@color/white"
         android:textSize="@dimen/top_album"
         android:alpha="0.6"/>
@@ -24,7 +23,6 @@
         android:id="@+id/tv_year_top_albums"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="2019"
         android:textSize="@dimen/year_top_album"
         android:textColor="@color/tv_color_artist_details"
         android:alpha="0.38"/>

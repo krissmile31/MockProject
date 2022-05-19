@@ -3,7 +3,7 @@
     <string name="home_nav">Home</string>
     <string name="music_nav">Music</string>
     <string name="setting_nav">Setting</string>
-    <string name="searchHint">Search song song</string>
+    <string name="searchHint">Search</string>
     <string name="hotRecommend">Hot Recommended</string>
     <string name="playlist">Playlist</string>
     <string name="viewAll">View All</string>
@@ -43,6 +43,9 @@
     <string name="share">Share</string>
     <string name="favourite">Add to Favourites</string>
 
+    <!--    album details-->
+    <string name="history_album">History</string>
+
     <!--    artist details-->
     <string name="artist_details">Artist Details</string>
     <string name="followers">Followers</string>
@@ -50,6 +53,8 @@
     <string name="follow">Follow</string>
     <string name="top_album">Top Albums</string>
     <string name="top_song">Top Songs</string>
+    <string name="album_artist">Albums</string>
+    <string name="song_artist">Songs</string>
 
     <!--    now playing-->
     <string name="now_playing">Now Playing</string>
@@ -58,6 +63,7 @@
     <string name="repeat_now_playing">Repeat</string>
     <string name="eq_now_playing">EQ</string>
     <string name="favourites_now_playing">Favourites</string>
+    <string name="album_now_playing">Album - Dangerous</string>
 
     <!--    setting-->
     <string name="setting">Settings</string>
@@ -69,5 +75,11 @@
     <string name="other">Other</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--    diaglog playlist creation-->
+    <string name="create_playlists">Create Playlist</string>
+    <string name="hint_create_playlist">Playlist Name ...</string>
+    <string name="ok_create_playlist">OK</string>
+    <string name="cancel_create_playlist">CANCEL</string>
 
 </resources>

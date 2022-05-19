@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingVertical="@dimen/padding_layout"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/background">
+    android:background="@color/background"
+    android:paddingVertical="@dimen/padding_layout">
 
     <ImageView
         android:id="@+id/play_album_details"
@@ -18,52 +18,53 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginStart="@dimen/margin_layout"
-        app:layout_constraintStart_toEndOf="@id/play_album_details"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/play_album_details">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_item_album_details"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        <TextView
-            android:id="@+id/song_album_details"
-            android:layout_width="124dp"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="Billie Jean"
-            android:textColor="@color/white"
-            android:textSize="@dimen/item_song_album_details"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/time_album_details"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="3:56"
-            android:textColor="@color/time_album_details"
-            android:textSize="@dimen/time_album_details"
-            app:layout_constraintStart_toEndOf="@id/song_album_details"
-            app:layout_constraintEnd_toStartOf="@id/more_album_details"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            <TextView
+                android:id="@+id/song_album_details"
+                android:layout_width="@dimen/max_width_tv_song"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Billie Jean"
+                android:textColor="@color/white"
+                android:textSize="@dimen/item_song_album_details"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/more_album_details"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_more_album_details"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            <TextView
+                android:id="@+id/time_album_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/time_album_details"
+                android:textSize="@dimen/time_album_details"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/more_album_details"
+                app:layout_constraintStart_toEndOf="@id/song_album_details"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/more_album_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_more_album_details"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View
             style="@style/divider"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/margin_layout"
             android:paddingTop="@dimen/padding_layout"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/constraint_item_album_details" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

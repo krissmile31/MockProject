@@ -15,9 +15,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.krissmile31.mockproject.MainActivity;
 import com.krissmile31.mockproject.R;
+import com.krissmile31.mockproject.database.playlist.PlaylistManager;
+import com.krissmile31.mockproject.database.playlist.songplaylist.SongPlaylistManager;
 import com.krissmile31.mockproject.models.Playlist;
 import com.krissmile31.mockproject.models.Song;
+import com.krissmile31.mockproject.services.PlayService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +29,9 @@ import java.util.List;
 public class CreatePlaylistDialog extends DialogFragment implements View.OnClickListener {
     private EditText mPlaylistName;
     private TextView mBtnOkCreat, mBtnCancelCreate;
-    private List<Song> mSongList = new ArrayList<>();
-    private List<Playlist> mPlaylist = new ArrayList<>();
+    private PlaylistManager mPlaylistManager;
+    private SongPlaylistManager mSongManager;
+    private PlayService mService;
 
     @NonNull
     @Override
@@ -35,15 +40,24 @@ public class CreatePlaylistDialog extends DialogFragment implements View.OnClick
         View view = LayoutInflater.from(getContext())
                 .inflate(R.layout.create_playlist_dialog, null);
 
-        mPlaylistName = view.findViewById(R.id.edt_create_playlist);
-        mBtnOkCreat = view.findViewById(R.id.btn_oke_create_playlist);
-        mBtnCancelCreate = view.findViewById(R.id.btn_cancle_create_playlist);
+        init(view);
+        dialog.setContentView(view);
 
         mBtnOkCreat.setOnClickListener(this);
         mBtnCancelCreate.setOnClickListener(this);
 
-        dialog.setContentView(view);
         return dialog;
+    }
+
+    private void init(View view) {
+        mPlaylistName = view.findViewById(R.id.edt_create_playlist);
+        mBtnOkCreat = view.findViewById(R.id.btn_oke_create_playlist);
+        mBtnCancelCreate = view.findViewById(R.id.btn_cancle_create_playlist);
+
+        mPlaylistManager = PlaylistManager.getInstance(getContext());
+        mSongManager = SongPlaylistManager.getInstance(getContext());
+        mService = ((MainActivity) requireActivity()).getService();
+
     }
 
     @Override
@@ -57,7 +71,6 @@ public class CreatePlaylistDialog extends DialogFragment implements View.OnClick
             InsetDrawable inset = new InsetDrawable(new ColorDrawable(Color.TRANSPARENT), 50);
             dialog.getWindow().setBackgroundDrawable(inset);
             dialog.getWindow().setLayout(width, height);
-//            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         }
     }
 
@@ -66,17 +79,14 @@ public class CreatePlaylistDialog extends DialogFragment implements View.OnClick
         switch (view.getId()) {
             case R.id.btn_oke_create_playlist:
                 String playlistName = mPlaylistName.getText().toString();
-//                Song song = serviceUtils.sCurrentSong();
-//                sSongPlaylist.add(song);
-//
-//                Playlist playlist = new Playlist(playlistName, sSongPlaylist);
-//                sPlaylist.add(playlist);
-//
-//                PlaylistManager playlistManager = PlaylistManager.getInstance(getContext());
-//                playlistManager.add(playlist);
-//
-//                SongPlaylistManager songManager = SongPlaylistManager.getInstance(getContext());
-//                songManager.add(song);
+                Playlist playlist = new Playlist(playlistName);
+                mPlaylistManager.add(playlist);
+
+                if (mService.getCurrentSong() != null) {
+                    Song song = mService.getCurrentSong();
+                    mSongManager.add(song);
+                }
+
                 dismiss();
                 break;
 

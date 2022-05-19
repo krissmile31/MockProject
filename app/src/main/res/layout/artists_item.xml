@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="10dp"
+    android:paddingBottom="@dimen/padding_edge"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/background">
 
@@ -24,7 +24,6 @@
             android:id="@+id/tv_singer_artists"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Beyonce"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             style="@style/singer_artists" />
@@ -33,49 +32,49 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/margin_edge"
             app:layout_constraintTop_toBottomOf="@id/tv_singer_artists">
 
             <TextView
                 android:id="@+id/quantity_albums_artists"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="4"
                 style="@style/details_artists"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" Albums"
+                android:text="@string/album_artist"
                 style="@style/details_artists" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginHorizontal="40dp"
+                android:layout_marginHorizontal="@dimen/margin_dot"
                 android:src="@drawable/ic_a_dot"/>
 
             <TextView
                 android:id="@+id/quantity_songs_artists"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="38"
                 style="@style/details_artists"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" Songs"
+                android:text="@string/song_artist"
                 style="@style/details_artists"/>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <ImageView
         android:id="@+id/menu_artists"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_three_dots_"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,6 +5,7 @@ import static com.krissmile31.mockproject.utils.Constants.*;
 
 import android.app.Notification;
 import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -33,30 +34,24 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayService extends android.app.Service implements MediaPlayer.OnCompletionListener {
-    private final int PLAY = 6;
+public class PlayService extends Service implements MediaPlayer.OnCompletionListener {
     private final int PAUSE = 1;
     private final int RESUME = 2;
     private final int EXIT = 3;
     private final int PREVIOUS = 4;
     private final int NEXT = 5;
+    private final int PLAY = 6;
 
     private boolean mIsPlaying;
     private Song mCurrentSong;
     private List<Song> mSongList = new ArrayList<>();
     public MediaPlayer mediaPlayer;
-
-    public int mCurrentSongIndex;
-
+    private int mCurrentSongIndex;
     private final String TAG = PlayService.class.getSimpleName();
 
     private MySongBinder mMySongBinder = new MySongBinder();
 
     public PlayService() {
-    }
-
-    public void updateViewFromNotification() {
-        sendActionMediaPlayer(mCurrentSong, mIsPlaying, PLAY);
     }
 
     public class MySongBinder extends Binder {
@@ -70,7 +65,6 @@ public class PlayService extends android.app.Service implements MediaPlayer.OnCo
         // TODO: Return the communication channel to the service.
         Log.e(TAG, "onBind()");
 
-//        startMediaPlayer(intent);
         return mMySongBinder;
     }
 
@@ -97,39 +91,27 @@ public class PlayService extends android.app.Service implements MediaPlayer.OnCo
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
         startMediaPlayer(intent);
 
         return START_NOT_STICKY;
     }
 
     private void startMediaPlayer(Intent intent) {
-
         if (intent != null) {
             Song song = (Song) intent.getSerializableExtra(SONG_DETAIL);
-
             if (song != null) {
                 mCurrentSong = song;
                 mIsPlaying = true;
                 playMusic(song);
                 sendNotification(song);
-                Log.e(TAG, "startMediaPlayer: " + mediaPlayer.getDuration());
             }
         }
         handleActionControlSong(intent.getIntExtra(BROADCAST_RECEIVER, 0));
-
-//        sendActionMediaPlayer(PLAY);
-
         LogUtils.d(String.valueOf(mIsPlaying));
     }
 
     public void sendNotification(Song song) {
         Intent intent = new Intent(this, MainActivity.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                | Intent.FLAG_ACTIVITY_SINGLE_TOP );
-        intent.putExtra(NOTIFICATION, song);
-
         PendingIntent pendingIntent;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             pendingIntent = PendingIntent.getActivity(
@@ -165,7 +147,6 @@ public class PlayService extends android.app.Service implements MediaPlayer.OnCo
                 .setContentTitle(song.getSongName())
                 .setContentText(song.getSinger())
                 .setContentIntent(pendingIntent)
-//                .setLargeIcon(BitmapFactory.decodeResource(getResources(), album.getThumbnail()))
                 .setLargeIcon(bitmap)
                 .setProgress(100, 30, false)
                 .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
@@ -185,8 +166,6 @@ public class PlayService extends android.app.Service implements MediaPlayer.OnCo
                 .addAction(R.drawable.ic_baseline_clear_24,
                         "Exit",
                         getPendingIntent(this, EXIT));
-
-        Log.d(TAG, "onPicassoStartLoading: ");
 
         Notification notification = notificationCompat.build();
         startForeground(1, notification);
@@ -234,11 +213,10 @@ public class PlayService extends android.app.Service implements MediaPlayer.OnCo
 
             case EXIT:
                 stopForeground(true);
+                stopSelf();
                 releaseMusic();
                 initMediaPlayer(mCurrentSong);
                 sendActionMediaPlayer(mCurrentSong, mIsPlaying, EXIT);
-
-//                stopSelf();
                 break;
 
             case PREVIOUS:
@@ -255,7 +233,6 @@ public class PlayService extends android.app.Service implements MediaPlayer.OnCo
     public void onDestroy() {
         super.onDestroy();
         Log.e(TAG, "onDestroy()");
-
         releaseMusic();
     }
 
@@ -265,7 +242,6 @@ public class PlayService extends android.app.Service implements MediaPlayer.OnCo
             mIsPlaying = false;
             sendActionMediaPlayer(mCurrentSong, mIsPlaying, PAUSE);
             sendNotification(mCurrentSong);
-
         }
     }
 
@@ -275,7 +251,6 @@ public class PlayService extends android.app.Service implements MediaPlayer.OnCo
             mIsPlaying = true;
             sendActionMediaPlayer(mCurrentSong, mIsPlaying, RESUME);
             sendNotification(mCurrentSong);
-
         }
     }
 
@@ -296,7 +271,6 @@ public class PlayService extends android.app.Service implements MediaPlayer.OnCo
         } catch (IllegalArgumentException | IllegalStateException | IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public void playMusic(Song song) {
@@ -310,22 +284,14 @@ public class PlayService extends android.app.Service implements MediaPlayer.OnCo
         } catch (IllegalArgumentException | IllegalStateException | IOException e) {
             e.printStackTrace();
         }
-
-        Log.e("TAG", "playMusic: " + mediaPlayer.getDuration());
-
         sendActionMediaPlayer(song, mIsPlaying, PLAY);
     }
 
-    //    public Song getCurrentSong(int position) {
-//        return sSongList.get(position);
-//    }
     public void playCurrentSong(int position) {
-//        Song song = getCurrentSong(position);
         mCurrentSong = mSongList.get(position);
         playMusic(mCurrentSong);
         mIsPlaying = true;
         sendNotification(mCurrentSong);
-
     }
 //
     public void preMusic() {
@@ -336,11 +302,9 @@ public class PlayService extends android.app.Service implements MediaPlayer.OnCo
         }
 
         playCurrentSong(mCurrentSongIndex);
-
         sendActionMediaPlayer(mCurrentSong, mIsPlaying, PREVIOUS);
-//        SongManager songManager = SongManager.getInstance(this);
-//        songManager.add(mCurrentSong);
-
+        SongManager songManager = SongManager.getInstance(this);
+        songManager.add(mCurrentSong);
     }
 
     public void nextMusic() {
@@ -349,40 +313,25 @@ public class PlayService extends android.app.Service implements MediaPlayer.OnCo
         } else {
             mCurrentSongIndex = 0;
         }
-
         playCurrentSong(mCurrentSongIndex);
         sendActionMediaPlayer(mCurrentSong, mIsPlaying, NEXT);
-//        sRecentSongList.add(mCurrentSong);
-//        SongManager songManager = SongManager.getInstance(this);
-//        songManager.add(mCurrentSong);
-
+        SongManager songManager = SongManager.getInstance(this);
+        songManager.add(mCurrentSong);
     }
 
-    // running out a song -> run next song
-//    public void onSongCompletion(Context context) {
-//        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-//            @Override
-//            public void onCompletion(MediaPlayer mediaPlayer) {
-//                if (mCurrentSongIndex < mSongList.size() - 1) {
-//                    mCurrentSongIndex++;
-//
-//                } else {
-//                    mCurrentSongIndex = 0;
-//                }
-//                playMusic(mCurrentSong);
-//            }
-//        });
-//    }
+//     running out a song -> run next song
+    public void onSongCompletion() {
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                nextMusic();
+            }
+        });
+    }
 
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
-        if (mCurrentSongIndex < mSongList.size() - 1) {
-            mCurrentSongIndex++;
-
-        } else {
-            mCurrentSongIndex = 0;
-        }
-        playMusic(mCurrentSong);
+        nextMusic();
     }
 
     private String getSongDuration(long milliseconds) {
@@ -392,10 +341,6 @@ public class PlayService extends android.app.Service implements MediaPlayer.OnCo
         int seconds = (int) (secondsConvert % 3600) % 60;
 
         String duration = "";
-
-//        if (hours > 0) {
-//            if (mi)
-//        }
 
         if (seconds >= 10)
             return duration + minutes + ":" + seconds;
@@ -424,45 +369,23 @@ public class PlayService extends android.app.Service implements MediaPlayer.OnCo
         return mediaPlayer.getDuration();
     }
 
-//    public void startMusicPlayerService() {
-//        Intent intent = new Intent(this, PlaySongService.class);
-//        intent.putExtra(SONG_DETAIL, mCurrentSong);
-//
-//        // started
-//        startService(intent);
-//
-//        // bound service
-//        bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
-//        ContextCompat.startForegroundService(this, intent);
-//    }
-
     public void sendActionMediaPlayer(Song song, boolean isPlaying, int action) {
         Intent intent = new Intent(BROADCAST_RECEIVER);
         intent.putExtra(SONG_DETAIL, song);
         intent.putExtra(IS_PLAYING, isPlaying);
         intent.putExtra(SONG_STATUS, action);
-
-//        Log.e(TAG, "sendActionMediaPlayer: " + song.getSongName());
-
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
     public void setSongList(List<Song> songList) {
         mSongList = songList;
-//        Log.e(TAG, "setSongList: " + songList);
     }
 
     public void setIndex(int position) {
         mCurrentSongIndex = position;
-//        Log.e(TAG, "setSongList: " + position);
-
     }
 
     public Song getCurrentSong() {
         return mCurrentSong;
-    }
-
-    public boolean isPlaying() {
-        return mIsPlaying;
     }
 }

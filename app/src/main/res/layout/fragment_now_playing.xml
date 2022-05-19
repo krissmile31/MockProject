@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:padding="@dimen/padding_layout"
-    tools:context=".view.nowplaying.NowPlayingFragment">
+    tools:context=".nowplaying.NowPlayingFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint_tv_now_playing"
@@ -51,9 +51,9 @@
         app:layout_constraintTop_toBottomOf="@id/constraint_tv_now_playing">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/oje"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
+            android:id="@+id/layout_container_dvd"
+            android:layout_width="@dimen/layout_container_dvd_size"
+            android:layout_height="@dimen/layout_container_dvd_size"
             android:paddingTop="@dimen/padding_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -61,21 +61,21 @@
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/thumbnail_now_playing"
-                android:layout_width="237dp"
-                android:layout_height="237dp"
-                android:layout_marginTop="10dp"
-                android:padding="1dp"
+                android:layout_width="@dimen/img_circle_dvd_size"
+                android:layout_height="@dimen/img_circle_dvd_size"
+                android:layout_marginTop="@dimen/margin_edge"
+                android:padding="@dimen/padding_img_dvd"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:shapeAppearanceOverlay="@style/CornerImage_circle"
                 app:strokeColor="@color/disable"
-                app:strokeWidth="1dp" />
+                app:strokeWidth="@dimen/stroke_width_dvd" />
 
             <com.krissmile31.mockproject.customview.CircleSeekBar
                 android:id="@+id/circle_seek_bar"
-                android:layout_width="257dp"
-                android:layout_height="289dp"
+                android:layout_width="@dimen/circle_seek_bar_width"
+                android:layout_height="@dimen/circle_seek_bar_height"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -87,13 +87,12 @@
             android:id="@+id/time_now_playing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="3:15 | 4:26"
+            android:layout_marginTop="@dimen/margin_element"
             android:textColor="@color/tv_details_now_playing"
             android:textSize="@dimen/tv_details_now_playing"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/oje" />
+            app:layout_constraintTop_toBottomOf="@id/layout_container_dvd" />
 
         <TextView
             android:id="@+id/tv_song_now_playing"
@@ -122,7 +121,6 @@
                 android:id="@+id/tv_singer_now_playing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Michael Jackson "
                 android:textColor="@color/tv_details_now_playing"
                 android:textSize="@dimen/tv_details_now_playing"
                 app:layout_constraintStart_toStartOf="parent"
@@ -132,7 +130,7 @@
                 android:id="@+id/split_details_now_playing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="5dp"
+                android:paddingHorizontal="@dimen/padding_element"
                 android:src="@drawable/ic_a_dot"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/tv_singer_now_playing"
@@ -142,7 +140,7 @@
                 android:id="@+id/tv_album_now_playing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" Album - Dangerous"
+                android:text="@string/album_now_playing"
                 android:textColor="@color/tv_details_now_playing"
                 android:textSize="@dimen/tv_details_now_playing"
                 app:layout_constraintStart_toEndOf="@id/split_details_now_playing"
@@ -152,8 +150,8 @@
 
         <ImageView
             android:id="@+id/equaliser_now_playing"
-            android:layout_width="224dp"
-            android:layout_height="75dp"
+            android:layout_width="@dimen/equaliser_width"
+            android:layout_height="@dimen/equaliser_height"
             android:layout_marginTop="@dimen/margin_layout"
             android:src="@drawable/ic_equaliser_now_playing"
             app:layout_constraintEnd_toEndOf="parent"
@@ -171,10 +169,10 @@
                 android:id="@+id/seek_bar_now_playing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_horizontal_seek_bar"
+                android:layout_marginEnd="@dimen/margin_horizontal_seek_bar"
                 android:progressTint="@color/seek_bar"
                 android:thumbTint="@color/seek_bar"
-                android:layout_marginStart="-10dp"
-                android:layout_marginEnd="-10dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -182,24 +180,22 @@
                 android:id="@+id/current_duration_now_playing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="3:15"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/seek_bar_now_playing"/>
+                app:layout_constraintTop_toBottomOf="@id/seek_bar_now_playing" />
 
             <TextView
                 android:id="@+id/total_duration_now_playing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="4:26"
-                app:layout_constraintTop_toBottomOf="@id/seek_bar_now_playing"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/seek_bar_now_playing" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View
             android:id="@+id/divider_now_playing"
             style="@style/divider"
-            android:visibility="invisible"
             android:layout_marginTop="@dimen/margin_layout"
+            android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/equaliser_now_playing" />
 
@@ -207,7 +203,7 @@
             android:id="@+id/linear_control_now_playing"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="100dp"
+            android:layout_marginHorizontal="@dimen/margin_horizontal_handle_music"
             android:layout_marginTop="@dimen/margin_layout"
             app:layout_constraintTop_toBottomOf="@id/divider_now_playing">
 
@@ -221,8 +217,8 @@
 
             <ImageView
                 android:id="@+id/play_now_playing"
-                android:layout_width="40dp"
-                android:layout_height="39dp"
+                android:layout_width="@dimen/icon_play_width"
+                android:layout_height="@dimen/icon_play_height"
                 android:layout_weight="2"
                 android:src="@drawable/ic_play_song_action" />
 
@@ -240,8 +236,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_layout"
+            android:paddingHorizontal="@dimen/padding_horizontal_handle_action"
             android:paddingTop="@dimen/padding_layout"
-            android:paddingHorizontal="50dp"
             app:layout_constraintTop_toBottomOf="@id/linear_control_now_playing">
 
             <LinearLayout

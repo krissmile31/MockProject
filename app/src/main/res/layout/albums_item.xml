@@ -25,14 +25,13 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingVertical="10dp">
+            android:paddingVertical="@dimen/padding_edge">
 
             <TextView
                 android:id="@+id/text_albums"
                 style="@style/text_albums"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="History"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -56,8 +55,7 @@
                 style="@style/text_details_albums"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Michael Jackson" />
+                android:layout_weight="1"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -72,16 +70,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="end"
-                android:text="10" />
+                android:gravity="end"/>
 
             <TextView
                 style="@style/text_details_albums"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="end"
-                android:text=" Songs" />
+                android:text="@string/song_artist"
+                android:gravity="end"/>
         </LinearLayout>
     </LinearLayout>
 

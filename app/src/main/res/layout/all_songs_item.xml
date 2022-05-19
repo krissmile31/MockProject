@@ -14,10 +14,10 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/img_all_songs"
-            android:layout_width="46dp"
-            android:layout_height="46dp"
+            android:layout_width="@dimen/img_circle_size"
+            android:layout_height="@dimen/img_circle_size"
             app:strokeColor="@color/white"
-            app:strokeWidth="0.5dp"
+            app:strokeWidth="@dimen/stroke_width_img"
             app:shapeAppearanceOverlay="@style/CornerImage_circle" />
 <!--        <ImageView-->
 <!--            android:id="@+id/img_all_songs"-->
@@ -26,8 +26,8 @@
 <!--            android:src="@drawable/billie_jean" />-->
 
         <ImageView
-            android:layout_width="14dp"
-            android:layout_height="14dp"
+            android:layout_width="@dimen/circle_background_inside_img"
+            android:layout_height="@dimen/circle_background_inside_img"
             android:layout_centerInParent="true"
             android:src="@drawable/circle_inside_dvd"
            ></ImageView>
@@ -42,8 +42,10 @@
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingEnd="50dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingEnd="@dimen/padding_end_background"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/tv_all_songs"
@@ -51,9 +53,8 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Billie Jean"
                 android:textColor="@color/white"
-                android:textSize="13sp" />
+                android:textSize="@dimen/text_size_all_songs" />
 
             <TextView
                 android:id="@+id/tv_all_singer"
@@ -61,9 +62,8 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Michael Jackson"
                 android:textColor="@color/singer"
-                android:textSize="10sp" />
+                android:textSize="@dimen/text_size_all_singers" />
 
 
         </LinearLayout>
@@ -77,49 +77,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_paddingBottom="@dimen/margin_layout"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/constrain_bill1">-->
-
             <View
                 style="@style/divider"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/margin_edge"
                 app:layout_constraintTop_toBottomOf="@id/play_song"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
-    <!--    <LinearLayout-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        android:orientation="vertical">-->
-
-    <!--        <LinearLayout-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content">-->
-
-    <!--            <LinearLayout-->
-    <!--                android:layout_width="wrap_content"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:orientation="vertical">-->
-
-    <!--            <TextView-->
-    <!--                android:layout_width="wrap_content"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:text="Billie Jean"-->
-    <!--                android:textSize="13sp"-->
-    <!--                android:textColor="@color/white"/>-->
-    <!--            <TextView-->
-    <!--                android:layout_width="wrap_content"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:text="Michael Jackson"-->
-    <!--                android:textSize="10sp"-->
-    <!--                android:textColor="@color/singer"/>-->
-    <!--            </LinearLayout>-->
-    <!--        </LinearLayout>-->
-    <!--    </LinearLayout>-->
 </LinearLayout>

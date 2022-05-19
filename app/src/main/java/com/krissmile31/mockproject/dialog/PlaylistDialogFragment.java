@@ -13,21 +13,28 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.krissmile31.mockproject.MainActivity;
 import com.krissmile31.mockproject.R;
 import com.krissmile31.mockproject.database.playlist.PlaylistManager;
+import com.krissmile31.mockproject.database.playlist.songplaylist.SongPlaylistManager;
 import com.krissmile31.mockproject.dialog.adapter.PlaylistItemAdapter;
 import com.krissmile31.mockproject.dialog.addplaylist.CreatePlaylistDialog;
 import com.krissmile31.mockproject.interfaces.OnPlaylistItemClickListener;
 import com.krissmile31.mockproject.models.Playlist;
+import com.krissmile31.mockproject.models.Song;
+import com.krissmile31.mockproject.services.PlayService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PlaylistDialogFragment extends BottomSheetDialogFragment implements View.OnClickListener {
-    private ConstraintLayout mContainPlaylist, mCreatePlaylist;
+    private ConstraintLayout mCreatePlaylist;
     private RecyclerView mRclPlaylistItems;
     private PlaylistItemAdapter mPlaylistItemAdapter;
     private List<Playlist> mPlaylists;
+    private PlaylistManager mPlaylistManager;
+    private PlayService mService;
+    private SongPlaylistManager mSongManager;
 
     @NonNull
     @Override
@@ -38,11 +45,7 @@ public class PlaylistDialogFragment extends BottomSheetDialogFragment implements
         View view = LayoutInflater.from(getContext())
                 .inflate(R.layout.fragment_playlist_dialog, null);
 
-        mCreatePlaylist = view.findViewById(R.id.create_playlist);
-        mRclPlaylistItems = view.findViewById(R.id.rcl_playlist_items);
-
-        mPlaylists = new ArrayList<>();
-
+        init(view);
         displayPlaylistItem();
         bottomSheetDialog.setContentView(view);
         mCreatePlaylist.setOnClickListener(this);
@@ -50,9 +53,20 @@ public class PlaylistDialogFragment extends BottomSheetDialogFragment implements
         return bottomSheetDialog;
     }
 
+    private void init(View view) {
+        mCreatePlaylist = view.findViewById(R.id.create_playlist);
+        mRclPlaylistItems = view.findViewById(R.id.rcl_playlist_items);
+
+        mPlaylists = new ArrayList<>();
+
+        mPlaylistManager = PlaylistManager.getInstance(getContext());
+        mSongManager = SongPlaylistManager.getInstance(getContext());
+        mService = ((MainActivity) requireActivity()).getService();
+
+    }
+
     private void displayPlaylistItem() {
-        PlaylistManager playlistManager = PlaylistManager.getInstance(getContext());
-        mPlaylists = playlistManager.all();
+        mPlaylists = mPlaylistManager.all();
         mPlaylistItemAdapter = new PlaylistItemAdapter(mPlaylists, mListener);
         mRclPlaylistItems.setAdapter(mPlaylistItemAdapter);
         mRclPlaylistItems.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -69,13 +83,14 @@ public class PlaylistDialogFragment extends BottomSheetDialogFragment implements
         }
     }
 
+    // click on available playlist
     private OnPlaylistItemClickListener mListener = new OnPlaylistItemClickListener() {
         @Override
         public void OnItemClick(Playlist playlist) {
-//            List<Song> songList = new ArrayList<>();
-////            songList.add(serviceUtils.sCurrentSong());
-//            sPlaylist.add(new Playlist(playlist.getPlaylistName(), songList));
-//            playlist.setSongList(songList, serviceUtils.sCurrentSong());
+            if (mService.getCurrentSong() != null) {
+                Song song = mService.getCurrentSong();
+                mSongManager.add(song);
+            }
             dismiss();
         }
     };

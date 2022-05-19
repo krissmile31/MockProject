@@ -68,7 +68,6 @@ public class SongManager {
         statement.bindString(3, song.getThumbnail());
         statement.bindString(1, song.getSongName());
         statement.bindString(2, song.getSinger());
-//        statement.bindDouble(3, Playlist.getUnitPrice());
 //        statement.bindLong(4, ((long) (Playlist.getNoSongsPlaylist())));
 
         long id = statement.executeInsert();
@@ -104,37 +103,4 @@ public class SongManager {
         db = dbHelper.getWritableDatabase();
         db.execSQL("DELETE FROM " + DbSchema.RecentSongsTable.NAME);
     }
-
-    public class SongCursorWrapper extends CursorWrapper {
-        public SongCursorWrapper(Cursor cursor) {
-            super(cursor);
-        }
-
-        public Song getSong() {
-            long id = getLong(getColumnIndex("id"));
-            String thumbnail = getString(getColumnIndex(DbSchema.RecentSongsTable.Cols.THUMBNAIL));
-            String name = getString(getColumnIndex(DbSchema.RecentSongsTable.Cols.NAME));
-            String singer = getString(getColumnIndex(DbSchema.RecentSongsTable.Cols.SINGER));
-
-            Song song = new Song(id, thumbnail, name, singer);
-
-            return song;
-        }
-
-        public List<Song> getSongs() {
-            List<Song> songs = new ArrayList<>();
-
-            moveToFirst();
-            while (!isAfterLast()) {
-                Song song = getSong();
-                songs.add(song);
-
-                moveToNext();
-            }
-
-            return songs;
-        }
-    }
-
-
 }

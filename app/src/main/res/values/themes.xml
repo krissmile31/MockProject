@@ -49,10 +49,10 @@
         <item name="android:height">300dp</item>
     </style>
 
-    <style name="ControlSeekBar" parent="Widget.AppCompat.SeekBar">
-        <item name="android:progressBackgroundTint">@color/circle_seek_bar</item>
-        <item name="android:progressTint">#D9519D</item>
-        <item name="android:thumbTint">#D9519D</item>
-    </style>
+<!--    <style name="ControlSeekBar" parent="Widget.AppCompat.SeekBar">-->
+<!--        <item name="android:progressBackgroundTint">@color/circle_seek_bar</item>-->
+<!--        <item name="android:progressTint">#D9519D</item>-->
+<!--        <item name="android:thumbTint">#D9519D</item>-->
+<!--    </style>-->
 
 </resources>

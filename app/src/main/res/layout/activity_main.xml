@@ -17,8 +17,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:paddingHorizontal="10dp"
-            android:paddingTop="10dp"
+            android:paddingHorizontal="@dimen/padding_edge"
+            android:paddingTop="@dimen/padding_edge"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/mini_player">
 
@@ -46,13 +46,8 @@
             <FrameLayout
                 android:id="@+id/fragmentContainer"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_height="match_parent" />
 
-            <androidx.fragment.app.FragmentContainerView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"></androidx.fragment.app.FragmentContainerView>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -63,18 +58,6 @@
                 android:visibility="visible"
                 app:layout_constraintBottom_toTopOf="@id/bottomNavigation"
                 app:layout_constraintBottom_toBottomOf="parent">
-
-                <!--            <SeekBar-->
-                <!--                android:id="@+id/seek_bar_mini_player"-->
-                <!--                android:layout_width="match_parent"-->
-                <!--                android:layout_height="wrap_content"-->
-                <!--                android:progressTint="@color/seek_bar"-->
-                <!--                android:thumbTint="@color/seek_bar"-->
-                <!--                android:layout_marginStart="-10dp"-->
-                <!--                android:layout_marginEnd="-15dp"-->
-                <!--                android:layout_marginTop="-10dp"-->
-                <!--                app:layout_constraintBottom_toTopOf="@id/below_seek_bar"-->
-                <!--                app:layout_constraintStart_toStartOf="parent"/>-->
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/below_seek_bar"
@@ -87,11 +70,13 @@
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/thumbnail_play_song"
-                        android:layout_width="46dp"
-                        android:layout_height="46dp"
+                        android:layout_width="@dimen/img_circle_size"
+                        android:layout_height="@dimen/img_circle_size"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
                         app:shapeAppearanceOverlay="@style/CornerImage_circle"
                         app:strokeColor="@color/white"
-                        app:strokeWidth="0.5dp" />
+                        app:strokeWidth="@dimen/stroke_width_img" />
                     <!--                <ImageView-->
                     <!--                    android:id="@+id/thumbnail_play_song"-->
                     <!--                    android:layout_width="46dp"-->
@@ -171,7 +156,7 @@
                         android:id="@+id/btn_exit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingRight="5dp"
+                        android:paddingRight="@dimen/padding_element"
                         android:src="@drawable/ic_exit"
                         app:layout_constraintEnd_toEndOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -181,10 +166,10 @@
                 android:id="@+id/seek_bar_mini_player"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:thumbOffset="5dp"
-                android:layout_marginStart="-15dp"
-                android:layout_marginEnd="-15dp"
-                android:layout_marginBottom="-10dp"
+                android:thumbOffset="@dimen/thumb_offset"
+                android:layout_marginStart="@dimen/seekbar_margin_horizontal"
+                android:layout_marginEnd="@dimen/seekbar_margin_horizontal"
+                android:layout_marginBottom="@dimen/seekbar_margin_bottom"
                 android:progressTint="@color/seek_bar"
                 android:thumbTint="@color/seek_bar"
                 app:layout_constraintBottom_toTopOf="@id/mini_player"

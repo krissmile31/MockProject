@@ -37,13 +37,12 @@ import com.krissmile31.mockproject.interfaces.OnItemSongPlay;
 import com.krissmile31.mockproject.interfaces.OnListAlbumListener;
 import com.krissmile31.mockproject.interfaces.OnListArtistListener;
 import com.krissmile31.mockproject.interfaces.OnListSongListener;
-import com.krissmile31.mockproject.interfaces.OnMiniPlayerClickListener;
 import com.krissmile31.mockproject.models.Song;
 import com.krissmile31.mockproject.services.PlayService;
-import com.krissmile31.mockproject.view.nav.home.HomeFragment;
-import com.krissmile31.mockproject.view.nav.settings.SettingFragment;
-import com.krissmile31.mockproject.view.nav.songs.MusicFragment;
-import com.krissmile31.mockproject.view.nowplaying.NowPlayingFragment;
+import com.krissmile31.mockproject.nav.home.HomeFragment;
+import com.krissmile31.mockproject.nav.settings.SettingFragment;
+import com.krissmile31.mockproject.nav.songs.MusicFragment;
+import com.krissmile31.mockproject.nowplaying.NowPlayingFragment;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -51,7 +50,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements OnBackPressedListener,
         OnBtnPlayIconClick, OnListSongListener, OnListAlbumListener, OnListArtistListener,
         View.OnClickListener, NavigationBarView.OnItemSelectedListener, OnItemSongPlay {
-
     private BottomNavigationView mBottomNavigationView;
     private NavigationView mNavigationView;
     private DrawerLayout mDrawerLayout;
@@ -60,16 +58,13 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
     private ConstraintLayout mMiniPlayer;
     private TextView mMiniSongPlayer, mMiniSingerPlayer,
             mHeaderNumSongs, mHeaderNumAlbums, mHeaderNumArtists;
-    private Song song;
-    private boolean isPlaying;
-    private int action;
+    private Song mSong;
+    private boolean mIsPlaying, mIsConnected;
+    private int mAction;
     public SeekBar seekBarMiniPlayer;
     private Handler mHandler = new Handler();
     private Runnable mRunnable;
-    public PlayService service;
-    public boolean isConnected;
-    private OnMiniPlayerClickListener onMiniPlayerClickListener;
-
+    private PlayService mService;
     private final String TAG = MainActivity.class.getSimpleName();
 
     @Override
@@ -78,21 +73,10 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
         setContentView(R.layout.activity_main);
 
         init();
-
-        // set null to put gradient color vector
-        mBottomNavigationView.setItemIconTintList(null);
-        mNavigationView.setItemIconTintList(null);
-
-        mMiniPlayer.setVisibility(View.GONE);
-        seekBarMiniPlayer.setVisibility(View.GONE);
-
         bindService();
 
-        replaceFragment(new MusicFragment());
         mMenuSideBar.setOnClickListener(this); // open side bar
         mBottomNavigationView.setOnItemSelectedListener(this);
-
-//        onNewIntent(getIntent());
     }
 
     private void init() {
@@ -117,11 +101,18 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
         mHeaderNumAlbums = (TextView) headerNav.findViewById(R.id.header_num_albums);
         mHeaderNumArtists = (TextView) headerNav.findViewById(R.id.header_num_artists);
 
+        // set null to put gradient color vector
+        mBottomNavigationView.setItemIconTintList(null);
+        mNavigationView.setItemIconTintList(null);
+
+        mMiniPlayer.setVisibility(View.GONE);
+        seekBarMiniPlayer.setVisibility(View.GONE);
+
+        replaceFragment(new MusicFragment());
     }
 
     private void bindService() {
         Intent intent = new Intent(this, PlayService.class);
-//        intent.putExtra(SONG_DETAIL, song);
         bindService(intent, serviceConnection, BIND_AUTO_CREATE);
 
     }
@@ -131,9 +122,6 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
         super.onStart();
         LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver,
                 new IntentFilter(BROADCAST_RECEIVER));
-
-        // bound service
-
     }
 
     @Override
@@ -151,68 +139,19 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-
             if (intent.getExtras() == null)
                 return;
-            song = (Song) intent.getSerializableExtra(SONG_DETAIL);
-            isPlaying = intent.getBooleanExtra(IS_PLAYING, false);
-            action = intent.getIntExtra(SONG_STATUS, 0);
 
-            Log.e("TAG", "onReceive: " + song);
+            mSong = (Song) intent.getSerializableExtra(SONG_DETAIL);
+            mIsPlaying = intent.getBooleanExtra(IS_PLAYING, false);
+            mAction = intent.getIntExtra(SONG_STATUS, 0);
 
-            setData(song);
+            setData(mSong);
 
         }
     };
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-//        Bundle extras = intent.getExtras();
-//        if (extras != null) {
-//            if (extras.containsKey(NOTIFICATION)) {
-////                startFragmentFromNotification();
-////                Song song = (Song) intent.getSerializableExtra(NOTIFICATION);
-////                Bundle bundle = new Bundle();
-////                bundle.putSerializable(NOW_PLAYING, song);
-////                NowPlayingFragment nowPlayingFragment = new NowPlayingFragment();
-////                nowPlayingFragment.setArguments(bundle);
-//
-////                Log.e("Rain", "Song: " + (Song) intent.getSerializableExtra(NOTIFICATION));
-////
-////                Log.e("Rain", ": " + extras.get(NOTIFICATION));
-////
-//                Log.e("Rain", "onNewIntent: " + song.getSongName());
-//
-//                getSupportFragmentManager().beginTransaction()
-//                        .replace(R.id.drawLayout, new NowPlayingFragment())
-//                        .addToBackStack(null).commit();
-//
-////                Log.e("connect", "isConnected: " + isConnected );
-//////                service.updateViewFromNotification();
-////                replaceFragment(new NowPlayingFragment());
-//
-//            }
-//        }
-        super.onNewIntent(intent);
-    }
-
-    private void startFragmentFromNotification() {
-
-        if (isConnected) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.drawLayout, new NowPlayingFragment())
-                    .addToBackStack(null).commit();
-
-            Log.e("connect", "isConnected: " + isConnected);
-            service.updateViewFromNotification();
-        } else {
-            startFragmentFromNotification();
-        }
-
-    }
-
     public void replaceFragment(Fragment fragment) {
-//        FragmentManager fragmentManager = getSupportFragmentManager();
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fragment)
                 .addToBackStack("bottom_nav").commit();
     }
@@ -227,25 +166,14 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
 
     @Override
     public void onBackStackPressed() {
-//        if (getFragmentManager().getBackStackEntryCount() > 0 ){
-//            getFragmentManager().popBackStack();
-//        } else {
-//            super.onBackPressed();
-//        }
         super.onBackPressed();
     }
-
-//    @Override
-//    public void onDisplayData(Song song) {
-//        setData(song);
-//    }
 
     public void setData(Song song) {
         mMiniPlayer.setVisibility(View.VISIBLE);
         seekBarMiniPlayer.setVisibility(View.VISIBLE);
-//        mMiniBtnPlay.setImageResource(R.drawable.ic_pause_empty);
 
-        if (isPlaying)
+        if (mIsPlaying)
             mMiniBtnPlay.setImageResource(R.drawable.ic_pause_empty);
         else
             mMiniBtnPlay.setImageResource(R.drawable.ic_play_empty);
@@ -262,10 +190,10 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
             @SuppressLint("SetTextI18n")
             @Override
             public void run() {
-                if (service.mediaPlayer == null)
+                if (mService.mediaPlayer == null)
                     return;
-                seekBarMiniPlayer.setProgress(service.getCurrentPosition());
-                seekBarMiniPlayer.setMax(service.getTotalTime());
+                seekBarMiniPlayer.setProgress(mService.getCurrentPosition());
+                seekBarMiniPlayer.setMax(mService.getTotalTime());
                 mHandler.postDelayed(this, 0);
             }
         };
@@ -285,35 +213,30 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
                 break;
 
             case R.id.mini_player:
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable(SONG_DETAIL, song);
-//                NowPlayingFragment nowPlayingFragment = new NowPlayingFragment();
-//                nowPlayingFragment.setArguments(bundle);
-
-//                replaceFragment(new NowPlayingFragment());
                 getSupportFragmentManager().beginTransaction()
                         .add(R.id.drawLayout, new NowPlayingFragment())
                         .addToBackStack(null).commit();
 
             case R.id.btn_play:
-                if (isPlaying)
-                    service.pauseMusic();
-                else
-                    service.resumeMusic();
-
+                if (mIsPlaying) {
+                    mService.pauseMusic();
+                } else {
+                    mService.resumeMusic();
+                }
                 break;
 
             case R.id.btn_pre:
-                service.preMusic();
+                mService.preMusic();
                 break;
 
             case R.id.btn_next:
-                service.nextMusic();
+                mService.nextMusic();
                 break;
 
             case R.id.btn_exit:
                 mMiniPlayer.setVisibility(View.GONE);
-                service.releaseMusic();
+                seekBarMiniPlayer.setVisibility(View.GONE);
+                mService.releaseMusic();
                 break;
         }
     }
@@ -340,65 +263,38 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             PlayService.MySongBinder mySongBinder = (PlayService.MySongBinder) iBinder;
-            service = mySongBinder.getPlayService();
-            isConnected = true;
-            Intent intent = getIntent();
-            Bundle extras = intent.getExtras();
-            if (extras != null) {
-                if (extras.containsKey(NOTIFICATION)) {
-//                startFragmentFromNotification();
-//                Song song = (Song) intent.getSerializableExtra(NOTIFICATION);
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable(NOW_PLAYING, song);
-//                NowPlayingFragment nowPlayingFragment = new NowPlayingFragment();
-//                nowPlayingFragment.setArguments(bundle);
-
-//                Log.e("Rain", "Song: " + (Song) intent.getSerializableExtra(NOTIFICATION));
-//
-//                Log.e("Rain", ": " + extras.get(NOTIFICATION));
-//
-//                    Log.e("Rain", "onNewIntent: " + song.getSongName());
-
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.drawLayout, new NowPlayingFragment())
-                            .addToBackStack(null).commit();
-
-//                Log.e("connect", "isConnected: " + isConnected );
-////                service.updateViewFromNotification();
-//                replaceFragment(new NowPlayingFragment());
-
-                }
-            }
+            mService = mySongBinder.getPlayService();
+            mIsConnected = true;
         }
 
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
-            service = null;
-            isConnected = false;
+            mService = null;
+            mIsConnected = false;
         }
     };
 
     public PlayService getService() {
-        return service;
+        return mService;
     }
 
     @Override
     public void onSongPlay(int position) {
-        service.setIndex(position);
+        mService.setIndex(position);
     }
 
     @Override
     public void updateSongList(List<Song> songList) {
-        service.setSongList(songList);
+        mService.setSongList(songList);
     }
 
     @Override
     public void onIconClick(ImageView icon) {
-        if (isPlaying) {
-            service.pauseMusic();
+        if (mIsPlaying) {
+            mService.pauseMusic();
             icon.setImageResource(R.drawable.ic_played);
         } else {
-            service.resumeMusic();
+            mService.resumeMusic();
             icon.setImageResource(R.drawable.ic_pause_gradie);
         }
     }

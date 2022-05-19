@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".view.nav.songs.tab.artists.ArtistsFragment">
+    tools:context=".nav.songs.tab.artists.ArtistsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcl_artist"

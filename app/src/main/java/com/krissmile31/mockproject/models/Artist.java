@@ -6,21 +6,15 @@ public class Artist implements Serializable {
     private long artistId;
     private String artistName;
     private String thumbnailArtist;
-    private int noAlbumsArtist;
-    private int noSongsArtist;
+    private int numAlbumsArtist;
+    private int numSongsArtist;
 
-    public Artist(long artistId, String artistName, String thumbnail, int noAlbums, int noSongsArtist) {
+    public Artist(long artistId, String artistName, String thumbnail, int noAlbums, int numSongsArtist) {
         this.artistId = artistId;
         this.artistName = artistName;
         this.thumbnailArtist = thumbnail;
-        this.noAlbumsArtist = noAlbums;
-        this.noSongsArtist = noSongsArtist;
-    }
-
-    public Artist(long artistId, String artistName, String thumbnailArtist) {
-        this.artistId = artistId;
-        this.artistName = artistName;
-        this.thumbnailArtist = thumbnailArtist;
+        this.numAlbumsArtist = noAlbums;
+        this.numSongsArtist = numSongsArtist;
     }
 
     public long getArtistId() {
@@ -35,11 +29,11 @@ public class Artist implements Serializable {
         return thumbnailArtist;
     }
 
-    public int getNoAlbumsArtist() {
-        return noAlbumsArtist;
+    public int getNumAlbumsArtist() {
+        return numAlbumsArtist;
     }
 
-    public int getNoSongsArtist() {
-        return noSongsArtist;
+    public int getNumSongsArtist() {
+        return numSongsArtist;
     }
 }

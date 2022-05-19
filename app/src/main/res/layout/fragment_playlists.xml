@@ -5,15 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".view.nav.songs.tab.albums.AlbumsFragment">
+    tools:context=".nav.songs.tab.albums.AlbumsFragment">
 
     <GridLayout
         android:id="@+id/grid_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_playlist"
         android:columnCount="2"
         android:rowCount="2"
-        android:layout_margin="-10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -21,10 +21,10 @@
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
             android:layout_row="0"
-            android:layout_column="0">
+            android:layout_rowWeight="1"
+            android:layout_column="0"
+            android:layout_columnWeight="1">
 
             <ImageView
                 android:layout_width="match_parent"
@@ -35,8 +35,8 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:layout_gravity="bottom">
+                android:layout_gravity="bottom"
+                android:padding="@dimen/padding_edge">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -61,33 +61,34 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_play"
                     android:layout_gravity="center_vertical"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/ic_play"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
             android:layout_row="0"
-            android:layout_column="1">
+            android:layout_rowWeight="1"
+            android:layout_column="1"
+            android:layout_columnWeight="1">
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="fitXY"
-                android:src="@drawable/lastet_added"/>
+                android:src="@drawable/lastet_added" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:layout_gravity="bottom">
+                android:layout_gravity="bottom"
+                android:padding="@dimen/padding_edge">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -112,32 +113,33 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_play"
                     android:layout_gravity="center_vertical"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/ic_play"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
             android:layout_row="1"
-            android:layout_column="0">
+            android:layout_rowWeight="1"
+            android:layout_column="0"
+            android:layout_columnWeight="1">
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="fitXY"
-                android:src="@drawable/history"/>
+                android:src="@drawable/history" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:layout_gravity="bottom">
+                android:layout_gravity="bottom"
+                android:padding="@dimen/padding_edge">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -158,35 +160,37 @@
                         android:layout_height="wrap_content"
                         android:text="@string/song_history" />
                 </LinearLayout>
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_play"
                     android:layout_gravity="center_vertical"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/ic_play"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
             android:layout_row="1"
-            android:layout_column="1">
+            android:layout_rowWeight="1"
+            android:layout_column="1"
+            android:layout_columnWeight="1">
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="fitXY"
-                android:src="@drawable/favourites"/>
+                android:src="@drawable/favourites" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:layout_gravity="bottom">
+                android:layout_gravity="bottom"
+                android:padding="@dimen/padding_edge">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -211,38 +215,16 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_play"
                     android:layout_gravity="center_vertical"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/ic_play"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
 
     </GridLayout>
-
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="vertical">-->
-
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content">-->
-
-<!--            <ImageView-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:src="@drawable/my_top_tracks"/>-->
-<!--            <ImageView-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:src="@drawable/lastet_added"-->
-<!--        </LinearLayout>-->
-<!--    </LinearLayout>-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -273,17 +255,16 @@
             android:id="@+id/rcl_myPlaylists"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/tv_my_playlists"
             android:layout_marginTop="@dimen/margin_layout"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_my_playlists" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="150dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -291,9 +272,9 @@
             android:id="@+id/float_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_floating_plus"
             android:clickable="true"
             android:pointerIcon="arrow"
+            android:src="@drawable/ic_floating_plus"
             app:backgroundTint="@color/floating_button" />
 
     </RelativeLayout>

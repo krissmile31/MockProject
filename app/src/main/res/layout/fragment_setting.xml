@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".view.nav.settings.SettingFragment">
+    tools:context=".nav.settings.SettingFragment">
 
     <LinearLayout
         android:id="@+id/linear_settings"
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -33,8 +33,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginTop="@dimen/margin_layout"
+        android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/linear_settings">
 
         <LinearLayout
@@ -47,21 +47,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/margin_layout"
-                android:src="@drawable/ic_display"/>
+                android:src="@drawable/ic_display" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <TextView
+                    style="@style/text_item_setting"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/display"
-                    style="@style/text_item_setting" />
+                    android:text="@string/display" />
 
                 <View
-                    android:layout_marginTop="@dimen/margin_divider"
-                    style="@style/divider"/>
+                    style="@style/divider"
+                    android:layout_marginTop="@dimen/margin_divider" />
             </LinearLayout>
         </LinearLayout>
 
@@ -74,20 +75,23 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_audio"
-                android:paddingRight="@dimen/padding_layout"/>
+                android:paddingRight="@dimen/padding_layout"
+                android:src="@drawable/ic_audio" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <TextView
+                    style="@style/text_item_setting"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/audio"
-                    style="@style/text_item_setting"/>
+                    android:text="@string/audio" />
+
                 <View
-                    android:layout_marginTop="@dimen/margin_divider"
-                    style="@style/divider"/>
+                    style="@style/divider"
+                    android:layout_marginTop="@dimen/margin_divider" />
             </LinearLayout>
         </LinearLayout>
 
@@ -100,20 +104,23 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_headset"
-                android:paddingRight="@dimen/padding_layout"/>
+                android:paddingRight="@dimen/padding_layout"
+                android:src="@drawable/ic_headset" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <TextView
+                    style="@style/text_item_setting"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/headset"
-                    style="@style/text_item_setting"/>
+                    android:text="@string/headset" />
+
                 <View
-                    android:layout_marginTop="@dimen/margin_divider"
-                    style="@style/divider"/>
+                    style="@style/divider"
+                    android:layout_marginTop="@dimen/margin_divider" />
             </LinearLayout>
         </LinearLayout>
 
@@ -126,20 +133,23 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_lockscreen"
-                android:paddingRight="@dimen/padding_layout"/>
+                android:paddingRight="@dimen/padding_layout"
+                android:src="@drawable/ic_lockscreen" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <TextView
+                    style="@style/text_item_setting"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/lockscreen"
-                    style="@style/text_item_setting"/>
+                    android:text="@string/lockscreen" />
+
                 <View
-                    android:layout_marginTop="@dimen/margin_divider"
-                    style="@style/divider"/>
+                    style="@style/divider"
+                    android:layout_marginTop="@dimen/margin_divider" />
             </LinearLayout>
         </LinearLayout>
 
@@ -152,20 +162,23 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_advanced"
-                android:paddingRight="@dimen/padding_layout"/>
+                android:paddingRight="@dimen/padding_layout"
+                android:src="@drawable/ic_advanced" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <TextView
+                    style="@style/text_item_setting"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/advanced"
-                    style="@style/text_item_setting"/>
+                    android:text="@string/advanced" />
+
                 <View
-                    android:layout_marginTop="@dimen/margin_divider"
-                    style="@style/divider"/>
+                    style="@style/divider"
+                    android:layout_marginTop="@dimen/margin_divider" />
             </LinearLayout>
         </LinearLayout>
 
@@ -178,23 +191,24 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_other"
-                android:paddingRight="@dimen/padding_layout"/>
+                android:paddingRight="@dimen/padding_layout"
+                android:src="@drawable/ic_other" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <TextView
+                    style="@style/text_item_setting"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/other"
-                    style="@style/text_item_setting"/>
+                    android:text="@string/other" />
+
                 <View
-                    android:layout_marginTop="@dimen/margin_divider"
-                    style="@style/divider"/>
+                    style="@style/divider"
+                    android:layout_marginTop="@dimen/margin_divider" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingVertical="@dimen/padding_layout"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/background">
+    android:background="@color/background"
+    android:paddingVertical="@dimen/padding_layout">
 
     <ImageView
         android:id="@+id/play_top_songs"
@@ -31,7 +31,7 @@
 
             <TextView
                 android:id="@+id/tv_name_top_songs"
-                android:layout_width="124dp"
+                android:layout_width="@dimen/max_width_tv_top_song"
                 android:layout_height="wrap_content"
                 android:alpha="0.6"
                 android:ellipsize="end"
@@ -47,7 +47,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:alpha="0.28"
-                android:text="3:56"
                 android:textColor="@color/white"
                 android:textSize="@dimen/time_song_top_songs"
                 app:layout_constraintEnd_toStartOf="@id/more_top_songs"
@@ -67,7 +66,7 @@
 
         <View
             style="@style/divider"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/margin_edge"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/constraint_top_song_details" />
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    android:padding="10dp"
-    tools:context=".view.nav.songs.tab.artists.artistdetails.ArtistDetailsFragment">
+    android:padding="@dimen/padding_edge"
+    tools:context=".nav.songs.tab.artists.artistdetails.ArtistDetailsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linear_artist_details"
@@ -20,7 +20,9 @@
             android:id="@+id/btn_back_artists"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_back_button" />
+            android:src="@drawable/ic_back_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/text_artist_details"
@@ -31,14 +33,16 @@
             android:textColor="@color/white"
             android:textSize="@dimen/text_artist_details"
             app:layout_constraintEnd_toStartOf="@id/search_artist_details"
-            app:layout_constraintStart_toEndOf="@id/btn_back_artists" />
+            app:layout_constraintStart_toEndOf="@id/btn_back_artists"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/search_artist_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_musica_searcher"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -52,14 +56,18 @@
         <ImageView
             android:id="@+id/thumbnail_artist_detail"
             android:layout_width="match_parent"
-            android:layout_height="169dp"
-            android:scaleType="fitXY"/>
+            android:layout_height="@dimen/background_detail"
+            android:scaleType="fitXY"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="fitXY"
-            android:src="@drawable/background_image_artist_details" />
+            android:src="@drawable/background_image_artist_details"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_artist_detail"
@@ -69,14 +77,15 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/tv_artist_detail"
+                android:id="@+id/tv_artist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:alpha="0.9"
                 android:gravity="center"
-                android:text="Dilon Bruce"
                 android:textColor="@color/tv_color_artist_details"
-                android:textSize="@dimen/tv_artist_detail" />
+                android:textSize="@dimen/tv_artist_detail"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_artist_details"
@@ -84,9 +93,8 @@
                 android:layout_height="wrap_content"
                 android:alpha="0.74"
                 android:gravity="center"
-                android:text="Pop rock, Funk pop, Heavy Mental"
                 android:textColor="@color/white"
-                app:layout_constraintTop_toBottomOf="@id/tv_artist_detail" />
+                app:layout_constraintTop_toBottomOf="@id/tv_artist" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -95,7 +103,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="@dimen/padding_layout"
-            android:paddingBottom="10dp"
+            android:paddingBottom="@dimen/padding_edge"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <LinearLayout
@@ -103,14 +111,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/quantity_followers"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:alpha="0.9"
-                    android:text="4,367"
                     android:textColor="@color/tv_color_artist_details"
                     android:textSize="@dimen/tv_quantity_artist_details" />
 
@@ -131,14 +140,14 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toStartOf="@id/btn_follow_artist_details"
-                app:layout_constraintStart_toEndOf="@id/linear_followers_artist_details">
+                app:layout_constraintStart_toEndOf="@id/linear_followers_artist_details"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/quantity_listeners"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:alpha="0.9"
-                    android:text="128,980"
                     android:textColor="@color/tv_color_artist_details"
                     android:textSize="@dimen/tv_quantity_artist_details" />
 
@@ -154,8 +163,8 @@
 
             <Button
                 android:id="@+id/btn_follow_artist_details"
-                android:layout_width="74dp"
-                android:layout_height="23dp"
+                android:layout_width="@dimen/button_follow_width"
+                android:layout_height="@dimen/button_follow_height"
                 android:background="@drawable/background_follow_artist_details"
                 android:text="@string/follow"
                 android:textAllCaps="false"
@@ -163,6 +172,7 @@
                 android:textSize="@dimen/tv_follow_artist_details"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/linear_listeners_artist_details"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -177,25 +187,29 @@
             android:id="@+id/constraint_tv_top_albums"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingVertical="@dimen/padding_layout">
+            android:paddingVertical="@dimen/padding_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:alpha="0.8"
                 android:text="@string/top_album"
-                android:textSize="@dimen/tv_top_album"
                 android:textColor="@color/white"
-                android:alpha="0.8"/>
+                android:textSize="@dimen/tv_top_album"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
                 android:text="@string/viewAll"
                 android:textColor="@color/tv_view_all"
                 android:textSize="@dimen/tv_view_all"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -216,15 +230,19 @@
             android:id="@+id/constraint_tv_top_songs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingVertical="@dimen/padding_layout">
+            android:paddingVertical="@dimen/padding_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:alpha="0.8"
                 android:text="@string/top_song"
-                android:textSize="@dimen/tv_top_song"
                 android:textColor="@color/white"
-                android:alpha="0.8"/>
+                android:textSize="@dimen/tv_top_song"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -232,9 +250,9 @@
                 android:text="@string/viewAll"
                 android:textColor="@color/viewAll"
                 android:textSize="@dimen/tv_view_all"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView

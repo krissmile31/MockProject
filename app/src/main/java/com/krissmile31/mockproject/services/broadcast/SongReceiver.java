@@ -12,9 +12,9 @@ public class SongReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Intent intentService = new Intent(context, PlayService.class);
-        intentService.putExtra(BROADCAST_RECEIVER, intent.getIntExtra(BROADCAST_RECEIVER, 0));
+        intentService.putExtra(BROADCAST_RECEIVER,
+                intent.getIntExtra(BROADCAST_RECEIVER, 0));
 
-//        Log.e("SongReceiver", "onReceive: " + intent.getIntExtra(BROADCAST_RECEIVER, 0) );
         context.startService(intentService);
     }
 }

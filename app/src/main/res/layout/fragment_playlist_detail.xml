@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/background"
-    tools:context=".view.playlists.PlaylistDetailFragment">
+    tools:context=".playlists.PlaylistDetailFragment">
 
     <ImageView
         android:id="@+id/btn_back_playlist_details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_back_button"
         android:layout_marginStart="@dimen/margin_layout"
         android:layout_marginTop="@dimen/margin_layout"
+        android:src="@drawable/ic_back_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,31 +21,27 @@
         android:id="@+id/thumbnail_playlist_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingTop="@dimen/margin_layout"
         android:src="@drawable/muzic"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:paddingTop="@dimen/margin_layout"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/playlist_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Krissmile31"
+        android:layout_marginTop="@dimen/margin_layout"
         android:textColor="@color/white"
-        android:textSize="15sp"
-        app:layout_constraintTop_toBottomOf="@id/thumbnail_playlist_detail"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="@dimen/text_size_playlist_name"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="@dimen/margin_layout"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/thumbnail_playlist_detail" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcl_playlist_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/playlist_name"
-        android:layout_marginTop="@dimen/margin_layout"/>
-
-
-
+        android:layout_marginTop="@dimen/margin_layout"
+        app:layout_constraintTop_toBottomOf="@id/playlist_name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

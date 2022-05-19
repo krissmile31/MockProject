@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_weight="1"
-    android:paddingHorizontal="5dp"
-    android:paddingBottom="10dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/background">
+    android:background="@color/background"
+    android:paddingHorizontal="@dimen/padding_element"
+    android:paddingBottom="@dimen/padding_edge">
 
     <ImageView
         android:id="@+id/thumbnail_genres"
         android:layout_width="match_parent"
-        android:layout_height="118dp"
+        android:layout_height="@dimen/thumbnail_background_genres_height"
         android:backgroundTintMode="screen"
         android:scaleType="fitXY"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,23 +20,24 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="118dp"
+        android:layout_height="@dimen/thumbnail_background_genres_height"
         android:scaleType="fitXY"
-        android:src="@drawable/background_thumbnail_genres" />
+        android:src="@drawable/background_thumbnail_genres"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/text_genres"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Classical"
             android:textColor="@color/white"
             android:textSize="@dimen/text_genres"
             app:layout_constraintEnd_toEndOf="parent"
@@ -46,23 +48,12 @@
             android:id="@+id/quantity_songs_genres"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="56 Songs"
             android:textColor="@color/white"
             android:textSize="@dimen/details_genres"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_genres" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/tv_songs_genres"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text=" Songs"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:textSize="@dimen/details_genres"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toEndOf="@id/quantity_songs_genres"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/text_genres" />-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

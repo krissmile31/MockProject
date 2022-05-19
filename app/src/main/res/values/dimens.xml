@@ -6,20 +6,38 @@
     <dimen name="text_header_nav_margin_right">50dp</dimen>
     <dimen name="padding_header_nav">20dp</dimen>
     <dimen name="padding_layout">20dp</dimen>
+    <dimen name="padding_edge">10dp</dimen>
+    <dimen name="padding_element">5dp</dimen>
+    <dimen name="margin_element">5dp</dimen>
     <dimen name="margin_layout">20dp</dimen>
+    <dimen name="margin_edge">10dp</dimen>
     <dimen name="radius_foreground">5dp</dimen>
 
 <!--    main-->
     <dimen name="height_linear">37dp</dimen>
+    <dimen name="img_circle_size">46dp</dimen>
+    <dimen name="thumb_offset">5dp</dimen>
+    <dimen name="seekbar_margin_horizontal">-15dp</dimen>
+    <dimen name="seekbar_margin_bottom">-10dp</dimen>
+    <dimen name="stroke_width_img">0.5dp</dimen>
+
+<!--    home-->
+    <dimen name="text_size_headlines">15sp</dimen>
+    <dimen name="text_size_view_all">11sp</dimen>
 
 <!--    music-->
     <dimen name="text_size_item_music">15sp</dimen>
+    <dimen name="text_size_songs_title">17sp</dimen>
+    <dimen name="edit_search_height">40dp</dimen>
+    <dimen name="text_size_edit_search">14sp</dimen>
+    <dimen name="tabIndicatorHeight">1dp</dimen>
 
 <!--    playlist-->
     <dimen name="text_playlist_size">14sp</dimen>
     <dimen name="text_song_playlist_size">11sp</dimen>
     <dimen name="my_playlists">15sp</dimen>
     <dimen name="viewAll">11sp</dimen>
+    <dimen name="margin_playlist">-10dp</dimen>
 
 <!--    song-->
     <dimen name="text_size_albums">11sp</dimen>
@@ -32,9 +50,28 @@
     <dimen name="item_song_album_details">13sp</dimen>
     <dimen name="time_album_details">10sp</dimen>
 
-<!--    artist-->
+<!--    all songs-->
+    <dimen name="text_size_all_songs">13sp</dimen>
+    <dimen name="text_size_all_singers">10sp</dimen>
+    <dimen name="padding_end_background">50dp</dimen>
+    <dimen name="circle_background_inside_img">14dp</dimen>
+
+    <!--    album details-->
+    <dimen name="max_width_tv_song">124dp</dimen>
+    <dimen name="background_detail">169dp</dimen>
+    <dimen name="thumbnail_album_details">87dp</dimen>
+    <dimen name="button_play_width">75dp</dimen>
+    <dimen name="button_play_height">23dp</dimen>
+    <dimen name="button_share_width">75dp</dimen>
+    <dimen name="button_share_height">23dp</dimen>
+    <dimen name="button_favourite_height">23dp</dimen>
+    <dimen name="padding_horizontal_in_background">15dp</dimen>
+
+
+    <!--    artist-->
     <dimen name="text_size_artists">14sp</dimen>
     <dimen name="text_details_artists">11sp</dimen>
+    <dimen name="margin_dot">40dp</dimen>
 
 <!--    artist details-->
     <dimen name="text_artist_details">17sp</dimen>
@@ -50,20 +87,57 @@
     <dimen name="tv_top_song">15sp</dimen>
     <dimen name="tv_song_top_songs">13sp</dimen>
     <dimen name="time_song_top_songs">10sp</dimen>
+    <dimen name="button_follow_width">74dp</dimen>
+    <dimen name="button_follow_height">23dp</dimen>
 
-<!--    genres-->
+    <!--    genres-->
     <dimen name="text_genres">15sp</dimen>
     <dimen name="details_genres">10sp</dimen>
+    <dimen name="thumbnail_background_genres_height">118dp</dimen>
 
 <!--    now playing-->
     <dimen name="tv_now_playing">17sp</dimen>
     <dimen name="tv_details_now_playing">12sp</dimen>
     <dimen name="tv_song_now_playing">18sp</dimen>
     <dimen name="tv_action_now_playing">9sp</dimen>
+    <dimen name="layout_container_dvd_size">300dp</dimen>
+    <dimen name="img_circle_dvd_size">237dp</dimen>
+    <dimen name="padding_img_dvd">1dp</dimen>
+    <dimen name="stroke_width_dvd">1dp</dimen>
+    <dimen name="circle_seek_bar_width">257dp</dimen>
+    <dimen name="circle_seek_bar_height">289dp</dimen>
+    <dimen name="equaliser_width">224dp</dimen>
+    <dimen name="equaliser_height">75dp</dimen>
+    <dimen name="margin_horizontal_seek_bar">-10dp</dimen>
+    <dimen name="margin_horizontal_handle_music">100dp</dimen>
+    <dimen name="icon_play_width">40dp</dimen>
+    <dimen name="icon_play_height">39dp</dimen>
+    <dimen name="padding_horizontal_handle_action">50dp</dimen>
 
-<!--    setting-->
+    <!--    setting-->
     <dimen name="text_settings">17sp</dimen>
     <dimen name="text_setting_item">14sp</dimen>
     <dimen name="margin_divider">20dp</dimen>
+
+<!--    diaglog playlist creation-->
+    <dimen name="create_dialog_height">200dp</dimen>
+    <dimen name="text_size_create_playlist">18sp</dimen>
+
+<!--    playlist detail-->
+    <dimen name="text_size_playlist_name">15sp</dimen>
+
+<!--    playlist dialog-->
+    <dimen name="text_size_create_new_playlist">18sp</dimen>
+    <dimen name="thumbnail_playlist_item_size">80dp</dimen>
+    <dimen name="text_size_playlist_item">12sp</dimen>
+
+<!--    playlist item -->
+    <dimen name="text_size_item_playlist_name">12sp</dimen>
+
+<!--    recently play-->
+    <dimen name="tv_song_max_width">200dp</dimen>
+
+<!--    top song-->
+    <dimen name="max_width_tv_top_song">124dp</dimen>
 
 </resources>

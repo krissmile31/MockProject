@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.nav.home.HomeFragment">
+    tools:context=".nav.home.HomeFragment">
 
     <LinearLayout
         android:id="@+id/menuSearch"
@@ -31,8 +31,8 @@
             android:gravity="center"
             android:hint="@string/searchHint"
             android:maxLines="1"
-            android:paddingLeft="20dp"
-            android:textColorHint="#707070" />
+            android:paddingLeft="@dimen/padding_layout"
+            android:textColorHint="@color/text_color_hint" />
 
     </LinearLayout>
 
@@ -40,7 +40,7 @@
         android:id="@+id/hotRecommend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin_edge"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/menuSearch">
 
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:text="@string/hotRecommend"
             android:textColor="@color/white"
-            android:textSize="15sp"
+            android:textSize="@dimen/text_size_headlines"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -58,13 +58,13 @@
             android:id="@+id/rcl_hotRecommended"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/margin_edge"
             app:layout_constraintTop_toBottomOf="@id/tv_hotRecommended"
             app:layout_constraintStart_toStartOf="parent"></androidx.recyclerview.widget.RecyclerView>
 
         <View
             style="@style/divider"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/margin_edge"
             app:layout_constraintTop_toBottomOf="@id/rcl_hotRecommended"
             app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -73,7 +73,7 @@
         android:id="@+id/playlist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin_edge"
         app:layout_constraintTop_toBottomOf="@id/hotRecommend">
 
         <TextView
@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:text="@string/playlist"
             android:textColor="@color/white"
-            android:textSize="15sp"
+            android:textSize="@dimen/text_size_headlines"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -91,7 +91,7 @@
             android:layout_height="wrap_content"
             android:text="@string/viewAll"
             android:textColor="@color/viewAll"
-            android:textSize="11sp"
+            android:textSize="@dimen/text_size_view_all"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -99,14 +99,14 @@
             android:id="@+id/rcl_playlist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/margin_edge"
             app:layout_constraintTop_toBottomOf="@id/tv_playlist"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <View
             style="@style/divider"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/margin_edge"
             app:layout_constraintTop_toBottomOf="@id/rcl_playlist"
             app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -115,7 +115,7 @@
         android:id="@+id/recentPlay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin_edge"
         app:layout_constraintTop_toBottomOf="@id/playlist">
 
         <TextView
@@ -124,7 +124,7 @@
             android:layout_height="wrap_content"
             android:text="@string/recentPlay"
             android:textColor="@color/white"
-            android:textSize="15sp"
+            android:textSize="@dimen/text_size_headlines"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -133,7 +133,7 @@
             android:layout_height="wrap_content"
             android:text="@string/viewAll"
             android:textColor="@color/viewAll"
-            android:textSize="11sp"
+            android:textSize="@dimen/text_size_view_all"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -141,7 +141,7 @@
             android:id="@+id/rcl_recentlyPlayed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/margin_edge"
             app:layout_constraintTop_toBottomOf="@id/tv_recentlyPlayed"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
