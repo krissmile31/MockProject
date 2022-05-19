@@ -120,19 +120,20 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.MyViewHolder> 
                 public void onClick(View view) {
                     int oldPosition = currentPosition;
                     currentPosition = position;
-                    if (mListener != null && currentPosition != RecyclerView.NO_POSITION) {
-                        mListener.onItemClick(mSongList.get(currentPosition), mBtnPlaySong);
+                    int pos = getAdapterPosition();
+                    if (mListener != null && pos != RecyclerView.NO_POSITION) {
+                        mListener.onItemClick(mSongList.get(pos), mBtnPlaySong);
                     }
                     notifyItemChanged(oldPosition);
-                    notifyItemChanged(currentPosition);
+//                    notifyItemChanged(currentPosition);
                 }
             });
 
             mBtnPlaySong.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    currentPosition = getAdapterPosition();
-                    if (mListener != null && currentPosition != RecyclerView.NO_POSITION) {
+                    int pos = getAdapterPosition();
+                    if (mListener != null && pos != RecyclerView.NO_POSITION) {
                         mListener.onIconClick(mBtnPlaySong);
                     }
                 }

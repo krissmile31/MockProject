@@ -29,6 +29,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.krissmile31.mockproject.MainActivity;
 import com.krissmile31.mockproject.R;
 import com.krissmile31.mockproject.database.recentsong.SongManager;
@@ -80,6 +81,35 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver,
+                new IntentFilter(BROADCAST_RECEIVER));
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
+    }
+
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            mSong = (Song) intent.getSerializableExtra(SONG_DETAIL);
+            mIsPlaying = intent.getBooleanExtra(IS_PLAYING, false);
+            mAction = intent.getIntExtra(SONG_STATUS, 0);
+
+            if (mIsPlaying) {
+               mIconPlay.setImageResource(R.drawable.ic_pause_gradie);
+            } else  {
+                mIconPlay.setImageResource(R.drawable.ic_played);
+            }
+        }};
+
+
     private void init(View view) {
         mRclAllSongs = view.findViewById(R.id.rcl_all_songs);
 
@@ -123,6 +153,7 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
     private OnSongClickListener mListener = new OnSongClickListener() {
         @Override
         public void onItemClick(Song song, ImageView icon) {
+            mIconPlay = icon;
             Intent intent = new Intent(getContext(), PlayService.class);
             intent.putExtra(SONG_DETAIL, song);
             openNowPlaying();
@@ -181,10 +212,11 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
                 Uri path = Uri.parse(cursor.getString((int) cursor.getColumnIndex(MediaStore.Audio.Media.DATA)));
                 Uri thumbnail = ContentUris.withAppendedId(Uri.parse("content://media/external/audio/albumart"),
                         cursor.getLong((int) cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID)));
-                boolean checkTime = cursor.getInt((int) cursor.getColumnIndex(MediaStore.Audio.Media.DURATION)) > 3000;
+                int duration = cursor.getInt((int) cursor.getColumnIndex(MediaStore.Audio.Media.DURATION));
+                boolean checkTime = duration > 3000;
 
                 if (path.toString().contains(".mp3") && checkTime) {
-                    mSongList.add(new Song(id, song, singer, thumbnail.toString(), data.toString()));
+                    mSongList.add(new Song(id, song, singer, thumbnail.toString(), data.toString(), duration));
                 }
             } while (cursor.moveToNext());
         }

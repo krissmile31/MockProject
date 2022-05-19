@@ -11,13 +11,16 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.AudioManager;
+import android.media.MediaMetadata;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
 import android.provider.MediaStore;
+import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaSessionCompat;
+import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
@@ -139,6 +142,23 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
             bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
         }
 
+        MediaSessionCompat mediaSession = new MediaSessionCompat(this, "Play Music");
+        mediaSession.setActive(true);
+        MediaMetadata mediaMetadata = new MediaMetadata.Builder()
+                .putLong(MediaMetadata.METADATA_KEY_DURATION, song.getDuration())
+                .build();
+        mediaSession.setMetadata(MediaMetadataCompat.fromMediaMetadata(mediaMetadata));
+        mediaSession.setPlaybackState(
+                new PlaybackStateCompat.Builder()
+                        .setState(PlaybackStateCompat.STATE_PLAYING,
+                                (long) mediaPlayer.getCurrentPosition(), 1)
+                        .setActions(PlaybackStateCompat.ACTION_SEEK_TO)
+                        .build());
+
+        Log.e(TAG, "sendNotification: " + getTotalTime() );
+
+        MediaSessionCompat.Token token = mediaSession.getSessionToken();
+
         NotificationCompat.Builder notificationCompat = new NotificationCompat.Builder(
                 this,
                 CHANNEL_ID)
@@ -148,11 +168,9 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
                 .setContentText(song.getSinger())
                 .setContentIntent(pendingIntent)
                 .setLargeIcon(bitmap)
-                .setProgress(100, 30, false)
                 .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
                         .setShowActionsInCompactView(0, 1, 2)
-                        .setMediaSession(new MediaSessionCompat(this,
-                                "Play Music").getSessionToken()))
+                        .setMediaSession(token))
                 .addAction(R.drawable.ic_baseline_skip_previous_24,
                         "Previous",
                         getPendingIntent(this, PREVIOUS))
@@ -180,10 +198,11 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
     }
 
     private int setDrawablePlaying() {
-        if (mIsPlaying)
+        if (mIsPlaying) {
             return R.drawable.ic_baseline_pause_24;
-        else
+        } else {
             return R.drawable.ic_baseline_play_arrow_24;
+        }
     }
 
     private String setTitlePlaying() {

@@ -41,6 +41,15 @@ public class Song implements Serializable {
         this.singer = singer;
     }
 
+    public Song(long id, String songName, String singer, String thumbnail, String data, int duration) {
+        this.id = id;
+        this.thumbnail = thumbnail;
+        this.data = data;
+        this.songName = songName;
+        this.singer = singer;
+        this.duration = duration;
+    }
+
 
     public Song(long id, String songName, String singer, String data) {
         this.id = id;
